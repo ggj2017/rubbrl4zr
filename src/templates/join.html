@@ -3,9 +3,34 @@
 	<head>
 		<title>rubbrl4zr</title>
 		<link rel="stylesheet" type="text/css" href="/static/style.css">
+		<script>
+		function build_player_list() {
+			var r = new XMLHttpRequest();
+			r.open("GET", "/players/{{ game_id }}", true);
+			r.onreadystatechange = function () {
+				if (r.readyState != 4 || r.status != 200) return;
+				let players = JSON.parse(r.response);
+				console.log(players);
+				player_list = document.getElementById("player_list");
+				while (player_list.firstChild) {
+					player_list.removeChild(player_list.firstChild);
+				}
+				for (player of players) {
+					console.log(player);
+					li = document.createElement("li");
+					li.innerHTML = player.name;
+					player_list.appendChild(li);
+				}
+			};
+			r.send();
+		}
+		window.onload = function() {
+			window.setInterval(build_player_list, 1000);
+		}
+		</script>
 	</head>
 	<body>
-		<ul>
+		<ul id="player_list">
 			<li>Dein Name: <input type="text" placeholder="Spieler {{ player_id }}"/></li>
 		</ul>
 		Andere Spieler können über diesen Link beitreten:
