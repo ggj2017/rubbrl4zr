@@ -4,9 +4,18 @@ html, body {
     margin: 0;
 }
 
+body{
+    background-color: black;
+    background-image: url(img/background.jpg);
+    background-repeat: repeat;
+}
+
 .wrapper {
     width: 100%;
     height: 100%;
+
+    background-image: url(img/nebula.png);
+    background-repeat: no-repeat;
 }
 
 .configuration {
