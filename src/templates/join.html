@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<ul>
-			<li>Dein Name: <input type="text"/></li>
+			<li>Dein Name: <input type="text" placeholder="Spieler {{ player_id }}"/></li>
 		</ul>
 		Andere Spieler können über diesen Link beitreten:
 		<a href="/join/{{ game_id }}">{{ server_url }}join/{{ game_id }}</a>
