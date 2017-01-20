@@ -13,4 +13,4 @@ if [[ "$PID" != "" ]]; then
 	kill $PID
 fi
 
-nohup python3 src/main.py </dev/null >server.log 2>&1 &
+nohup env PYTHONUNBUFFERED=1 python3 src/main.py </dev/null >server.log 2>&1 &

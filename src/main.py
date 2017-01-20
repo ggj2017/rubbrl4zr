@@ -37,7 +37,9 @@ def join(game_id):
 @app.route('/lobby/<game_id>/<player_id>')
 def lobby(game_id, player_id):
     if not get_game(game_id):
-        return redirect(url_for('new_game'))
+        game = Game(game_id)
+        games.append(game)
+        game.players.append(Player(player_id))
     return render_template('join.html', game_id=game_id, player_id=player_id,
                             server_url=request.url_root)
 
@@ -51,6 +53,19 @@ def players(game_id):
             'name': player.name,
         })
     return json.dumps(players_json)
+
+@app.route("/set_player_name/<game_id>/<player_id>", methods=['POST'])
+def set_player_name(game_id, player_id):
+    print("asdf")
+    print(request.data.decode('utf-8'))
+    game = get_game(game_id)
+    data = json.loads(request.data.decode('utf-8'))
+    print(data)
+    for player in game.players:
+        if player.id == player_id:
+            player.name = data['name']
+            break
+    return "OK"
 
 if __name__ == "__main__":
     app.run()

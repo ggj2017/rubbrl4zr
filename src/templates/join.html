@@ -10,19 +10,23 @@
 			r.onreadystatechange = function () {
 				if (r.readyState != 4 || r.status != 200) return;
 				let players = JSON.parse(r.response);
-				console.log(players);
 				player_list = document.getElementById("player_list");
 				while (player_list.firstChild) {
 					player_list.removeChild(player_list.firstChild);
 				}
 				for (player of players) {
-					console.log(player);
 					li = document.createElement("li");
 					li.innerHTML = player.name;
 					player_list.appendChild(li);
 				}
 			};
 			r.send();
+			new_player_name = document.getElementById("player_name").value;
+			if (new_player_name != "") {
+				let r2 = new XMLHttpRequest();
+				r2.open("POST", "/set_player_name/{{ game_id }}/{{ player_id }}", true);
+				r2.send("{\"name\":\"" + new_player_name + "\"}");
+			}
 		}
 		window.onload = function() {
 			window.setInterval(build_player_list, 1000);
@@ -30,8 +34,8 @@
 		</script>
 	</head>
 	<body>
+		<li>Dein Name: <input id="player_name" type="text" placeholder="Spieler {{ player_id }}"/></li>
 		<ul id="player_list">
-			<li>Dein Name: <input type="text" placeholder="Spieler {{ player_id }}"/></li>
 		</ul>
 		Andere Spieler können über diesen Link beitreten:
 		<a href="/join/{{ game_id }}">{{ server_url }}join/{{ game_id }}</a>
