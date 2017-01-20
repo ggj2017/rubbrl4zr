@@ -25,7 +25,9 @@
 			if (new_player_name != "") {
 				let r2 = new XMLHttpRequest();
 				r2.open("POST", "/set_player_name/{{ game_id }}/{{ player_id }}", true);
-				r2.send("{\"name\":\"" + new_player_name + "\"}");
+				var data = new Object();
+				data.name = new_player_name;
+				r2.send(JSON.stringify(data));
 			}
 		}
 		window.onload = function() {
