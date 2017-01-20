@@ -2,13 +2,33 @@
 <html>
 <head>
 	<title>rubbrl4zr</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-	<div>
-	*Canvas*
-	<div>
-	<div>
-	*UI*
-	</div>
+    <div class="wrapper">
+        <div class="configuration">
+            <div>
+                <canvas id="preview"></canvas>
+            </div>
+            <label for="slider">Blubb</label>
+
+            <input id="slider" type="range" min="0" max="100" step="1" />
+            <input type="text" value="10" disabled>
+
+
+            <input type="radio" id="sin" name="Zahlmethode" value="SIN">
+            <label for="sin">SIN</label>
+
+
+            <input type="radio" id="cos" name="Zahlmethode" value="COS">
+            <label for="cos">COS</label>
+
+            <button>Ready!</button>
+        </div>
+
+        <canvas id="game">
+            Gamefield should be here
+        </canvas>
+    </div>
 </body>
 </html>
