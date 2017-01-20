@@ -1,3 +1,14 @@
+@font-face {
+    font-family: 'forcedsquare';
+    src: url('font/forced_square-webfont.eot');
+    src: url('font/forced_square-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/forced_square-webfont.woff2') format('woff2'),
+         url('font/forced_square-webfont.woff') format('woff'),
+         url('font/forced_square-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -7,6 +18,8 @@ html, body {
     padding: 0;
     margin: 0;
     color: #fff;
+    font-family: 'forcedsquare';
+    font-size: 20px;
 }
 
 body{
@@ -28,9 +41,12 @@ body{
     padding: 1em;
     width: 300px;
     height: 100%;
-    background-color: lightgrey;
     float: left;
     position: relative;
+    background-color: grey;
+    background-image: url(img/panel.jpg);
+    background-position: top right;
+    background-repeat: repeat-y;
 }
 
 #preview {
