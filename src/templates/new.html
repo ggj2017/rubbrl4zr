@@ -5,9 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="static/style.css">
 	</head>
 	<body>
-		Dein Name: <input type="text"/>
-		<ul>
-			<li><a href="/new">Neues Spiel starten</a></li>
-		</ul>
+		Andere Spieler können über diesen Link beitreten:
+		<a href="/join/{{ game_id }}">{{ server_url }}join/{{ game_id }}</a>
 	</body>
 </html>
