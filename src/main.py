@@ -11,6 +11,7 @@ games = []
 
 @app.route("/")
 def hello():
+    return "asdf"jahskfjhaksfd
     return render_template('welcome.html')
 
 @app.route("/new")

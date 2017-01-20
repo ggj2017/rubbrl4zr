@@ -1,0 +1,9 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "bash",
+	"isShellCommand": true,
+	"args": ["-c", "./restart.sh && sleep 0.5 && cat server.log && pgrep python3 && wmctrl -a firefox && sleep 0.2 && xdotool key F5"],
+	"showOutput": "always"
+}
