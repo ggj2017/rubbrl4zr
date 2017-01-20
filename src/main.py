@@ -1,11 +1,15 @@
 import json
 
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
+
+from game import Game
+
+games = []
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return render_template('welcome.html')
 
 @app.route("/test")
 def test():
