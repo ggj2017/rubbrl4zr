@@ -43,10 +43,14 @@ body{
 }
 
 #game {
-    width: 915px;
-    height: 100%;
+    width: 800px;
+    height: 600px;
     display: block;
     overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgba(255,255,255,0.2);
 }
 
 .ready-box {
