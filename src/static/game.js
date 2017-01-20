@@ -1,16 +1,12 @@
 class Game {
-    constructor(element) {
+    constructor(canvas) {
         window._game = this;
-        var canvas = document.createElement("canvas");
         canvas.width = 800;
         canvas.height = 600;
         _game._canvas = canvas;
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
         canvas.id = "game";
-        console.log(canvas);
-
-        element.replaceWith(canvas);
     }
 
     render() {

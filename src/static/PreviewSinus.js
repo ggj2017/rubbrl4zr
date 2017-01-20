@@ -40,7 +40,7 @@ class PreviewSinus {
     draw () {
 
         let context = this.context;
-        console.log(this.props)
+        // console.log(this.props)
         const {width,height} = this.props;
 
         // Clear the canvas
@@ -52,7 +52,7 @@ class PreviewSinus {
 
         // Set styles for animated graphics
         context.save();
-        context.strokeStyle = '#00f';
+        context.strokeStyle = '#0f0';
         context.fillStyle = '#fff';
         context.lineWidth = 2;
 
