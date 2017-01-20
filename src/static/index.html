@@ -5,30 +5,86 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <div id="nebula"></div>
     <div class="wrapper">
         <div class="configuration">
+            <h2>
+                rubbrl4zr
+            </h2>
+
             <div>
-                <canvas id="preview"></canvas>
+                <canvas id="preview" height="400"></canvas>
             </div>
             <label for="slider">Blubb</label>
-
             <input id="slider" type="range" min="0" max="100" step="1" />
-            <input type="text" value="10" disabled>
+
+            <input id="slider-value" type="text" value="50" disabled>
+
+            <br />
 
 
-            <input type="radio" id="sin" name="Zahlmethode" value="SIN">
+            <input type="radio" id="sin" name="Zahlmethode" value="SIN" checked>
             <label for="sin">SIN</label>
 
 
             <input type="radio" id="cos" name="Zahlmethode" value="COS">
             <label for="cos">COS</label>
 
-            <button>Ready!</button>
+            <div class="ready-box">
+                <button class="btn rdy-btn">Ready!</button>
+                29s
+                <br />
+                <span>0/4 Players are ready</span>
+            </div>
         </div>
 
         <canvas id="game">
             Gamefield should be here
         </canvas>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            addSliderInput();
+            drawSinus();
+        });
+
+        const addSliderInput = () => {
+            document.getElementById("slider").addEventListener("change", function(e) {
+                let val = e.target.value;
+                document.getElementById("slider-value").value = val;
+            });
+        };
+
+        const drawSinus = () => {
+            var c = document.getElementById("preview");
+            var ctx = c.getContext("2d");
+            var i;
+            for(i=0; i<360; i+= 20){
+                ctx.moveTo(i+5,180);
+                ctx.lineTo(i,180);
+
+            }
+            ctx.stroke();
+
+            var counter = 0, x=0,y=180;
+
+
+            //100 iterations
+            var increase = 90/180*Math.PI / 9;
+            for(i=0; i<=360; i+=10){
+
+                ctx.moveTo(x,y);
+                x = i;
+                y =  180 - Math.sin(counter) * 120;
+                counter += increase;
+
+                ctx.lineTo(x,y);
+                ctx.stroke();
+                //alert( " x : " + x + " y : " + y + " increase : " + counter ) ;
+
+            }
+        }
+    </script>
 </body>
 </html>

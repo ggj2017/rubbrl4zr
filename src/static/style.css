@@ -1,23 +1,71 @@
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     height: 100%;
     padding: 0;
     margin: 0;
 }
 
+body{
+    background-color: black;
+    background-image: url(img/background.jpg);
+    background-repeat: repeat;
+}
+
 .wrapper {
     width: 100%;
     height: 100%;
+
+    background-image: url(img/nebula.png);
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .configuration {
-    width: 340px;
+    padding: 1em;
+    width: 300px;
     height: 100%;
     background-color: lightgrey;
     float: left;
+    position: relative;
+}
+
+#preview {
+    height: 200px;
+    width: 100%;
+}
+
+#slider-value {
+    width: 25px;
 }
 
 #game {
-    width: 1280px;
+    width: 915px;
     height: 100%;
     display: block;
+    overflow: hidden;
+}
+
+.ready-box {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1em;
+}
+
+.btn {
+    border: 1px solid darkgrey;
+    padding: 1em;
+}
+
+.rdy-btn {
+    width: 80%;
+    background-color: orange;
+    transition: 1s;
+}
+
+.rdy-btn:hover {
+    background-color: red;
 }
