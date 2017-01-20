@@ -131,6 +131,10 @@ body{
     background-color: red;
 }
 
+input {
+    color: #fff;
+}
+
 /* Slider */
 input[type=range] {
     -webkit-appearance: none;
