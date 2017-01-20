@@ -30,14 +30,14 @@ def get_game(id):
 @app.route("/join/<game_id>")
 def join(game_id):
     game = get_game(game_id)
-    if not game:
-        return redirect(url_for('new_game'))
     player_id = len(game.players) + 1
     game.players.append(Player(player_id))
     return redirect(url_for('lobby', game_id=game_id, player_id=player_id))
 
 @app.route('/lobby/<game_id>/<player_id>')
 def lobby(game_id, player_id):
+    if not get_game(game_id):
+        return redirect(url_for('new_game'))
     return render_template('join.html', game_id=game_id, player_id=player_id,
                             server_url=request.url_root)
 
