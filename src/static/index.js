@@ -60,10 +60,10 @@ const drawPreview = ()=> {
 const drawGameSinus = ()=> {
     let height = 600;
     let width = 900;
-    let xAxis = 0;
+    let xAxis = width/2;
     let yAxis = Math.floor(width/4);
     let canvas = document.getElementById("game");
-    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
+    let preview = new GameSinus({canvas,height,width,xAxis,yAxis});
 }
 
 var game = new Game(document.getElementById("game"), []);

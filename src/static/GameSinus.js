@@ -1,6 +1,6 @@
 
 
-class PreviewSinus {
+class GameSinus {
 
 
     constructor(props) {
@@ -78,23 +78,34 @@ class PreviewSinus {
      * The sine curve is drawn in 10px segments starting at the origin.
      */
     drawSine (t,max) {
+        const {yAxis,xAxis,width,height} = this.props;
 
-        const {yAxis,xAxis} = this.props;
+
+
+        var direction = 1;
+        var degree = 180;
+        this.context.translate(width/2,height/2);
+        this.context.rotate(degree*Math.PI/180);
+        this.context.translate(-width/2,-height/2);
         let unit = 60;
         // Set the initial x and y, starting at 0,0 and translating to the origin on
         // the canvas.
         var x = 0;
         var y = Math.sin(x);
+
         this.context.moveTo(xAxis, unit*y+yAxis);
 
         // Loop to draw segments
         for (let i = 0; i <= max; i += 10) {
             x = (i)/unit;
+
             y = Math.sin(x);
-            this.context.lineTo(i, unit*y+yAxis);
-            this.context.stroke();
+
+            this.context.lineTo(direction*i + xAxis, unit*y+yAxis);
+
 
         }
+       // this.context.restore();
     }
 
 
