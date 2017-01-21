@@ -103,7 +103,7 @@ body{
 }
 
 .configuration h2:first-child{
-    left: 0;
+    margin-top: 0;
 }
 
 #previewWrapper{
