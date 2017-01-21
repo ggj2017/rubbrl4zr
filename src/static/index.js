@@ -70,6 +70,11 @@ window.lib = (new function(){
         }
     };
 
+    this.playSound = function(filePath) {
+        snd = new Audio(filePath);
+        snd.play();
+    };
+
     this.loopMusic = function(filePath) {
         _music = new Audio(filePath);
         _music.addEventListener('ended', function() {

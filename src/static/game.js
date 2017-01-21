@@ -7,9 +7,17 @@ class Game {
         this._ctx = canvas.getContext("2d");
         this._players = [];
         this._obstacles = [];
+        this._explosions = [];
+        this._removeExplosions = []; // the indices of explosions that are done
         canvas.id = "game";
         this._canvasPreview = canvasPreview;
         this._previewLaser = this.createPreviewLaser(canvasPreview);
+
+        canvas.onclick = function(evt) {
+            var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
+                                evt.clientY - canvas.offsetTop - 64);
+            _game.makeExplosion(pos);
+        }
 
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
@@ -62,6 +70,14 @@ class Game {
         this.animateToggleButton();
     }
 
+    makeExplosion(pos){
+        lib.playSound("/static/snd/explosion.mp3");
+        var idx = _game._explosions.length;
+        _game._explosions.push(new Explosion(pos, function(){
+            // _game._removeExplosions.push(idx);
+        }));
+    }
+
     get_player(id) {
         // TODO: Wenn man Spieler in der Lobby kicken können soll, könnte man hier dann stattdessen
         //       die Spieler durchgehen und den mit der richtigen ID raussuchen.
@@ -84,6 +100,19 @@ class Game {
             obstacle.render(_game._ctx);
             _game._ctx.restore();
         }
+
+        for(var explosion of _game._explosions) {
+            _game._ctx .save();
+            explosion.render(_game._ctx);
+            _game._ctx.restore();
+        }
+
+        var diff = 0;
+        for(var idx of _game._removeExplosions) {
+            _game._explosions.splice(idx+diff, 1);
+            diff++;
+        }
+        _game._removeExplosions = [];
 
         this.renderPreview();
     }
@@ -234,7 +263,7 @@ class Game {
         _game._players.push(player);
     }
 
-    createLaser(player) {
+    createLaser(player, fre = 30 , amp = 30) {
 
         let rad = (player.renderable._degree + player.renderable._init_degree)*Math.PI / 180;
         let x =64;
@@ -252,8 +281,8 @@ class Game {
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x + x,
             yAxis:player.renderable._pos.y + y,
-           // xAxis:player.renderable._pos.x,
-           // yAxis:player.renderable._pos.y,
+            amplitude: amp,
+            frequency: fre,
             degree: player.renderable._degree + player.renderable._init_degree,
             color: player.color,
             collisionCallback: this.onObstacleCollision,

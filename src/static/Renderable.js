@@ -10,6 +10,7 @@ class Renderable {
         this._renderWidth = 0;
         this._currentFrame = 0.0;
 
+
         this._img = new Image();
         this._img.onload = () => {
             this._loaded = true;
@@ -25,14 +26,10 @@ class Renderable {
 
         // console.log("rendering", this._img, this._pos)
         ctx.save();
-        /*ctx.translate(this._pos.x + this._img.width / 2, this._pos.y + this._img.height / 2);
-        ctx.rotate((90+this._degree) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
-        ctx.drawImage(this._img, -this._img.width / 2, -this._img.height / 2);*/
-        //ctx.drawImage(this._img, -this._img.width, -this._img.height);
         ctx.translate( this._pos.x + this._renderWidth / 2,  this._pos.y + this._img.height / 2);
-        ctx.rotate((90+ this._init_degree + this._degree) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
+        ctx.rotate((90+ this._init_degree ) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
+        //ctx.rotate((90+ this._init_degree + this._degree) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
 
-        // ctx.drawImage(this._img,  -this._renderWidth / 2  ,  -this._img.height / 2); // unclipped
 
         ctx.drawImage(this._img,
                         (Math.floor(this._currentFrame))*this._renderWidth, // sx
@@ -40,7 +37,7 @@ class Renderable {
                         this._renderWidth, this._img.height,                // swidth, sheight
                         -this._renderWidth / 2  ,  -this._img.height / 2,
                         this._renderWidth, this._img.height); // clipped
-        //ctx.drawImage(this._img, -this._img.width, -this._img.height);
+
         ctx.restore();
     }
 }

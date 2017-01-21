@@ -16,6 +16,7 @@ class Player {
 
     set_degree(degree) {
         this.renderable._degree = degree;
+        console.log(this.renderable._degree );
     }
 
     _getNamePos(){
