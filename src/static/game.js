@@ -192,6 +192,10 @@ class Game {
     	requestAnimationFrame(_game._mainLoop);
     }
 
+    onObstacleCollision({obstacle}) {
+        _game._obstacles = _game._obstacles.filter(ob => { return ob.id != obstacle.id});
+    }
+
     run() {
         var w = window;
         requestAnimationFrame = w.requestAnimationFrame
@@ -263,7 +267,7 @@ class Game {
         _game._players.push(player);
     }
 
-    createLaser(player) {
+    createLaser(player, fre = 30 , amp = 30) {
 
         let rad = (player.renderable._degree + player.renderable._init_degree)*Math.PI / 180;
         let x =64;
@@ -281,10 +285,11 @@ class Game {
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x + x,
             yAxis:player.renderable._pos.y + y,
-           // xAxis:player.renderable._pos.x,
-           // yAxis:player.renderable._pos.y,
+            amplitude: amp,
+            frequency: fre,
             degree: player.renderable._degree + player.renderable._init_degree,
-            color: player.color
+            color: player.color,
+            collisionCallback: this.onObstacleCollision,
         });
         player.shoot(laser);
     }

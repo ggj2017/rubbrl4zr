@@ -19,7 +19,7 @@ class SinusLaser extends Renderable {
      */
     render (context) {
 
-        const {color = '#00f', lineWidth = 2} = this.props;
+        const {collisionCallback, color = '#00f', lineWidth = 2} = this.props;
 
 
         // Set styles for animated graphics
@@ -28,7 +28,15 @@ class SinusLaser extends Renderable {
         context.lineWidth = lineWidth;
         context.lineJoin = 'round';
 
-        if(this.counter > this.lines.length) this.counter = 0;
+        if(this.counter > this.lines.length) {
+            this.counter = 0;
+            if(collisionCallback) {
+                collisionCallback({
+                    'laser': this,
+                    'obstacle': this.collidedObstacle,
+                });
+            }
+        }
 
         this.drawSine(context);
     }
@@ -55,9 +63,7 @@ class SinusLaser extends Renderable {
             if(_game) {
                 for (let obstac of _game._obstacles) {
                     if (obstac.collision && obstac.collision.contains({x, y})) {
-                        if(collisionCallback) {
-                            collisionCallback(this, obstac, {x,y});
-                        }
+                        this.collidedObstacle = obstac;
                         return;
                     }
                 }
@@ -122,13 +128,9 @@ class SinusLaser extends Renderable {
      * The sine curve is drawn in 10px segments starting at the origin.
      */
     drawSine (context) {
-        const {yAxis,xAxis,color} = this.props;
+        const {color} = this.props;
         let laserLength = 200;
 
-
-        //context.translate( width/2, s +  height/2);
-       // context.rotate(45*Math.PI/180);
-      // context.translate( -width/2,-height/2);
 
         context.strokeStyle = color;
         context.beginPath();
