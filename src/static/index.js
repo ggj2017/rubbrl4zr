@@ -121,16 +121,6 @@ window.lib = (new function(){
                     }
                 }
                 loadNthScript(0, scripts);
-
-                // for(var i = 0; i < scripts.length; i++) {
-                //     if(scripts[i].src){
-                //         var head = document.getElementsByTagName('head')[0];
-                //         head.appendChild(scripts[i]);
-                //     }
-                //     else{
-                //         eval(scripts[i].innerHTML);
-                //     }
-                // }
             }, 500)
         });
     };

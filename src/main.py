@@ -5,6 +5,10 @@ import string
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+
 from game import Game
 from player import Player
 
@@ -22,7 +26,7 @@ def welcome():
 def new_game():
     # Zufällige Game-ID erzeugen um andere Spieler per URL einladen zu können:
     game_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
-    g = Game(game_id);
+    g = Game(game_id)
     games.append(g)
     p = Player(1)
     g.add_player(p)
