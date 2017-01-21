@@ -88,6 +88,7 @@ body{
 
 .configuration {
     padding: 1em;
+    padding-right: 1.8em;
     width: 320px;
     height: 100%;
     position: absolute;
