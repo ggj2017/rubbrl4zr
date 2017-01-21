@@ -15,7 +15,9 @@ window.lib = (new function(){
         if(contentType != undefined)
             xhttp.setRequestHeader("Content-type", contentType);
         if(params == undefined)
+        {
             xhttp.send();
+        }
         else {
             xhttp.send(params);
         }
