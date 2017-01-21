@@ -96,7 +96,7 @@ def game(game_id, player_id):
         # Zum Debuggen ein Spiel anlegen, wenn man z. B. den Server neugestartet hat:
         game = Game(game_id)
         games.append(game)
-        for i in range(1, 5):
+        for i in range(1, 2):
             game.players.append(Player(i))
     return app.send_static_file('index.html')
 
