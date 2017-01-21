@@ -105,7 +105,7 @@ class Game {
       //  setTimeout(this._mainLoop,1);
     }
 
-    createPreviewLaser(canvas, amplitude = 30) {
+    createPreviewLaser(canvas ,frequency = 30, amplitude = 30) {
         if(this._canvasPreview) {
             canvas = this._canvasPreview;
         }
@@ -115,7 +115,7 @@ class Game {
         let xAxis = 0;
         let yAxis = height/2;
         this.previewContext = canvas.getContext("2d");
-        return new SinusLaser({canvas,height,width,xAxis,yAxis, amplitude, color: '#00FF00', degree: 0});
+        return new SinusLaser({canvas,height,width,xAxis,yAxis, frequency,  amplitude, color: '#00FF00', degree: 0});
     }
 
 
