@@ -191,6 +191,7 @@ input {
 input[type=range] {
     -webkit-appearance: none;
     margin: 0;
+    margin-top: 0.1em;
     margin-bottom: 0.3em;
     width: 100%;
     background-color: transparent;
@@ -233,7 +234,7 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 3px;
     background-color: none;
     -webkit-appearance: none;
-    margin-top: -14px;
+    margin-top: -5px;
     background-image: url(img/sliderbtn.png);
     cursor: none;
 }
