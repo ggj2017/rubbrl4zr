@@ -159,6 +159,10 @@ class Game {
     	requestAnimationFrame(_game._mainLoop);
     }
 
+    onObstacleCollision({obstacle}) {
+        _game._obstacles = _game._obstacles.filter(ob => { return ob.id != obstacle.id});
+    }
+
     run() {
         var w = window;
         requestAnimationFrame = w.requestAnimationFrame
@@ -251,7 +255,8 @@ class Game {
            // xAxis:player.renderable._pos.x,
            // yAxis:player.renderable._pos.y,
             degree: player.renderable._degree + player.renderable._init_degree,
-            color: player.color
+            color: player.color,
+            collisionCallback: this.onObstacleCollision,
         });
         player.shoot(laser);
     }
