@@ -1,9 +1,9 @@
-class Vector {
+/*class Vector {
     constructor(x, y) {
         this.x = x;
         this.y = y;
     }
-}
+}*/
 
 class Rect {
     constructor(x, y, width, height) {
@@ -27,8 +27,7 @@ class Circle {
     }
 
     contains(point) {
-        return Math.sqrt((this.x-point.x)
-            +(this.y-point.y)) <= this.radius;
+        return Math.abs(point.x - this.x) <= this.radius && Math.abs(point.y - this.y) <= this.radius;
     }
 }
 

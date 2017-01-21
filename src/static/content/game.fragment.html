@@ -46,6 +46,7 @@
 </canvas>
 
 
+<script src="/static/collision.js"></script>
 <script src="/static/PreviewSinus.js"></script>
 <script src="/static/Player.js"></script>
 <script src="/static/Renderable.js"></script>
@@ -61,18 +62,23 @@ const drawPreview = ()=> {
     let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
 }
 
+
+
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0 ,0 ),0),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(800 - 32,0),90),"#0066FF");
 let Player3 = new Player(44, "Timo", new Renderable("/static/img/ship-green.png", new Vector(800 -32 ,600 -64),180),"#00FF00");
 let Player4 = new Player(45, "janNiklas", new Renderable("/static/img/ship-yellow.png", new Vector(0 ,600 -64),270),"#FFFF00");
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
+
+game._obstacles.push(new Asteroid(42, new Vector(350,350)));
+
 game.addPlayer(Player1);
 game.addPlayer(Player2);
 game.addPlayer(Player3);
 game.addPlayer(Player4);
 
-game._obstacles.push(new Asteroid(42, new Vector(350,350)));
+
 
 // TODO: don't put this into obstacles, but into a separate list of renderable objects
 game._obstacles.push(new Explosion(42, new Vector(450,450)));
