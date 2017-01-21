@@ -176,19 +176,21 @@ class Game {
     // ----------------------------------------------------
 
     addPlayer(player) {
+        this.createLaser(player);
+        _game._players.push(player);
+
+    }
+
+    createLaser(player) {
         const laser = new SinusLaser({
             height: _game._canvas.height,
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x,
             yAxis:player.renderable._pos.y,
-            degree: player.renderable._degree,
+            degree: player.renderable._degree + player.renderable._init_degree,
             color: player.color
         });
         player.shoot(laser);
-        console.log(laser);
-        console.log(player);
-        _game._players.push(player);
-
     }
 
     getOwnPlayer() {

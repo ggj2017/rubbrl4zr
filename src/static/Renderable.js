@@ -1,9 +1,10 @@
 "use strict";
 
 class Renderable {
-    constructor(imgPath, pos, degree){
+    constructor(imgPath, pos, init_degree){
         this._pos = pos;
-        this._degree = degree;
+        this._init_degree = init_degree;
+        this._degree = 45;
         this._loaded = false;
         this._img = new Image();
         this._img.onload = () => {
@@ -18,9 +19,14 @@ class Renderable {
         if(!this._loaded) return;
         // console.log("rendering", this._img, this._pos)
         ctx.save();
-        ctx.translate(this._pos.x + this._img.width / 2, this._pos.y + this._img.height / 2);
-        ctx.rotate(this._degree * Math.PI / 180);
-        ctx.drawImage(this._img, -this._img.width / 2, -this._img.height / 2);
+        /*ctx.translate(this._pos.x + this._img.width / 2, this._pos.y + this._img.height / 2);
+        ctx.rotate((90+this._degree) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
+        ctx.drawImage(this._img, -this._img.width / 2, -this._img.height / 2);*/
+        //ctx.drawImage(this._img, -this._img.width, -this._img.height);
+        ctx.translate( this._pos.x + this._img.width / 2,  this._pos.y + this._img.height / 2);
+        ctx.rotate((90+ this._init_degree + this._degree) * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.
+        ctx.drawImage(this._img,  -this._img.width / 2  ,  -this._img.height / 2 );
+        //ctx.drawImage(this._img, -this._img.width, -this._img.height);
         ctx.restore();
     }
 }

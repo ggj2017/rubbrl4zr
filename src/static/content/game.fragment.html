@@ -21,9 +21,9 @@
     <label for="phase">Phase</label>
     <input id="phase" type="range" min="0" max="100" step="5" />
 
-    <div style="float: right"><span id="current-rotation">0</span> °</div>
+    <div style="float: right"><span id="current-rotation">45</span> °</div>
     <label for="rotation">Rotation</label>
-    <input id="rotation" type="range" min="0" max="360" step="18" />
+    <input id="rotation" type="range" min="0" max="90" value="45"/>
 
     <div class="ready-box">
         <div class="playerlamp on"></div>
@@ -61,12 +61,17 @@ const drawPreview = ()=> {
     let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
 }
 
-let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
-let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
+let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0 ,0 ),0),"#FF0000");
+let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(800 - 32,0),90),"#00FF00");
+let Player3 = new Player(44, "Timo", new Renderable("/static/img/ship-blue.png", new Vector(800 -32 ,600 -64),180),"#0000FF");
+let Player4 = new Player(45, "janNiklas", new Renderable("/static/img/ship-blue.png", new Vector(0 ,600 -64),270),"#FFFF00");
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 game.addPlayer(Player1);
 game.addPlayer(Player2);
+game.addPlayer(Player3);
+game.addPlayer(Player4);
+
 game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 game.run();
 lib.loopMusic("/static/snd/music01.mp3");
@@ -80,6 +85,7 @@ document.getElementById('frequency').addEventListener('input', function(e) {
     this.fre = 80 / e.target.value;
     let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
+    game.createLaser(game._players[0]);
 }.bind(this));
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
@@ -88,6 +94,7 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
    this.amp = e.target.value;
     let laser = game.createPreviewLaser(null, this.fre,this.amp);
     game._previewLaser = laser;
+    game.createLaser(game._players[0]);
 
 }.bind(this));
 
@@ -98,6 +105,9 @@ document.getElementById('phase').addEventListener('input', function(e) {
 document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
     game.getOwnPlayer().set_degree(e.target.value);
+
+    game._players[0].renderable._degree = e.target.value;
+    game.createLaser(game._players[0]);
 });
 
 </script>
