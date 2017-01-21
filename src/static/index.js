@@ -89,7 +89,7 @@ window.lib = (new function(){
         if(lib.gameId && lib.playerId) {
             suffix = "/"+lib.gameId+"/"+lib.playerId;
         }
-        lib.ajax("GET", "/static/content/"+uri+".html.fragment", function(data){
+        lib.ajax("GET", "/static/content/"+uri+".fragment.html", function(data){
             var wrapper = document.querySelector(".wrapper");
             var children = wrapper.children;
             for (var i = 0; i < children.length; i++) {
