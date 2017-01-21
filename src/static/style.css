@@ -11,6 +11,7 @@
 
 * {
     box-sizing: border-box;
+    cursor: none;
 }
 
 @keyframes animateStarsBackground {
@@ -33,6 +34,14 @@
   }
 }
 
+@keyframes slideConfiguration {
+    100% { left: 0; }
+}
+
+@keyframes slideCanvas {
+    100% { right: 10px; }
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari*/
@@ -50,6 +59,7 @@ html, body {
     color: #fff;
     font-family: 'forcedsquare';
     font-size: 20px;
+    overflow: hidden;
 }
 
 body{
@@ -57,6 +67,14 @@ body{
     background-image: url(img/background.jpg);
     background-repeat: repeat;
     animation: animateStarsBackground 40s linear infinite;
+}
+
+#cursor{
+    width: 32px;
+    height: 32px;
+    background-image: url(img/cursor.png);
+    position:fixed;
+    pointer-events: none;
 }
 
 .wrapper {
@@ -72,13 +90,19 @@ body{
     padding: 1em;
     width: 320px;
     height: 100%;
-    float: left;
-    padding-right: 38px;
-    position: relative;
+    position: absolute;
     background-color: grey;
     background-image: url(img/panel.jpg);
     background-position: top right;
     background-repeat: repeat-y;
+
+    animation: slideConfiguration 0.5s forwards;
+    animation-delay: 0.3s;
+    left: -320px;
+}
+
+.configuration h2:first-child{
+    left: 0;
 }
 
 #previewWrapper{
@@ -106,7 +130,12 @@ body{
     position: absolute;
     right: 10px;
     top: 10px;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(0,0,0,0.6);
+
+    animation: slideCanvas 0.5s forwards;
+    animation-delay: 0.8s;
+    right: -800px;
+    border: 1px solid #006600;
 }
 
 .ready-box {
@@ -166,7 +195,6 @@ input[type=range]::-moz-range-track {
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 18px;
-    cursor: pointer;
     border-left: 1px solid black;
     border-right: 1px solid black;
     background-color: none;
@@ -181,7 +209,6 @@ input[type=range]::-webkit-slider-thumb {
     width: 16px;
     border-radius: 3px;
     background: #ffffff;
-    cursor: pointer;
     -webkit-appearance: none;
     margin-top: -14px;
 }
@@ -192,12 +219,10 @@ input[type=range]::-moz-range-thumb {
     width: 16px;
     border-radius: 3px;
     background: #ffffff;
-    cursor: pointer;
 }
 input[type=range]::-ms-track {
     width: 100%;
     height: 8.4px;
-    cursor: pointer;
     animate: 0.2s;
     background: transparent;
     border-color: transparent;
@@ -221,5 +246,4 @@ input[type=range]::-ms-thumb {
     width: 16px;
     border-radius: 3px;
     background: #ffffff;
-    cursor: pointer;
 }
