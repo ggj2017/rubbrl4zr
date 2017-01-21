@@ -15,7 +15,7 @@ class Game {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         for(var player of _game._players) {
-            player.renderable.render(this._ctx);
+            player.render(this._ctx);
             this._ctx.restore();
         }
     }
@@ -85,5 +85,18 @@ class Player {
         this.id = id;
         this.name = name;
         this.renderable = renderable;
+    }
+
+    shoot(laser) {
+        this.laser = laser;
+    }
+
+
+    render(ctx) {
+        this.renderable.render(ctx);
+        ctx.restore();
+        if(this.laser) {
+            this.laser.render(ctx);
+        }
     }
 }
