@@ -87,7 +87,7 @@ window.lib = (new function(){
     this.loadContent = function(uri){
         var suffix = "";
         if(lib.gameId && lib.playerId) {
-            suffix = "/"+lib.gameId+"/"+lib.playerId;
+            suffix = "/"+lib.gameId+"/"+lib.playerId+"/";
         }
         lib.ajax("GET", "/static/content/"+uri+".fragment.html", function(data){
             var wrapper = document.querySelector(".wrapper");
@@ -118,8 +118,20 @@ window.lib = (new function(){
         return window.location.pathname.split('/');
     }
 
+    this.getPlayerInfo = function(playerId) {
+        lib.ajax("GET", "/player/"+lib.gameId+"/"+lib.playerId+"/",
+            function(data) {
+            this.playerName = data["name"];
+        });
+    }
+
     window.onload = function() {
         var params = lib.getParams();
-        lib.loadContent(params["p"] || "welcome");
+        if(params[2] && params[3]){
+            lib.gameId = params[2];
+            lib.playerId = params[3];
+            lib.getPlayerInfo(lib.playerId);
+        }
+        lib.loadContent(params[1] || "welcome");
     };
 });

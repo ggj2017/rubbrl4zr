@@ -8,3 +8,7 @@ class Game:
             if player.id == id:
                 return player
         return None
+
+
+    def add_player(self, player):
+        self.players.append(player)
