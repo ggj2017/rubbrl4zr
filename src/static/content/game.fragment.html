@@ -63,8 +63,8 @@ const drawPreview = ()=> {
 
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0 ,0 ),0),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(800 - 32,0),90),"#0066FF");
-let Player3 = new Player(44, "Timo", new Renderable("/static/img/ship-blue.png", new Vector(800 -32 ,600 -64),180),"#00FF00");
-let Player4 = new Player(45, "janNiklas", new Renderable("/static/img/ship-blue.png", new Vector(0 ,600 -64),270),"#FFFF00");
+let Player3 = new Player(44, "Timo", new Renderable("/static/img/ship-green.png", new Vector(800 -32 ,600 -64),180),"#00FF00");
+let Player4 = new Player(45, "janNiklas", new Renderable("/static/img/ship-yellow.png", new Vector(0 ,600 -64),270),"#FFFF00");
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 game.addPlayer(Player1);
