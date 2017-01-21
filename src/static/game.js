@@ -42,8 +42,17 @@ class Game {
             player.render(_game._ctx);
             _game._ctx.restore();
         }
-        this.previewContext.clearRect(0, 0, this._canvasPreview.width, this._canvasPreview.height)
+
+        this.renderPreview();
+    }
+
+    renderPreview() {
+        this.previewContext.clearRect(0, 0, this._canvasPreview.width, this._canvasPreview.height);
+        this.previewContext.lineWidth = 5;
+        this.previewContext.save();
+
         this._previewLaser.render(this.previewContext);
+        this.previewContext.restore();
     }
 
     update() {
@@ -98,13 +107,17 @@ class Game {
       //  setTimeout(this._mainLoop,1);
     }
 
-    createPreviewLaser(canvas) {
+    createPreviewLaser(canvas, amplitude = 30) {
+        if(this._canvasPreview) {
+            canvas = this._canvasPreview;
+        }
+
         let height = canvas.height;
         let width = canvas.width;
         let xAxis = 0;
         let yAxis = height/2;
         this.previewContext = canvas.getContext("2d");
-        return new SinusLaser({canvas,height,width,xAxis,yAxis, color: '#00FF00', degree: 0});
+        return new SinusLaser({canvas,height,width,xAxis,yAxis, amplitude, color: '#00FF00', degree: 0});
     }
 
 
@@ -120,6 +133,8 @@ class Game {
             color: player.color
         });
         player.shoot(laser);
+        console.log(laser);
+        console.log(player);
         _game._players.push(player);
 
     }
