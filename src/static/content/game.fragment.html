@@ -37,21 +37,16 @@
 <script src="/static/index.js"></script>
 
 <script type="application/javascript">
-const drawPreview = ()=> {
-    let height = 200;
-    let width = 400;
-    let xAxis = 0;
-    let yAxis = Math.floor(width/4);
-    let canvas = document.getElementById("preview");
-    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
-
-
-}
 
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
 
-var game = new Game(document.getElementById("game"), []);
+var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 game.addPlayer(Player1);
 game.addPlayer(Player2);
+game.run();
+
+document.getElementById('amplitude').addEventListener('input', function(e) {
+  console.log(e);
+});
 </script>

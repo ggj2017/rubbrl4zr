@@ -1,5 +1,5 @@
 class Game {
-    constructor(canvas) {
+    constructor(canvas, canvasPreview) {
         window._game = this;
         canvas.width = 800;
         canvas.height = 600;
@@ -7,6 +7,8 @@ class Game {
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
         canvas.id = "game";
+        _game._canvasPreview = canvasPreview;
+        _game._previewLaser = this.createPreviewLaser(canvasPreview);
 
         //_game._ctx .save();
 
@@ -40,6 +42,8 @@ class Game {
             player.render(_game._ctx);
             _game._ctx.restore();
         }
+        this.previewContext.clearRect(0, 0, this._canvasPreview.width, this._canvasPreview.height)
+        this._previewLaser.render(this.previewContext);
     }
 
     update() {
@@ -92,6 +96,15 @@ class Game {
         _game._then = Date.now();
         this._mainLoop();
       //  setTimeout(this._mainLoop,1);
+    }
+
+    createPreviewLaser(canvas) {
+        let height = canvas.height;
+        let width = canvas.width;
+        let xAxis = 0;
+        let yAxis = height/2;
+        this.previewContext = canvas.getContext("2d");
+        return new SinusLaser({canvas,height,width,xAxis,yAxis, color: '#00FF00', degree: 0});
     }
 
 
