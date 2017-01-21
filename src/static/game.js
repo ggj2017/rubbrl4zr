@@ -6,6 +6,7 @@ class Game {
         _game._canvas = canvas;
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
+        _game._obstacles = [];
         canvas.id = "game";
         _game._canvasPreview = canvasPreview;
         _game._previewLaser = this.createPreviewLaser(canvasPreview);
@@ -38,6 +39,12 @@ class Game {
         for(var player of _game._players) {
             _game._ctx .save();
             player.render(_game._ctx);
+            _game._ctx.restore();
+        }
+
+        for(var obstacle of _game._obstacles) {
+            _game._ctx .save();
+            obstacle.render(_game._ctx);
             _game._ctx.restore();
         }
 
