@@ -9,11 +9,11 @@
         </div>
     </div>
     <label for="amplitude">Amplitude</label>
-    <input id="amplitude" type="range" min="0" max="20" step="1" />
+    <input id="amplitude" type="range" min="0" max="100" step="5" />
     <label for="phase">Phase</label>
-    <input id="phase" type="range" min="0" max="20" step="1" />
+    <input id="phase" type="range" min="0" max="100" step="1" />
     <label for="rotation">Rotation</label>
-    <input id="rotation" type="range" min="0" max="20" step="1" />
+    <input id="rotation" type="range" min="0" max="100" step="1" />
 
     <div class="ready-box">
         <div class="playerlamp on"></div>
@@ -34,6 +34,7 @@
 
 <script src="/static/PreviewSinus.js"></script>
 <script src="/static/Player.js"></script>
+<script src="/static/Renderable.js"></script>
 <script src="/static/SinusLaser.js"></script>
 <script src="/static/index.js"></script>
 
@@ -58,6 +59,7 @@ game.addPlayer(Player2);
 game.run();
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
-  console.log(e);
+    let laser = game.createPreviewLaser(null, e.target.value);
+    game._previewLaser = laser;
 });
 </script>
