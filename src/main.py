@@ -96,7 +96,7 @@ def game(game_id, player_id):
         # Zum Debuggen ein Spiel anlegen, wenn man z. B. den Server neugestartet hat:
         game = Game(game_id)
         games.append(game)
-        for i in range(1, 2):
+        for i in range(1, 3):
             game.players.append(Player(i))
     return app.send_static_file('index.html')
 
@@ -135,6 +135,15 @@ def get_state(game_id, player_id):
     return json.dumps({
         "players": json_players,
     })
+
+@app.route("/game/<game_id>/<int:player_id>/set_state", methods=['POST'])
+def set_state(game_id, player_id):
+    game = get_game(game_id)
+    player = game.get_player(player_id)
+    data = json.loads(request.data.decode('utf-8'))
+    player.angle = data['angle']
+    print(data)
+    return "OK"
 
 if __name__ == "__main__":
     app.run(threaded=True)

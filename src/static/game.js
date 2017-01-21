@@ -15,17 +15,28 @@ class Game {
         rdyBtn.onclick = function () {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
-            var r = new XMLHttpRequest();
-            r.open("GET", "toggle_ready", true);
-            r.onreadystatechange = function () {
-                let img = 'img/ready-btn.png'
-                if (r.responseText === "true") {
-                   rdyBtn.style['opacity'] = 0.5;
-                } else  {
-                   rdyBtn.style['opacity'] = 1;
+            let r = new XMLHttpRequest();
+            r.open("POST", "set_state", true);
+            r.onreadystatechange = () => {
+                if (r.readyState != 4 || r.status != 200) return;
+                // Jetzt dem Server mitteilen, dass wir Ready sind
+                let r2 = new XMLHttpRequest();
+                r2.open("GET", "toggle_ready", true);
+                r2.onreadystatechange = () => {
+                    if (r2.readyState != 4 || r2.status != 200) return;
+                    let img = 'img/ready-btn.png'
+                    if (r2.responseText === "true") {
+                    rdyBtn.style['opacity'] = 0.5;
+                    } else  {
+                    rdyBtn.style['opacity'] = 1;
+                    }
                 }
-            }
-            r.send();
+                r2.send();
+            };
+            let player = _game.get_player(lib.playerId);
+            r.send(JSON.stringify({
+                "angle": player.get_degree(),
+            }));
         }
 
         _game.poll();
