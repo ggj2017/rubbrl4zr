@@ -63,4 +63,9 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
     let laser = game.createPreviewLaser(null, e.target.value);
     game._previewLaser = laser;
 });
+
+document.getElementById('rotation').addEventListener('input', function (e) {
+    game._players[0].renderable._degree = e.target.value;
+    game._players[0].renderable._degree = e.target.value;
+});
 </script>
