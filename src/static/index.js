@@ -1,6 +1,7 @@
 window.lib = (new function(){
     var _music = null;
     var _intervals = [];
+    this.players = [];
 
     this.ajax = function(method, uri, handler, params, contentType) {
         var xhttp = new XMLHttpRequest();

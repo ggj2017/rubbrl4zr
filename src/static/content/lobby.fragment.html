@@ -25,6 +25,7 @@
 		function build_player_list() {
             lib.ajax("GET", "/players/"+lib.gameId, function(data) {
 				let players = JSON.parse(data);
+                lib.players = players;
 				player_list = document.getElementById("player_list");
 				while (player_list.firstChild) {
 					player_list.removeChild(player_list.firstChild);
