@@ -12,8 +12,11 @@ class Game {
     render() {
         if(_game._resourcesLoaded < _game._resouceCount) return;
         // _game._ctx.drawImage(...)
+        this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+
         for(var player of _game._players) {
             player.renderable.render(this._ctx);
+            this._ctx.restore();
         }
     }
 
