@@ -46,7 +46,6 @@
 </canvas>
 
 
-<script src="/static/collision.js"></script>
 <script src="/static/PreviewSinus.js"></script>
 <script src="/static/Player.js"></script>
 <script src="/static/Renderable.js"></script>
@@ -78,7 +77,7 @@ game.addPlayer(Player2);
 game.addPlayer(Player3);
 game.addPlayer(Player4);
 
-
+game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 
 // TODO: don't put this into obstacles, but into a separate list of renderable objects
 game._obstacles.push(new Explosion(42, new Vector(450,450)));
