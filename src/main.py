@@ -5,6 +5,10 @@ import string
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+
 from game import Game
 from player import Player
 
