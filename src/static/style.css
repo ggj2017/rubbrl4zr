@@ -79,6 +79,7 @@ body{
     background-image: url(img/cursor.png);
     position:fixed;
     pointer-events: none;
+    display: none;
 }
 
 .wrapper {
