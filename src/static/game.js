@@ -8,7 +8,7 @@ class Game {
         _game._players = [];
         canvas.id = "game";
 
-        _game._ctx .save();
+        //_game._ctx .save();
 
         document.getElementById("rdy-btn").onclick = function(){
             console.log("beep!");
@@ -23,9 +23,9 @@ class Game {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         for(var player of _game._players) {
-            _game._ctx .save();
+            //_game._ctx .save();
             player.render(this._ctx);
-            //this._ctx.restore();
+            //_game._ctx.restore();
         }
     }
 
@@ -60,7 +60,7 @@ class Game {
     // ----------------------------------------------------
 
     addPlayer(player) {
-        const laser = new GameSinus({
+        const laser = new SinusLaser({
             heigt: _game._canvas.height,
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x,

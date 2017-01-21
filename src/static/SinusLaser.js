@@ -1,4 +1,4 @@
-class GameSinus extends Renderable {
+class SinusLaser extends Renderable {
 
 
     constructor(props) {
@@ -20,7 +20,7 @@ class GameSinus extends Renderable {
 
         this.context = context;
 
-        // console.log(context);
+        console.log(context);
 
         // Set styles for animated graphics
         this.context.strokeStyle = color;
@@ -29,7 +29,7 @@ class GameSinus extends Renderable {
         context.lineJoin = 'round';
 
 
-        this.context.save();
+       // this.context.save();
 
         // Draw the sine curve at time draw.t, as well as the circle.
         this.context.beginPath();
@@ -53,7 +53,7 @@ class GameSinus extends Renderable {
 
 
         var direction = 1;
-
+        
         this.context.translate(width/2,height/2);
         this.context.rotate(degree*Math.PI/180);
         this.context.translate(-width/2,-height/2);
