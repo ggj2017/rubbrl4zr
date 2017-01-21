@@ -73,6 +73,10 @@ class Game {
                 }
                 ++i;
             }
+            for (; i < lamps.length; ++i) {
+                // Alle übrigen Lampen ausblenden
+                lamps[i].style['display'] = 'none';
+            }
             // In zwei Sekunden nochmal pollen:
             setTimeout(function () {
                 _game.poll()
