@@ -7,6 +7,9 @@ class Game {
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
         canvas.id = "game";
+
+        _game._ctx .save();
+
     }
 
     render() {
@@ -15,6 +18,7 @@ class Game {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         for(var player of _game._players) {
+            _game._ctx .save();
             player.render(this._ctx);
             this._ctx.restore();
         }
@@ -44,13 +48,20 @@ class Game {
                             || w.mozRequestAnimationFrame;
 
         _game._then = Date.now();
-        this._mainLoop();
+        setTimeout(this._mainLoop,1);
     }
 
     // ----------------------------------------------------
 
     addPlayer(player) {
         _game._players.push(player);
+
+        let xAxis = 0;
+       // let yAxis = _game._canvas.height/2;
+        let yAxis = 0;
+        let degree = 45;
+        let laser = new GameSinus({xAxis,yAxis,degree});
+        player.shoot(laser);
     }
 }
 

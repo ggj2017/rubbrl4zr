@@ -1,35 +1,12 @@
-
-
-class GameSinus {
+class GameSinus extends Renderable {
 
 
     constructor(props) {
+        super();
         this.props = props;
         this.status = 0;
-        this.init();
+        this.lines = [];
     }
-
-    /**
-     * Init function.
-     *
-     * Initialize variables and begin the animation.
-     */
-    init () {
-
-        const {width, height, canvas} = this.props;
-
-        canvas.width = width;
-        canvas.height = height;
-
-        this.context = canvas.getContext("2d");
-        this.context.font = '18px sans-serif';
-        this.context.strokeStyle = '#000';
-        this.context.lineJoin = 'round';
-
-        this.context.save();
-        this.draw();
-    }
-
 
     /**
      * Draw animation function.
@@ -37,38 +14,28 @@ class GameSinus {
      * This function draws one frame of the animation, waits 20ms, and then calls
      * itself again.
      */
-    draw () {
+    render (context) {
 
-        let context = this.context;
+
         const {width,height} = this.props;
-
-        // Clear the canvas
-        context.clearRect(0, 0, width, height);
-
-        // Draw the axes in their own path
-        context.beginPath();
-        context.stroke();
+        this.context = context;
 
         // Set styles for animated graphics
-        context.save();
         context.strokeStyle = '#00f';
         context.fillStyle = '#fff';
         context.lineWidth = 2;
+        context.lineJoin = 'round';
+
+
+        context.save();
 
         // Draw the sine curve at time draw.t, as well as the circle.
         context.beginPath();
-        this.status = (this.status + 20);
-        if(this.status > width) {
-            this.status = 0;
-        }
-        this.drawSine(0,this.status);
+
+        this.drawSine();
 
         context.stroke();
 
-        // Restore original styles
-        context.restore();
-
-        setTimeout(()=>{this.draw();}, 55);
     }
 
 
@@ -77,13 +44,13 @@ class GameSinus {
      *
      * The sine curve is drawn in 10px segments starting at the origin.
      */
-    drawSine (t,max) {
-        const {yAxis,xAxis,width,height} = this.props;
+    drawSine () {
+        const {yAxis,xAxis,width,height,degree} = this.props;
 
 
 
         var direction = 1;
-        var degree = 180;
+        
         this.context.translate(width/2,height/2);
         this.context.rotate(degree*Math.PI/180);
         this.context.translate(-width/2,-height/2);
@@ -95,17 +62,22 @@ class GameSinus {
 
         this.context.moveTo(xAxis, unit*y+yAxis);
 
-        // Loop to draw segments
-        for (let i = 0; i <= max; i += 10) {
-            x = (i)/unit;
-
-            y = Math.sin(x);
-
-            this.context.lineTo(direction*i + xAxis, unit*y+yAxis);
-
-
+        this.status = (this.status + 10);
+        if(this.status > width) {
+            this.status = 0;
         }
-       // this.context.restore();
+
+        // Loop to draw segments
+        x = (this.status)/unit;
+
+        y = Math.sin(x);
+        this.lines.push({x:direction*this.status + xAxis,y:unit*y+yAxis});
+
+        for(let line of this.lines) {
+            this.context.lineTo(line.x, line.y);
+        }
+        this.context.stroke();
+        this.context.restore();
     }
 
 
