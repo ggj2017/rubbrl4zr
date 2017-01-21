@@ -34,7 +34,7 @@ class SinusLaser extends Renderable {
 
     addLines() {
 
-        const {width,degree,xAxis,yAxis} = this.props;
+        const {width,degree,xAxis,yAxis,height} = this.props;
 
 
 
@@ -44,7 +44,7 @@ class SinusLaser extends Renderable {
         let x = 0;
         let y = 0;
 
-        for(let status = 0; status < width ; status++) {
+        for(let status = 1; status < width + height ; status++) {
 
             x = status ;
             y = Math.sin(x/amplitude) *amplitude;
@@ -59,7 +59,7 @@ class SinusLaser extends Renderable {
             {
                 this.props.xAxis = x;
                 this.props.yAxis = y;
-                this.props.degree = 360-(2 * (90 - degree));
+                this.props.degree = 360- degree;
                 this.reflec++;
                 this.addLines();
 
