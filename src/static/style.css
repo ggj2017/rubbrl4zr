@@ -14,6 +14,16 @@
     cursor: none;
 }
 
+div {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari*/
+       -khtml-user-select: none; /* Konqueror */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+
 @keyframes animateStarsBackground {
   from {
     background-position: 0% 0%;
@@ -54,16 +64,6 @@
 
 button::-moz-focus-inner {
   border: 0;
-}
-
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari*/
-     -khtml-user-select: none; /* Konqueror */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
 }
 
 html, body {
@@ -265,6 +265,20 @@ a{
     animation-delay: 0.8s;
     right: -800px;
     border: 1px solid #006600;
+}
+
+#storytext {
+    font-size: 16px;
+    color: #bbddbb;
+    text-shadow: 0 0 8px black,
+                0 0 1px #009900;
+    position: absolute;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding: 1em 2em;
+    white-space: pre-wrap;
 }
 
 .ready-box {

@@ -147,6 +147,26 @@ window.lib = (new function(){
         });
     }
 
+    var _showTypewriterText = function(visible, invisible, interval){
+        var message = invisible.textContent;
+        if (message.length > 0) {
+            visible.textContent += message[0];
+            invisible.textContent = message.substring(1);
+            setTimeout(function () { _showTypewriterText(visible, invisible, interval); }, interval);
+        };
+    };
+
+    this.showTypewriterText = function(target, message, interval) {
+        var visible = document.createElement("span");
+        var invisible = document.createElement("span");
+        invisible.style.opacity = "0";
+        invisible.textContent = message;
+        target.innerHTML = "";
+        target.appendChild(visible);
+        target.appendChild(invisible);
+        _showTypewriterText(visible, invisible, interval);
+    };
+
     window.onload = function() {
         var params = lib.getParams();
         if(params[2] && params[3]){
