@@ -3,16 +3,17 @@ class Game {
         window._game = this;
         canvas.width = 800;
         canvas.height = 600;
-        _game._canvas = canvas;
-        _game._ctx = canvas.getContext("2d");
-        _game._players = [];
-        _game._obstacles = [];
+        this._canvas = canvas;
+        this._ctx = canvas.getContext("2d");
+        this._players = [];
+        this._obstacles = [];
         canvas.id = "game";
-        _game._canvasPreview = canvasPreview;
-        _game._previewLaser = this.createPreviewLaser(canvasPreview);
+        this._canvasPreview = canvasPreview;
+        this._previewLaser = this.createPreviewLaser(canvasPreview);
 
-        let rdyBtn = document.getElementById("rdy-btn");
-        rdyBtn.onclick = function () {
+        this.rdyBtn = document.getElementById("rdy-btn");
+        this.rdyBtn.style.opacity = 1;
+        this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
             let r = new XMLHttpRequest();
@@ -25,11 +26,7 @@ class Game {
                 r2.onreadystatechange = () => {
                     if (r2.readyState != 4 || r2.status != 200) return;
                     let img = 'img/ready-btn.png'
-                    if (r2.responseText === "true") {
-                    rdyBtn.style['opacity'] = 0.5;
-                    } else  {
-                    rdyBtn.style['opacity'] = 1;
-                    }
+                    this.setReadyButtonToggled(r2.responseText === "true");
                 }
                 r2.send();
             };
@@ -40,6 +37,29 @@ class Game {
         }
 
         _game.poll();
+    }
+
+    animateToggleButton() {
+        let currentOpacity = parseFloat(this.rdyBtn.style.opacity);
+        let dif = this.rdyBtnTargetOpacity - currentOpacity;
+        if (dif > 0) {
+            this.rdyBtn.style.opacity = currentOpacity + 0.05;
+        } else {
+            this.rdyBtn.style.opacity = currentOpacity - 0.05;
+        }
+        if (Math.abs(dif) > 0.1) {
+            setTimeout(() => { this.animateToggleButton(); }, 40);
+        }
+    }
+
+    setReadyButtonToggled(toggled) {
+        let s = this.rdyBtn.style;
+        if (toggled) {
+            this.rdyBtnTargetOpacity = 0.2;
+        } else {
+            this.rdyBtnTargetOpacity = 1;
+        }
+        this.animateToggleButton();
     }
 
     get_player(id) {
@@ -84,7 +104,7 @@ class Game {
     poll() {
         let r = new XMLHttpRequest();
         r.open("GET", "get_ready_states", true);
-        r.onreadystatechange = function () {
+        r.onreadystatechange = () => {
             if (r.readyState != 4 || r.status != 200) return;
             let response = JSON.parse(r.response);
             let lamps = document.getElementsByClassName('playerlamp');
@@ -113,13 +133,13 @@ class Game {
                     for (let player of response["players"]) {
                         _game.get_player(player.id).set_degree(player.angle);
                     }
+                    // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
+                    this.setReadyButtonToggled(false);
                 };
                 r.send();
             }
             // In zwei Sekunden nochmal pollen:
-            setTimeout(function () {
-                _game.poll()
-            }, 2000);
+            setTimeout(() => { _game.poll() }, 2000);
         };
         r.send();
     }
