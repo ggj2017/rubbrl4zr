@@ -78,22 +78,34 @@ def set_player_name(game_id, player_id):
             return "OK"
     return "player not found"
 
-@app.route("/play/<game_id>/<int:player_id>/")
-def play(game_id, player_id):
+@app.route("/game/<game_id>/<int:player_id>/")
+def game(game_id, player_id):
     if not get_game(game_id):
         # Zum Debuggen ein Spiel anlegen, wenn man z. B. den Server neugestartet hat:
         game = Game(game_id)
         games.append(game)
-        game.players.append(Player(player_id))
+        for i in range(1, 5):
+            game.players.append(Player(i))
     return app.send_static_file('index.html')
 
-@app.route("/play/<game_id>/<int:player_id>/toggle_ready/")
+@app.route("/game/<game_id>/<int:player_id>/toggle_ready/")
 def toggle_ready(game_id, player_id):
     '''Gibt zurück, ob der Spieler nun ready ist'''
     game = get_game(game_id)
     player = game.get_player(player_id)
     player.ready = not player.ready
     return "true" if player.ready else "false"
+
+@app.route("/game/<game_id>/<int:player_id>/get_ready_states")
+def get_ready_states(game_id, player_id):
+    '''Gibt zurück, welche Spieler ready sind'''
+    game = get_game(game_id)
+    player_states = []
+    for player in game.players:
+        player_states.append("true" if player.ready else "false")
+    return json.dumps({
+        "player_states": player_states,
+    })
 
 if __name__ == "__main__":
     app.run(threaded=True)
