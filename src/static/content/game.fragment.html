@@ -86,9 +86,6 @@ else {
 
 game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 
-// TODO: don't put this into obstacles, but into a separate list of renderable objects
-game._obstacles.push(new Explosion(42, new Vector(450,450)));
-
 game.run();
 lib.loopMusic("/static/snd/music01.mp3");
 
