@@ -66,4 +66,4 @@ def set_player_name(game_id, player_id):
     return "player not found"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)

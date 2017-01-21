@@ -70,7 +70,8 @@ body{
     background-color: black;
     background-image: url(img/background.jpg);
     background-repeat: repeat;
-    animation: animateStarsBackground 40s linear infinite;
+    /* -- no bg animation for development -- */
+    /*animation: animateStarsBackground 40s linear infinite;*/
 }
 
 #cursor{
@@ -175,7 +176,7 @@ body{
 .playerlamp.on {
     background-color: white;
     box-shadow: 0 0 5px #338800,
-            inset -1px -1px 2px #00ff00,
+            inset -1px -1px 2px #001100,
                 0 0 10px #00ff00;
 }
 
@@ -184,7 +185,7 @@ body{
     padding: 1em;
 }
 
-.rdy-btn {
+#rdy-btn {
     background-color: none;
     background-color: transparent;
     border: none;
@@ -196,11 +197,11 @@ body{
     outline: none;
 }
 
-.rdy-btn:hover {
+#rdy-btn:hover {
     background-image: url(img/ready-btn-hover.png);
 }
 
-.rdy-btn:active {
+#rdy-btn:active {
     background-image: url(img/ready-btn-active.png);
 }
 
@@ -231,8 +232,6 @@ input[type=range]::-moz-focus-outer {
 input[type=range]::-moz-range-track {
     width: 100%;
     height: 18px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
     background-color: transparent;
     background-image: url(img/slider.png);
     background-repeat: repeat-x;
@@ -241,8 +240,6 @@ input[type=range]::-moz-range-track {
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 18px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
     background-color: none;
     background-image: url(img/slider.png);
     background-repeat: repeat-x;

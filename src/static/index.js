@@ -74,4 +74,4 @@ var game = new Game(document.getElementById("game"), []);
 game.addPlayer(new Player(42, "Carsten", new Renderable("img/ship-blue.png", new Vector(100,100))))
 game.addPlayer(new Player(43, "Jan Niklas", new Renderable("img/ship-red.png", new Vector(400,500))))
 game.run();
-game.loopMusic("snd/music01.mp3");
+// game.loopMusic("snd/music01.mp3");

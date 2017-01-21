@@ -10,6 +10,11 @@ class Game {
 
         _game._ctx .save();
 
+        document.getElementById("rdy-btn").onclick = function(){
+            console.log("beep!");
+            var beep = new Audio("snd/beep01.mp3");
+            beep.play();
+        }
     }
 
     render() {
