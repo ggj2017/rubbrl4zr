@@ -157,6 +157,26 @@ body{
     bottom: 0;
     width: 100%;
     padding-right: 3em;
+    text-align: center;
+}
+
+.playerlamp{
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 0 0 1px #338800,
+                0 0 3px #004400,
+            inset -1px 1px 2px #00ff00,
+            inset 2px 1px 3px #004400;
+    display: inline-block;
+}
+
+.playerlamp.on {
+    background-color: white;
+    box-shadow: 0 0 5px #338800,
+            inset -1px -1px 2px #00ff00,
+                0 0 10px #00ff00;
 }
 
 .btn {

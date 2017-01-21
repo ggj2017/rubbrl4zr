@@ -51,6 +51,7 @@ class Game {
         setTimeout(this._mainLoop,1);
     }
 
+
     // ----------------------------------------------------
 
     addPlayer(player) {
@@ -62,6 +63,32 @@ class Game {
         let degree = 45;
         let laser = new GameSinus({xAxis,yAxis,degree});
         player.shoot(laser);
+    }
+
+    // ----------------------------------------------------
+
+    loopMusic(filePath) {
+        _game.music = new Audio(filePath);
+        _game.music.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+
+        _game.music.play();
+    }
+
+    stopMusic() {
+        if(_game.music) {
+            _game.music.stop();
+            _game.music = null;
+        }
+        _game.music = new Audio(filePath);
+        _game.music.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+
+        _game.music.play();
     }
 }
 
