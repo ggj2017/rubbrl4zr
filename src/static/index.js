@@ -1,5 +1,6 @@
 window.lib = (new function(){
     var _music = null;
+    var _intervals = [];
 
     this.ajax = function(method, uri, handler, params, contentType) {
         var xhttp = new XMLHttpRequest();
@@ -22,6 +23,10 @@ window.lib = (new function(){
             xhttp.send(params);
         }
     };
+
+    this.setInterval = function(callback, timeout) {
+        _intervals.push(window.setInterval(callback, timeout));
+    }
 
     this.requestFullscreen = function(){
         var elem = document.body;
@@ -89,6 +94,10 @@ window.lib = (new function(){
     };
 
     this.loadContent = function(uri){
+        for(var interval of _intervals) {
+            window.clearInterval(interval);
+        }
+        _intervals = [];
         var suffix = "";
         if(lib.gameId && lib.playerId) {
             suffix = "/"+lib.gameId+"/"+lib.playerId+"/";
