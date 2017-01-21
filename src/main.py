@@ -131,6 +131,7 @@ def get_state(game_id, player_id):
     if all([x.in_sync for x in game.players]):
         for player in game.players:
             player.ready = False
+            player.in_sync = False
 
     return json.dumps({
         "players": json_players,
