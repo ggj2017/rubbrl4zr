@@ -7,6 +7,7 @@ class SinusLaser extends Renderable {
         this.counter = 0;
         this.lines = [];
         this.reflec = 0;
+
         this.addLines();
     }
 
@@ -48,34 +49,59 @@ class SinusLaser extends Renderable {
             y = Math.sin(rad) * x + Math.cos(rad) * y;
             x = tempX;
 
-            x += xAxis;
-            y += yAxis;
+            x = x +  xAxis;
+            y = y + yAxis;
 
-            if(this.edgeReached(x,y) && this.reflec < 3)
-            {
-                this.props.xAxis = x;
-                this.props.yAxis = y;
-                this.props.degree = 360- degree;
-                this.reflec++;
-                this.addLines();
+            if(this.reflec < 10) {
 
-                return;
+                if(this.edgeWidthReached(x))
+                {
+                    this.props.xAxis = x;
+                    this.props.yAxis = y;
+                    this.props.degree = 180 - degree;
+
+                    this.reflec++;
+
+
+                    this.addLines();
+
+                    return;
+                }
+                if(this.edgeHeightReached(y)){
+                    this.props.xAxis = x;
+                    this.props.yAxis = y;
+                    this.props.degree = 360 - degree;
+
+                    this.reflec++;
+
+
+                    this.addLines();
+
+                    return;
+                }
             }
 
             this.lines.push({x: x  , y:  y });
         }
     }
 
-    edgeReached(x,y) {
-        const {width,height} = this.props;
+    edgeWidthReached(x) {
+        const {width} = this.props;
+
         if(x >= width || x <= 0) {
             return true;
         }
+        return false;
+    }
+
+    edgeHeightReached(y) {
+        const {height} = this.props;
         if (y >= height || y <= 0) {
             return true;
         }
         return false;
     }
+
 
 
     /**

@@ -10,8 +10,6 @@ class Game {
         _game._canvasPreview = canvasPreview;
         _game._previewLaser = this.createPreviewLaser(canvasPreview);
 
-        //_game._ctx .save();
-
         let rdyBtn = document.getElementById("rdy-btn");
         rdyBtn.onclick = function () {
             var beep = new Audio("/static/snd/beep01.mp3");
@@ -67,7 +65,7 @@ class Game {
             let response = JSON.parse(r.response);
             let lamps = document.getElementsByClassName('playerlamp');
             let i = 0;
-            for (let player_ready of response['player_states']) {
+            for (let player_ready of response) {
                 if (player_ready === "true") {
                     lamps[i].classList.add('on');
                 } else {
