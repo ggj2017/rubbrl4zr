@@ -30,12 +30,13 @@ class SinusLaser extends Renderable {
 
         if(this.counter > this.lines.length) {
             this.counter = 0;
-            if(collisionCallback) {
+            if(this.collidedObstacle && collisionCallback) {
                 collisionCallback({
                     'laser': this,
                     'obstacle': this.collidedObstacle,
                 });
             }
+            this.collidedObstacle = null;
         }
 
         this.drawSine(context);

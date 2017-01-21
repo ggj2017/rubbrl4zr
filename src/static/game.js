@@ -194,6 +194,7 @@ class Game {
 
     onObstacleCollision({obstacle}) {
         _game._obstacles = _game._obstacles.filter(ob => { return ob.id != obstacle.id});
+        _game.makeExplosion(obstacle.renderable._pos);
     }
 
     run() {
