@@ -9,7 +9,9 @@ class Renderable {
         this._img.onload = () => {
             this._loaded = true;
         }
-        this._img.src = imgPath;
+        if (imgPath) {
+            this._img.src = imgPath;
+        }
     }
 
     render(ctx) {

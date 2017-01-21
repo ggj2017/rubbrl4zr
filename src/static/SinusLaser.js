@@ -35,16 +35,16 @@ class SinusLaser extends Renderable {
 
     addLines() {
 
-        const {width,degree,xAxis,yAxis,height, amplitude = 30} = this.props;
+        const {width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
 
         let rad = degree * Math.PI /180;
         let x = 0;
-        let y = 0;
+        let y = 1;
 
         for(let status = 1; status < width + height ; status++) {
 
             x = status ;
-            y = Math.sin(x/amplitude) *amplitude;
+            y = Math.sin(x/frequency) *amplitude;
             let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
             y = Math.sin(rad) * x + Math.cos(rad) * y;
             x = tempX;

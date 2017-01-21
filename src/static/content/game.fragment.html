@@ -28,8 +28,12 @@
     <div class="ready-box">
         <div class="playerlamp on"></div>
         <div class="playerlamp on"></div>
-        <div class="playerlamp"></div>
-        <div class="playerlamp"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
         <button id="rdy-btn"></button>
         <!-- 29s
         <br />
@@ -68,15 +72,25 @@ game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 game.run();
 lib.loopMusic("/static/snd/music01.mp3");
 
+let amp = 30;
+let fre = 30;
+
 document.getElementById('frequency').addEventListener('input', function(e) {
     document.getElementById('current-frequency').innerHTML = e.target.value;
-    let laser = game.createPreviewLaser(null, 80 / e.target.value);
+
+    this.fre = 80 / e.target.value;
+    let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
-});
+}.bind(this));
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
     document.getElementById('current-amplitude').innerHTML = e.target.value;
-});
+
+   this.amp = e.target.value;
+    let laser = game.createPreviewLaser(null, this.fre,this.amp);
+    game._previewLaser = laser;
+
+}.bind(this));
 
 document.getElementById('phase').addEventListener('input', function(e) {
     document.getElementById('current-phase').innerHTML = e.target.value;

@@ -6,7 +6,6 @@ class Game {
         _game._canvas = canvas;
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
-        _game._obstacles = [];
         canvas.id = "game";
         _game._canvasPreview = canvasPreview;
         _game._previewLaser = this.createPreviewLaser(canvasPreview);
@@ -42,12 +41,6 @@ class Game {
             _game._ctx.restore();
         }
 
-        for(var obstacle of _game._obstacles) {
-            _game._ctx .save();
-            obstacle.render(_game._ctx);
-            _game._ctx.restore();
-        }
-
         this.renderPreview();
     }
 
@@ -79,6 +72,10 @@ class Game {
                     lamps[i].classList.remove('on');
                 }
                 ++i;
+            }
+            for (; i < lamps.length; ++i) {
+                // Alle übrigen Lampen ausblenden
+                lamps[i].style['display'] = 'none';
             }
             // In zwei Sekunden nochmal pollen:
             setTimeout(function () {
@@ -112,7 +109,7 @@ class Game {
       //  setTimeout(this._mainLoop,1);
     }
 
-    createPreviewLaser(canvas, amplitude = 30) {
+    createPreviewLaser(canvas ,frequency = 30, amplitude = 30) {
         if(this._canvasPreview) {
             canvas = this._canvasPreview;
         }
@@ -122,9 +119,7 @@ class Game {
         let xAxis = 0;
         let yAxis = height/2;
         this.previewContext = canvas.getContext("2d");
-        var sn = new SinusLaser({canvas,height,width,xAxis,yAxis, amplitude, color: '#00FF00', degree: 0});
-        console.log(sn);
-        return sn;
+        return new SinusLaser({canvas,height,width,xAxis,yAxis, frequency,  amplitude, color: '#00FF00', degree: 0});
     }
 
 
