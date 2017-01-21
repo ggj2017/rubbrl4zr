@@ -21,8 +21,6 @@ class SinusLaser extends Renderable {
 
         this.context = context;
 
-        console.log(context);
-
         // Set styles for animated graphics
         this.context.strokeStyle = color;
         this.context.fillStyle = '#fff';
