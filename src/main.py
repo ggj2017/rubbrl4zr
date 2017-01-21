@@ -117,5 +117,15 @@ def get_ready_states(game_id, player_id):
         player_states.append("true" if player.ready else "false")
     return json.dumps(player_states)
 
+@app.route("/game/<game_id>/<int:player_id>/get_state")
+def get_state(game_id, player_id):
+    game = get_game(game_id)
+    json_players = []
+    for player in game.players:
+        json_players.append(player.get_dict())
+    return json.dumps({
+        "players": json_players,
+    })
+
 if __name__ == "__main__":
     app.run(threaded=True)

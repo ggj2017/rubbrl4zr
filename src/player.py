@@ -3,10 +3,12 @@ class Player:
 		self.id = id
 		self.name = "Spieler {}".format(id)
 		self.ready = False
+		self.angle = 140
 
 	def get_dict(self):
 		return {
 			"id" : self.id,
 			"name" : self.name,
-			"ready" : self.ready
+			"ready" : self.ready,
+			"angle" : self.angle,
 		}
