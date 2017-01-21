@@ -23,7 +23,6 @@
         link.innerHTML = lib.joinLink;
         input.value = lib.playerName;
 
-
 		function build_player_list() {
             lib.ajax("GET", "/players/"+lib.gameId, function(data) {
 				let players = JSON.parse(data);

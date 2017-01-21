@@ -138,12 +138,20 @@ window.lib = (new function(){
         });
     }
 
+    this.getGameInfo = function(gameId) {
+        lib.ajax("GET", "/game_info/"+lib.gameId+"/",
+            function(data) {
+                lib.joinLink = JSON.parse(data)["joinLink"];
+        });
+    }
+
     window.onload = function() {
         var params = lib.getParams();
         if(params[2] && params[3]){
             lib.gameId = params[2];
             lib.playerId = params[3];
             lib.getPlayerInfo(lib.playerId);
+            lib.getGameInfo(lib.gameId);
         }
         lib.loadContent(params[1] || "welcome");
     };
