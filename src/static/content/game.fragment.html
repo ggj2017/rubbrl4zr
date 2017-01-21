@@ -109,6 +109,8 @@ document.getElementById('phase').addEventListener('input', function(e) {
 document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
     game.getOwnPlayer().set_degree(e.target.value);
+      game.createLaser(game._players[0]);
+
 });
 
 </script>
