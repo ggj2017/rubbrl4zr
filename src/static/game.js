@@ -35,7 +35,7 @@ class Game {
 
         for(var player of _game._players) {
             _game._ctx .save();
-            player.render(this._ctx);
+            player.render(_game._ctx);
             _game._ctx.restore();
         }
     }
@@ -88,7 +88,8 @@ class Game {
                             || w.mozRequestAnimationFrame;
 
         _game._then = Date.now();
-        setTimeout(this._mainLoop,1);
+        this._mainLoop();
+      //  setTimeout(this._mainLoop,1);
     }
 
 
@@ -96,7 +97,7 @@ class Game {
 
     addPlayer(player) {
         const laser = new SinusLaser({
-            heigt: _game._canvas.height,
+            height: _game._canvas.height,
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x,
             yAxis:player.renderable._pos.y,
@@ -115,6 +116,11 @@ class Vector {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    scale(val) {
+        this.x *=val;
+        this.y *= val;
     }
 }
 

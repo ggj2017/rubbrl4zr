@@ -19,51 +19,38 @@ class SinusLaser extends Renderable {
 
         const {color = '#00f'} = this.props;
 
-        this.context = context;
 
         // Set styles for animated graphics
-        this.context.strokeStyle = color;
-        this.context.fillStyle = '#fff';
+        context.strokeStyle = color;
+        context.fillStyle = '#fff';
         context.lineWidth = 2;
         context.lineJoin = 'round';
 
         if(this.counter > this.lines.length) this.counter = 0;
 
-       // this.context.save();
-
-        // Draw the sine curve at time draw.t, as well as the circle.
-        //this.context.save();
-        this.context.beginPath();
-
-        this.drawSine();
-
-        this.context.stroke();
-        //this.context.restore();
-
+        this.drawSine(context);
     }
 
     addLines() {
-        const {yAxis,xAxis,width} = this.props;
 
-        var direction = 1;
-        let unit = 20;
+        const {width,degree} = this.props;
 
-        // Set the initial x and y, starting at 0,0 and translating to the origin on
-        // the canvas.
-        var x = 0;
-        var y = Math.sin(x);
+        let amplitude = 30;
 
+        let rad = degree * Math.PI /180;
+        let x = 0;
+        let y = 0;
 
-        this.status += 10;
-        for(let status = 0; status < width ; status+=10) {
+        for(let status = 0; status < width ; status++) {
 
-            // Loop to draw segments
-            x = (status) / unit;
+            x = status ;
+            y = Math.sin(x/amplitude) *amplitude;
+            let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
+            y = Math.sin(rad) * x + Math.cos(rad) * y;
+            x = tempX;
 
-            y = Math.sin(x);
-            this.lines.push({x: direction * status + xAxis, y: unit * y + yAxis});
+            this.lines.push({x: x  , y:  y });
         }
-
     }
 
 
@@ -73,29 +60,40 @@ class SinusLaser extends Renderable {
      *
      * The sine curve is drawn in 10px segments starting at the origin.
      */
-    drawSine () {
+    drawSine (context) {
         const {yAxis,xAxis,width,height,degree,color} = this.props;
-        let laserLength = 10;
-
-        this.context.translate(width/2,height/2);
-        this.context.rotate(degree*Math.PI/180);
-        this.context.translate(-width/2,-height/2);
+        let laserLength = 200;
 
 
+        //context.translate( width/2, s +  height/2);
+       // context.rotate(45*Math.PI/180);
+      // context.translate( -width/2,-height/2);
 
-        this.context.strokeStyle = color;
+        context.strokeStyle = color;
+        context.beginPath();
+
+
         let num = 0;
         for(let line of this.lines) {
-            if(this.counter >= num && this.counter <= num + laserLength) {
 
-                this.context.lineTo(line.x, line.y);
-                this.context.moveTo(xAxis+line.x, yAxis+line.y);
+            if(this.counter >= num && this.counter <= num + laserLength) {
+                if(this.counter == num) {
+                    //context.moveTo( line.x,  line.y);
+                     context.moveTo( line.x  + xAxis, yAxis + line.y);
+                } else {
+                    //context.lineTo( line.x,  line.y);
+                    context.lineTo( line.x + xAxis, yAxis + line.y);
+                    //console.log(line.x,line.y);
+                }
             }
             num ++;
         }
-        this.counter++;
-        //this.context.restore();
-        this.context.rotate(360-degree*Math.PI/180);
+
+
+
+        context.stroke();
+
+        this.counter+= laserLength/20 ;
 
     }
 
