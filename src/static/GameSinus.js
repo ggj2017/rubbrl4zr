@@ -20,7 +20,7 @@ class GameSinus extends Renderable {
 
         this.context = context;
 
-        console.log(context);
+        // console.log(context);
 
         // Set styles for animated graphics
         this.context.strokeStyle = color;
@@ -53,7 +53,7 @@ class GameSinus extends Renderable {
 
 
         var direction = 1;
-        
+
         this.context.translate(width/2,height/2);
         this.context.rotate(degree*Math.PI/180);
         this.context.translate(-width/2,-height/2);

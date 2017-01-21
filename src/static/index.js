@@ -49,17 +49,6 @@ const drawPreview = ()=> {
 
 }
 
-
-
-
-
-document.onmousemove = function (evt){
-    var cursor = document.getElementById('cursor');
-    cursor.style.left = evt.clientX+"px";
-    cursor.style.top = evt.clientY+"px";
-}
-
-
 let Player1 = new Player(42, "Carsten", new Renderable("img/ship-red.png", new Vector(0,0),45),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("img/ship-blue.png", new Vector(700,0),135),"#00FF00");
 
