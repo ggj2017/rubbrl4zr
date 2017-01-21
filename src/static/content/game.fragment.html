@@ -9,7 +9,7 @@
         </div>
     </div>
     <label for="amplitude">Amplitude</label>
-    <input id="amplitude" type="range" min="0" max="100" step="1" />
+    <input id="amplitude" type="range" min="0" max="100" step="5" />
     <label for="phase">Phase</label>
     <input id="phase" type="range" min="0" max="100" step="1" />
     <label for="rotation">Rotation</label>
@@ -37,16 +37,6 @@
 <script src="/static/index.js"></script>
 
 <script type="application/javascript">
-const drawPreview = ()=> {
-    let height = 200;
-    let width = 400;
-    let xAxis = 0;
-    let yAxis = Math.floor(width/4);
-    let canvas = document.getElementById("preview");
-    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
-
-
-}
 
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
@@ -57,6 +47,7 @@ game.addPlayer(Player2);
 game.run();
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
-  console.log(e);
+    let laser = game.createPreviewLaser(null, e.target.value);
+    game._previewLaser = laser;
 });
 </script>
