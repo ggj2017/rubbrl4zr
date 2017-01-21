@@ -107,7 +107,7 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
    this.amp = e.target.value;
     let laser = game.createPreviewLaser(null, this.fre,this.amp);
     game._previewLaser = laser;
-    game.createLaser(game.getOwnPlayer());
+    game.createLaser(game.getOwnPlayer(),this.free ,this.amp);
 
 }.bind(this));
 

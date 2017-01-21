@@ -122,13 +122,8 @@ class SinusLaser extends Renderable {
      * The sine curve is drawn in 10px segments starting at the origin.
      */
     drawSine (context) {
-        const {yAxis,xAxis,color} = this.props;
+        const {color} = this.props;
         let laserLength = 200;
-
-
-        //context.translate( width/2, s +  height/2);
-       // context.rotate(45*Math.PI/180);
-      // context.translate( -width/2,-height/2);
 
         context.strokeStyle = color;
         context.beginPath();
@@ -149,8 +144,6 @@ class SinusLaser extends Renderable {
             }
             num ++;
         }
-
-
 
         context.stroke();
 
