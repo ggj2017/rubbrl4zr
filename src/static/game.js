@@ -26,6 +26,8 @@ class Game {
             }
             r.send();
         }
+
+        _game.poll();
     }
 
     render() {
@@ -48,11 +50,7 @@ class Game {
         let r = new XMLHttpRequest();
         r.open("GET", "get_ready_states", true);
         r.onreadystatechange = function () {
-            if (r.readyState != 4 || r.status != 200) {
-                console.log("Pollen fehlgeschlagen!");
-                return;
-            }
-            console.log(r.response);
+            if (r.readyState != 4 || r.status != 200) return;
             let response = JSON.parse(r.response);
             let lamps = document.getElementsByClassName('playerlamp');
             let i = 0;
@@ -64,6 +62,10 @@ class Game {
                 }
                 ++i;
             }
+            // In zwei Sekunden nochmal pollen:
+            setTimeout(function () {
+                _game.poll()
+            }, 2000);
         };
         r.send();
     }
