@@ -104,7 +104,6 @@ class Game {
                     }
                 };
                 r.send();
-                return;
             }
             // In zwei Sekunden nochmal pollen:
             setTimeout(function () {
