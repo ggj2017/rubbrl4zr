@@ -1,0 +1,18 @@
+<div class="menupanel">
+    <h1 class="centered">rubbrl4zr</h1>
+    <h3 class="centered inverse">Rubber Laser Space Fight</h3>
+    <a class="menubutton" id="startNewGame">Start a new Game</a>
+
+    <script type="application/javascript">
+    document.getElementById("startNewGame").onclick =  function(){
+        lib.ajax("GET", "/new", function(data) {
+            var content = JSON.parse(data);
+            lib.gameId = content.gameId;
+            lib.joinLink = content.joinLink;
+            console.log(lib.joinLink);
+
+            lib.loadContent('lobby');;
+        });
+    }
+    </script>
+</div>

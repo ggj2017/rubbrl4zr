@@ -39,7 +39,13 @@
 }
 
 @keyframes slideMenu {
+    0% { top: -100%; }
     100% { top: 0; }
+}
+
+@keyframes slideMenuRemove {
+    0% { top: 0; }
+    100% { top: -100%; }
 }
 
 @keyframes slideCanvas {
@@ -126,23 +132,37 @@ body{
     animation-delay: 0.3s;
     top: -100%;
     text-align: center;
-}
 
-.menupanel ul {
-    margin: 0;
-    padding: 0;
-    margin-top: 3em;
-    list-style-type: none;
-}
-.menupanel li {
-    margin: 0;
-    padding: 0;
     color: black;
-    font-size: 1.3em;
     text-shadow: 0 0 5px white;
 }
 
-.menupanel li a {
+.menupanel.remove {
+    animation: slideMenuRemove 0.5s forwards;
+}
+
+.menupanel ul {
+    margin-top: 3em;
+    margin: 0;
+    padding: 0;
+}
+
+.menupanel ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menupanel ul li::before {
+    content: '- ';
+}
+
+.menupanel ul li::after {
+    content: ' -';
+}
+
+.menubutton {
+    font-size: 1.3em;
     background-image: url(img/menubtn.png);
     color: black;
     text-decoration: none;
@@ -150,20 +170,27 @@ body{
     height: 77px;
     line-height: 77px;
     display: inline-block;
+    text-shadow: 0 0 5px white;
 }
 
-.menupanel li:hover a {
+.menubutton:hover {
     background-image: url(img/menubtn-hover.png);
 }
 
-.menupanel li:active a {
+.menubutton:active {
     background-image: url(img/menubtn-active.png);
     line-height: 82px;
 }
 
 h1, h2, h3, h4, h5, h6 {
+    color: white;
     text-shadow: 0 0 5px #338800,
                 0 0 10px #00ff00;
+}
+
+h5 {
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
 }
 
 h1.inverse, h2.inverse, h3.inverse, h4.inverse, h5.inverse, h6.inverse {
@@ -184,6 +211,25 @@ h1.inverse, h2.inverse, h3.inverse, h4.inverse, h5.inverse, h6.inverse {
 .configuration label{
     text-shadow: 0 0 1px #338800,
                 0 0 2px #00ff00;
+}
+
+input[type='text'],
+.sunkenBox {
+    border-radius: 0.1em;
+    box-shadow: 2px 2px 2px black,
+                inset 2px 2px 2px black,
+                inset -1px -1px 2px rgba(255,255,255,0.5);
+    padding: 0.5em;
+    margin: 1em;
+    background-color: rgba(0,0,0,0.4);
+    border: none;
+    font-family: 'forcedsquare';
+    font-size: 16px;
+}
+
+a{
+    color: #99ff99;
+    text-shadow: 0 0 4px #004400;
 }
 
 #previewWrapper{

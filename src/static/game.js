@@ -74,32 +74,6 @@ class Game {
         _game._players.push(player);
 
     }
-
-    // ----------------------------------------------------
-
-    loopMusic(filePath) {
-        _game.music = new Audio(filePath);
-        _game.music.addEventListener('ended', function() {
-            this.currentTime = 0;
-            this.play();
-        }, false);
-
-        _game.music.play();
-    }
-
-    stopMusic() {
-        if(_game.music) {
-            _game.music.stop();
-            _game.music = null;
-        }
-        _game.music = new Audio(filePath);
-        _game.music.addEventListener('ended', function() {
-            this.currentTime = 0;
-            this.play();
-        }, false);
-
-        _game.music.play();
-    }
 }
 
 class Vector {

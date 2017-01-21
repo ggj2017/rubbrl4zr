@@ -1,0 +1,25 @@
+<div class="menupanel">
+    <h1 class="centered">rubbrl4zr</h1>
+
+    Your Name: <input id="player_name" type="text" value="Player {{ player_id }}"/>
+    <br/>
+
+    <h5 class="inverse">Players online:</h5>
+    <ul id="player_list">
+        <li>foo</li>
+    </ul>
+
+
+    <div style="position: absolute; bottom: 0; left:0; right:0;">
+        <a class="menubutton" onclick="lib.loadContent('game');">Start Game</a>
+        <h5 class="centered inverse">Other players can join the game by using this link:</h5>
+        <div class="sunkenBox">
+            <a id="joinLink" target="_blank"></a>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var link = document.getElementById("joinLink");
+        link.href = lib.joinLink;
+        link.innerHTML = lib.joinLink;
+    </script>
+</div>

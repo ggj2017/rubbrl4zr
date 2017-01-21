@@ -12,14 +12,18 @@ games = []
 
 @app.route("/")
 def hello():
-    return render_template('welcome.html')
+    # return render_template('welcome.html')
+    return redirect("static/index.html", code=302)
 
 @app.route("/new")
 def new_game():
     # Zufällige Game-ID erzeugen um andere Spieler per URL einladen zu können:
     game_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
     games.append(Game(game_id))
-    return redirect(url_for('join', game_id=game_id))
+    return json.dumps({
+        "gameId" : game_id,
+        "joinLink" : request.url_root[:-1] + url_for('join', game_id=game_id)
+    })
 
 def get_game(id):
     for g in games:
