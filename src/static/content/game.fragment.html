@@ -9,6 +9,10 @@
         </div>
     </div>
 
+    <div style="float: right"><span id="current-frequency">1</span> Hz</div>
+    <label for="frequency">Frequency</label>
+    <input id="frequency" type="range" min="1" max="21" step="1" />
+
     <div style="float: right">50 %</div>
     <label for="amplitude">Amplitude</label>
     <input id="amplitude" type="range" min="0" max="100" step="5" />
@@ -17,7 +21,7 @@
     <label for="phase">Phase</label>
     <input id="phase" type="range" min="0" max="100" step="5" />
 
-    <div style="float: right"><span id="current_rotation">0</span> °</div>
+    <div style="float: right"><span id="current-rotation">0</span> °</div>
     <label for="rotation">Rotation</label>
     <input id="rotation" type="range" min="0" max="360" step="18" />
 
@@ -57,7 +61,7 @@ const drawPreview = ()=> {
 }
 
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
-let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#0088FF");
+let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 game.addPlayer(Player1);
@@ -65,13 +69,14 @@ game.addPlayer(Player2);
 game.run();
 lib.loopMusic("/static/snd/music01.mp3");
 
-document.getElementById('amplitude').addEventListener('input', function(e) {
-    let laser = game.createPreviewLaser(null, e.target.value);
+document.getElementById('frequency').addEventListener('input', function(e) {
+    document.getElementById('current-frequency').innerHTML = e.target.value;
+    let laser = game.createPreviewLaser(null, 80 / e.target.value);
     game._previewLaser = laser;
 });
 
 document.getElementById('rotation').addEventListener('input', function (e) {
-    document.getElementById('current_rotation').innerHTML = e.target.value;
+    document.getElementById('current-rotation').innerHTML = e.target.value;
     game._players[0].renderable._degree = e.target.value;
 });
 </script>
