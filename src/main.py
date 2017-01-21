@@ -71,7 +71,7 @@ def players(game_id):
         })
     return json.dumps(players_json)
 
-@app.route("/set_player_name/<game_id>/<int:player_id>/", methods=['POST'])
+@app.route("/set_player_name/<game_id>/<int:player_id>", methods=['POST'])
 def set_player_name(game_id, player_id):
     game = get_game(game_id)
     data = json.loads(request.data.decode('utf-8'))

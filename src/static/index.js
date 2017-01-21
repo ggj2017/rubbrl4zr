@@ -3,7 +3,6 @@ window.lib = (new function(){
 
     this.ajax = function(method, uri, handler, params, contentType) {
         var xhttp = new XMLHttpRequest();
-
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState == 4 && xhttp.status == 200
                 && handler != undefined)
@@ -11,12 +10,15 @@ window.lib = (new function(){
                 handler(xhttp.responseText);
             }
         };
+
         xhttp.open(method, uri, true);
         if(contentType != undefined)
             xhttp.setRequestHeader("Content-type", contentType);
         if(params == undefined)
             xhttp.send();
-        else xhttp.send(params);
+        else {
+            xhttp.send(params);
+        }
     };
 
     this.requestFullscreen = function(){

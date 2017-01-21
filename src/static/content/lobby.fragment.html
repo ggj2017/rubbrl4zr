@@ -1,12 +1,11 @@
 <div class="menupanel">
     <h1 class="centered">rubbrl4zr</h1>
 
-    Your Name: <input id="player_name" type="text""/>
+    Your Name: <input id="player_name" type="text"/>
     <br/>
 
     <h5 class="inverse">Players online:</h5>
     <ul id="player_list">
-        <li>foo</li>
     </ul>
 
 
@@ -23,5 +22,33 @@
         link.href = lib.joinLink;
         link.innerHTML = lib.joinLink;
         input.value = lib.playerName;
+
+
+		function build_player_list() {
+            lib.ajax("GET", "/players/"+lib.gameId, function(data) {
+				let players = JSON.parse(data);
+				player_list = document.getElementById("player_list");
+				while (player_list.firstChild) {
+					player_list.removeChild(player_list.firstChild);
+				}
+				for (player of players) {
+					li = document.createElement("li");
+					li.innerHTML = player.name;
+					player_list.appendChild(li);
+				}
+			});
+
+			var new_player_name = document.getElementById("player_name").value;
+			if (new_player_name != "") {
+                var data = new Object();
+				data.name = new_player_name;
+                var content = JSON.stringify(data);
+
+                lib.ajax("POST", "/set_player_name/"+lib.gameId+"/"+lib.playerId,
+                    function(data){ },
+                    content);
+			}
+		}
+		window.setInterval(build_player_list, 1000);
     </script>
 </div>
