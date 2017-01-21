@@ -12,8 +12,11 @@ games = []
 
 @app.route("/")
 def hello():
-    # return render_template('welcome.html')
-    return redirect("static/index.html", code=302)
+    return app.send_static_file('index.html')
+
+@app.route("/welcome")
+def welcome():
+    return app.send_static_file('index.html')
 
 @app.route("/new")
 def new_game():

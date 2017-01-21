@@ -85,6 +85,10 @@ window.lib = (new function(){
     };
 
     this.loadContent = function(uri){
+        var suffix = "";
+        if(lib.gameId && lib.playerId) {
+            suffix = "/"+lib.gameId+"/"+lib.playerId;
+        }
         lib.ajax("GET", "/static/content/"+uri+".html.fragment", function(data){
             var wrapper = document.querySelector(".wrapper");
             var children = wrapper.children;
@@ -92,7 +96,7 @@ window.lib = (new function(){
                 var child = children[i];
                 child.className += " remove";
             }
-            history.pushState(null, "", "?p="+encodeURIComponent(uri));
+            history.pushState(null, "", "/"+encodeURIComponent(uri)+suffix);
             window.setTimeout(function(){
                 wrapper.innerHTML = data;
 
@@ -111,13 +115,7 @@ window.lib = (new function(){
     };
 
     this.getParams = function() {
-        var params = window.location.search.substring(1).split('&');
-        var variables = {};
-        for(var i=0; i < params.length; i++){
-            var value = params[i].split('=');
-            variables[decodeURIComponent(value[0])] = decodeURIComponent(value[1]);
-        }
-        return variables;
+        return window.location.pathname.split('/');
     }
 
     window.onload = function() {
