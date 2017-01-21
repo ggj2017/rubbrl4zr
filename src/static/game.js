@@ -44,6 +44,30 @@ class Game {
         // not yet needed
     }
 
+    poll() {
+        let r = new XMLHttpRequest();
+        r.open("GET", "get_ready_states", true);
+        r.onreadystatechange = function () {
+            if (r.readyState != 4 || r.status != 200) {
+                console.log("Pollen fehlgeschlagen!");
+                return;
+            }
+            console.log(r.response);
+            let response = JSON.parse(r.response);
+            let lamps = document.getElementsByClassName('playerlamp');
+            let i = 0;
+            for (let player_ready of response['player_states']) {
+                if (player_ready === "true") {
+                    lamps[i].classList.add('on');
+                } else {
+                    lamps[i].classList.remove('on');
+                }
+                ++i;
+            }
+        };
+        r.send();
+    }
+
     _mainLoop(){
         var now = Date.now();
     	var delta = now - _game._then;
