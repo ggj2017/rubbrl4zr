@@ -46,6 +46,7 @@
 </canvas>
 
 
+<script src="/static/collision.js"></script>
 <script src="/static/PreviewSinus.js"></script>
 <script src="/static/Player.js"></script>
 <script src="/static/Renderable.js"></script>
@@ -62,20 +63,26 @@ const drawPreview = ()=> {
 }
 
 
-
-let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0 ,0 ),0),"#FF0000");
-let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(800 - 32,0),90),"#0066FF");
-let Player3 = new Player(44, "Timo", new Renderable("/static/img/ship-green.png", new Vector(800 -32 ,600 -64),180),"#00FF00");
-let Player4 = new Player(45, "janNiklas", new Renderable("/static/img/ship-yellow.png", new Vector(0 ,600 -64),270),"#FFFF00");
-
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 
 game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 
-game.addPlayer(Player1);
-game.addPlayer(Player2);
-game.addPlayer(Player3);
-game.addPlayer(Player4);
+function loadPlayers(){
+    for(var player of lib.players) {
+        game.addPlayer(player.name);
+    }
+}
+
+if(lib.players.length == 0) {
+    lib.ajax("GET", "/players/"+lib.gameId, function(data) {
+        let players = JSON.parse(data);
+        lib.players = players;
+        loadPlayers();
+    });
+}
+else {
+    loadPlayers();
+}
 
 game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 
@@ -94,7 +101,7 @@ document.getElementById('frequency').addEventListener('input', function(e) {
     this.fre = 80 / e.target.value;
     let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
-    game.createLaser(game._players[0]);
+    game.createLaser(game.getOwnPlayer());
 }.bind(this));
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
@@ -103,7 +110,7 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
    this.amp = e.target.value;
     let laser = game.createPreviewLaser(null, this.fre,this.amp);
     game._previewLaser = laser;
-    game.createLaser(game._players[0]);
+    game.createLaser(game.getOwnPlayer());
 
 }.bind(this));
 
@@ -114,6 +121,7 @@ document.getElementById('phase').addEventListener('input', function(e) {
 document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
     game.getOwnPlayer().set_degree(e.target.value);
+    game.createLaser(game.getOwnPlayer());
 });
 
 </script>
