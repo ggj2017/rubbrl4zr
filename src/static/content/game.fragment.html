@@ -8,12 +8,18 @@
             <canvas id="preview" height="400"></canvas>
         </div>
     </div>
+
+    <div style="float: right">50 %</div>
     <label for="amplitude">Amplitude</label>
     <input id="amplitude" type="range" min="0" max="100" step="5" />
+
+    <div style="float: right">50 %</div>
     <label for="phase">Phase</label>
-    <input id="phase" type="range" min="0" max="100" step="1" />
+    <input id="phase" type="range" min="0" max="100" step="5" />
+
+    <div style="float: right">0 °</div>
     <label for="rotation">Rotation</label>
-    <input id="rotation" type="range" min="0" max="100" step="1" />
+    <input id="rotation" type="range" min="0" max="360" step="18" />
 
     <div class="ready-box">
         <div class="playerlamp on"></div>
@@ -65,7 +71,6 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
 });
 
 document.getElementById('rotation').addEventListener('input', function (e) {
-    game._players[0].renderable._degree = e.target.value;
     game._players[0].renderable._degree = e.target.value;
 });
 </script>
