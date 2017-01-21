@@ -19,13 +19,13 @@ class SinusLaser extends Renderable {
      */
     render (context) {
 
-        const {color = '#00f'} = this.props;
+        const {color = '#00f', lineWidth = 2} = this.props;
 
 
         // Set styles for animated graphics
         context.strokeStyle = color;
         context.fillStyle = '#fff';
-        context.lineWidth = 2;
+        context.lineWidth = lineWidth;
         context.lineJoin = 'round';
 
         if(this.counter > this.lines.length) this.counter = 0;
