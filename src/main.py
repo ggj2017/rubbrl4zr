@@ -49,6 +49,14 @@ def get_player(game_id, player_id):
     player = g.get_player(player_id)
     return json.dumps(player.get_dict() if player is not None else None)
 
+@app.route("/game_info/<game_id>/")
+def get_game_info(game_id):
+    g = get_game(game_id)
+    return json.dumps({
+        "gameId" : game_id,
+        "joinLink" : request.url_root[:-1] + url_for('join', game_id=game_id),
+    })
+
 @app.route("/join/<game_id>/")
 def join(game_id):
     game = get_game(game_id)
@@ -71,7 +79,7 @@ def players(game_id):
         })
     return json.dumps(players_json)
 
-@app.route("/set_player_name/<game_id>/<int:player_id>/", methods=['POST'])
+@app.route("/set_player_name/<game_id>/<int:player_id>", methods=['POST'])
 def set_player_name(game_id, player_id):
     game = get_game(game_id)
     data = json.loads(request.data.decode('utf-8'))

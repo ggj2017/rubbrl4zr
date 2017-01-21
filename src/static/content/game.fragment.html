@@ -33,10 +33,22 @@
 
 
 <script src="/static/PreviewSinus.js"></script>
+<script src="/static/Player.js"></script>
+<script src="/static/Renderable.js"></script>
 <script src="/static/SinusLaser.js"></script>
 <script src="/static/index.js"></script>
 
 <script type="application/javascript">
+const drawPreview = ()=> {
+    let height = 200;
+    let width = 400;
+    let xAxis = 0;
+    let yAxis = Math.floor(width/4);
+    let canvas = document.getElementById("preview");
+    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
+
+
+}
 
 let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
 let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
