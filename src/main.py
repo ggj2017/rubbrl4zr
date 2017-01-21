@@ -115,9 +115,7 @@ def get_ready_states(game_id, player_id):
     player_states = []
     for player in game.players:
         player_states.append("true" if player.ready else "false")
-    return json.dumps({
-        "player_states": player_states,
-    })
+    return json.dumps(player_states)
 
 if __name__ == "__main__":
     app.run(threaded=True)
