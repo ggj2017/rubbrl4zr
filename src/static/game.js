@@ -133,6 +133,9 @@ class Game {
                     for (let player of response["players"]) {
                         _game.get_player(player.id).set_degree(player.angle);
                     }
+
+                    // TODO: Hier Simulation der Schüsse starten!
+
                     // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
                     this.setReadyButtonToggled(false);
                 };
