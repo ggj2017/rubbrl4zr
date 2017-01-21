@@ -19,6 +19,8 @@ class Game {
             _game.makeExplosion(pos);
         }
 
+        lib.setInterval(this._garbageCollectExplosions, 5000);
+
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
         this.rdyBtn.onclick = () => {
@@ -60,6 +62,17 @@ class Game {
         }
     }
 
+    _garbageCollectExplosions() {
+        var activeExplosions = [];
+        var explosions = _game._explosions;
+        for(var explosion of explosions) {
+            if(!explosion.done){
+                activeExplosions.push(explosion);
+            }
+        }
+        _game._explosions = activeExplosions;
+    }
+
     setReadyButtonToggled(toggled) {
         let s = this.rdyBtn.style;
         if (toggled) {
@@ -72,10 +85,7 @@ class Game {
 
     makeExplosion(pos){
         lib.playSound("/static/snd/explosion.mp3");
-        var idx = _game._explosions.length;
-        _game._explosions.push(new Explosion(pos, function(){
-            // _game._removeExplosions.push(idx);
-        }));
+        _game._explosions.push(new Explosion(pos));
     }
 
     get_player(id) {
@@ -101,18 +111,12 @@ class Game {
             _game._ctx.restore();
         }
 
-        for(var explosion of _game._explosions) {
+        var explosions = _game._explosions;
+        for(var explosion of explosions) {
             _game._ctx .save();
             explosion.render(_game._ctx);
             _game._ctx.restore();
         }
-
-        var diff = 0;
-        for(var idx of _game._removeExplosions) {
-            _game._explosions.splice(idx+diff, 1);
-            diff++;
-        }
-        _game._removeExplosions = [];
 
         this.renderPreview();
     }

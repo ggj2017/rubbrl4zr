@@ -25,19 +25,17 @@ class Asteroid extends Obstacle {
 
 
 class Explosion {
-    constructor(pos, callback) {
-        console.log("pus: ", pos);
-        console.log("cullbck: ", callback);
+    constructor(pos) {
         this.renderable = new Renderable("/static/img/explosion.png", pos, 0, 6);
-        this.callback = callback;
+        this.done = false;
     }
 
     render(ctx) {
+        if(this.done) return;
+
         this.renderable._currentFrame += 0.2;
         if(this.renderable._currentFrame >= 6){
-            if(this.callback){
-                this.callback();
-            }
+            this.done = true;
         }
         this.renderable.render(ctx);
     }
