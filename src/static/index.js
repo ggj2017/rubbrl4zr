@@ -98,7 +98,13 @@ window.lib = (new function(){
 
                 var scripts = document.querySelectorAll("script");
                 for(var i = 0; i < scripts.length; i++) {
-                    eval(scripts[i].innerHTML);
+                    if(scripts[i].src){
+                        var head = document.getElementsByTagName('head')[0];
+                        head.appendChild(scripts[i]);
+                    }
+                    else{
+                        eval(scripts[i].innerHTML);
+                    }
                 }
             }, 500)
         });
@@ -119,23 +125,3 @@ window.lib = (new function(){
         lib.loadContent(params["p"] || "welcome");
     };
 });
-
-
-
-const drawPreview = ()=> {
-    let height = 200;
-    let width = 400;
-    let xAxis = 0;
-    let yAxis = Math.floor(width/4);
-    let canvas = document.getElementById("preview");
-    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
-
-
-}
-
-let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
-let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
-
-var game = new Game(document.getElementById("game"), []);
-game.addPlayer(Player1);
-game.addPlayer(Player2);

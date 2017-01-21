@@ -1,5 +1,57 @@
-<div class="menupanel">
-    <h1 class="centered">rubbrl4zr</h1>
-    <h2 class="centered inverse">TODO:</h2>
-    - Hier sollte das Spiel sein -
+<div class="configuration noselect">
+    <h2>
+        rubbrl4zr
+    </h2>
+
+    <div>
+        <div id="previewWrapper">
+            <canvas id="preview" height="400"></canvas>
+        </div>
+    </div>
+    <label for="amplitude">Amplitude</label>
+    <input id="amplitude" type="range" min="0" max="100" step="1" />
+    <label for="phase">Phase</label>
+    <input id="phase" type="range" min="0" max="100" step="1" />
+    <label for="rotation">Rotation</label>
+    <input id="rotation" type="range" min="0" max="100" step="1" />
+
+    <div class="ready-box">
+        <div class="playerlamp on"></div>
+        <div class="playerlamp on"></div>
+        <div class="playerlamp"></div>
+        <div class="playerlamp"></div>
+        <button id="rdy-btn"></button>
+        <!-- 29s
+        <br />
+        <span>0/4 Players are ready</span> -->
+    </div>
 </div>
+
+<canvas id="game">
+    Gamefield should be here
+</canvas>
+
+
+<script src="/static/PreviewSinus.js"></script>
+<script src="/static/SinusLaser.js"></script>
+<script src="/static/index.js"></script>
+
+<script type="application/javascript">
+const drawPreview = ()=> {
+    let height = 200;
+    let width = 400;
+    let xAxis = 0;
+    let yAxis = Math.floor(width/4);
+    let canvas = document.getElementById("preview");
+    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
+
+
+}
+
+let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
+let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
+
+var game = new Game(document.getElementById("game"), []);
+game.addPlayer(Player1);
+game.addPlayer(Player2);
+</script>
