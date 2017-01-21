@@ -31,6 +31,12 @@ class Game {
         _game.poll();
     }
 
+    get_player(id) {
+        // TODO: Wenn man Spieler in der Lobby kicken können soll, könnte man hier dann stattdessen
+        //       die Spieler durchgehen und den mit der richtigen ID raussuchen.
+        return this._players[id - 1];
+    }
+
     render() {
         if(_game._resourcesLoaded < _game._resouceCount) return;
         // _game._ctx.drawImage(...)
@@ -72,17 +78,32 @@ class Game {
             let response = JSON.parse(r.response);
             let lamps = document.getElementsByClassName('playerlamp');
             let i = 0;
+            let cnt_ready = 0;
             for (let player_ready of response) {
                 if (player_ready === "true") {
                     lamps[i].classList.add('on');
+                    ++cnt_ready;
                 } else {
                     lamps[i].classList.remove('on');
                 }
                 ++i;
             }
+            let number_of_players = i; // FIXME: Über lib stattedessen
             for (; i < lamps.length; ++i) {
                 // Alle übrigen Lampen ausblenden
                 lamps[i].style['display'] = 'none';
+            }
+            if (cnt_ready == number_of_players) { // Alle Spieler sind bereit
+                let r = new XMLHttpRequest();
+                r.open("GET", "get_state", true);
+                r.onreadystatechange = () => {
+                    if (r.readyState != 4 || r.status != 200) return;
+                    let response = JSON.parse(r.response);
+                    for (let player of response["players"]) {
+                        _game.get_player(player.id).set_degree(player.angle);
+                    }
+                };
+                r.send();
             }
             // In zwei Sekunden nochmal pollen:
             setTimeout(function () {

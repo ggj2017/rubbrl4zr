@@ -96,7 +96,7 @@ def game(game_id, player_id):
         # Zum Debuggen ein Spiel anlegen, wenn man z. B. den Server neugestartet hat:
         game = Game(game_id)
         games.append(game)
-        for i in range(1, 5):
+        for i in range(1, 2):
             game.players.append(Player(i))
     return app.send_static_file('index.html')
 
@@ -123,6 +123,15 @@ def get_state(game_id, player_id):
     json_players = []
     for player in game.players:
         json_players.append(player.get_dict())
+
+    game.get_player(player_id).in_sync = True # Wir schicken ihm geraden State, also ist er synchron
+
+    # Sind alle spieler synchron? Dann neue Runde anfangen.
+    print([x.in_sync for x in game.players])
+    if all([x.in_sync for x in game.players]):
+        for player in game.players:
+            player.ready = False
+
     return json.dumps({
         "players": json_players,
     })
