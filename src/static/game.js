@@ -120,8 +120,6 @@ class Game {
             color: player.color
         });
         player.shoot(laser);
-        console.log(laser);
-        console.log(player);
         _game._players.push(player);
 
     }
