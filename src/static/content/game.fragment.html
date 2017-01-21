@@ -17,7 +17,7 @@
     <label for="phase">Phase</label>
     <input id="phase" type="range" min="0" max="100" step="5" />
 
-    <div style="float: right">0 °</div>
+    <div style="float: right"><span id="current_rotation">0</span> °</div>
     <label for="rotation">Rotation</label>
     <input id="rotation" type="range" min="0" max="360" step="18" />
 
@@ -71,6 +71,7 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
 });
 
 document.getElementById('rotation').addEventListener('input', function (e) {
+    document.getElementById('current_rotation').innerHTML = e.target.value;
     game._players[0].renderable._degree = e.target.value;
 });
 </script>
