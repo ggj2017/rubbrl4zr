@@ -54,10 +54,10 @@ class Game {
     renderPreview() {
         this.previewContext.clearRect(0, 0, this._canvasPreview.width, this._canvasPreview.height);
         this.previewContext.lineWidth = 5;
-        this.previewContext.save();
+        //this.previewContext.save();
 
         this._previewLaser.render(this.previewContext);
-        this.previewContext.restore();
+        //this.previewContext.restore();
     }
 
     update() {
@@ -126,9 +126,20 @@ class Game {
         let xAxis = 0;
         let yAxis = height/2;
         this.previewContext = canvas.getContext("2d");
-        return new SinusLaser({canvas,height,width,xAxis,yAxis, frequency,  amplitude, color: '#00FF00', degree: 0});
+        return new SinusLaser(
+            {
+                canvas,
+                height,
+                width,
+                xAxis,
+                yAxis,
+                lineWidth: 4,
+                frequency,
+                amplitude,
+                color: '#00FF00',
+                degree: 0
+            });
     }
-
 
     // ----------------------------------------------------
 
