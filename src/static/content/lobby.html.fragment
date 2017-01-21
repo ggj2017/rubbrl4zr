@@ -1,7 +1,7 @@
 <div class="menupanel">
     <h1 class="centered">rubbrl4zr</h1>
 
-    Your Name: <input id="player_name" type="text" value="Player {{ player_id }}"/>
+    Your Name: <input id="player_name" type="text""/>
     <br/>
 
     <h5 class="inverse">Players online:</h5>
@@ -19,7 +19,9 @@
     </div>
     <script type="application/javascript">
         var link = document.getElementById("joinLink");
+        var input = document.getElementById("player_name");
         link.href = lib.joinLink;
         link.innerHTML = lib.joinLink;
+        input.value = lib.playerName;
     </script>
 </div>

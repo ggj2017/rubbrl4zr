@@ -9,7 +9,9 @@
             var content = JSON.parse(data);
             lib.gameId = content.gameId;
             lib.joinLink = content.joinLink;
-            console.log(lib.joinLink);
+            lib.playerId = content.playerId;
+            lib.playerName = content.playerName;
+            console.log(content);
 
             lib.loadContent('lobby');;
         });

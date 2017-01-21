@@ -22,7 +22,9 @@ def new_game():
     games.append(Game(game_id))
     return json.dumps({
         "gameId" : game_id,
-        "joinLink" : request.url_root[:-1] + url_for('join', game_id=game_id)
+        "joinLink" : request.url_root[:-1] + url_for('join', game_id=game_id),
+        "playerId" : 1,
+        "playerName" : "Player 1"
     })
 
 def get_game(id):
