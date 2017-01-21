@@ -38,6 +38,10 @@
     100% { left: 0; }
 }
 
+@keyframes slideMenu {
+    100% { top: 0; }
+}
+
 @keyframes slideCanvas {
     100% { right: 10px; }
 }
@@ -108,10 +112,71 @@ body{
     left: -320px;
 }
 
-.configuration h2:first-child{
-    margin-top: 0;
+.menupanel {
+    padding: 1em;
+    width: 512px;
+    height: 100%;
+    margin: auto;
+    position: relative;
+    background-color: grey;
+    background-image: url(img/panel.jpg);
+    background-repeat: repeat-y;
+
+    animation: slideMenu 0.5s forwards;
+    animation-delay: 0.3s;
+    top: -100%;
+    text-align: center;
+}
+
+.menupanel ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 3em;
+    list-style-type: none;
+}
+.menupanel li {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-size: 1.3em;
+    text-shadow: 0 0 5px white;
+}
+
+.menupanel li a {
+    background-image: url(img/menubtn.png);
+    width: 372px;
+    height: 77px;
+    line-height: 77px;
+    display: inline-block;
+}
+
+.menupanel li:hover a {
+    background-image: url(img/menubtn-hover.png);
+}
+
+.menupanel li:active a {
+    background-image: url(img/menubtn-active.png);
+    line-height: 82px;
+}
+
+h1, h2, h3, h4, h5, h6 {
     text-shadow: 0 0 5px #338800,
                 0 0 10px #00ff00;
+}
+
+h1.inverse, h2.inverse, h3.inverse, h4.inverse, h5.inverse, h6.inverse {
+    color: black;
+    text-shadow: 0 0 2px white,
+                0 0 5px #338800,
+                0 0 10px #00ff00;
+}
+
+.centered {
+    text-align: center;
+}
+
+.configuration h2:first-child{
+    margin-top: 0;
 }
 
 .configuration label{
