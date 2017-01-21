@@ -42,5 +42,6 @@ class Renderable {
                         this._renderWidth, this._img.height); // clipped
         //ctx.drawImage(this._img, -this._img.width, -this._img.height);
         ctx.restore();
+        console.log(this._init_degree + this._degree);
     }
 }

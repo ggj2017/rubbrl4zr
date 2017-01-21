@@ -182,11 +182,24 @@ class Game {
     }
 
     createLaser(player) {
+
+        let rad = (player.renderable._degree + player.renderable._init_degree)*Math.PI / 180;
+        let x =64;
+        let y = 0
+        let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
+        y = Math.sin(rad) * x + Math.cos(rad) * y;
+        x = tempX;
+
+
+
+
         const laser = new SinusLaser({
             height: _game._canvas.height,
             width: _game._canvas.width ,
-            xAxis:player.renderable._pos.x,
-            yAxis:player.renderable._pos.y,
+            xAxis:player.renderable._pos.x + x,
+            yAxis:player.renderable._pos.y + y,
+           // xAxis:player.renderable._pos.x,
+           // yAxis:player.renderable._pos.y,
             degree: player.renderable._degree + player.renderable._init_degree,
             color: player.color
         });
