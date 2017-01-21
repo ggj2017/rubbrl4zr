@@ -89,7 +89,7 @@ document.getElementById('frequency').addEventListener('input', function(e) {
     this.fre = 80 / e.target.value;
     let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
-    game.createLaser(game._players[0]);
+    game.createLaser(game.getOwnPlayer());
 }.bind(this));
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
@@ -98,7 +98,7 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
    this.amp = e.target.value;
     let laser = game.createPreviewLaser(null, this.fre,this.amp);
     game._previewLaser = laser;
-    game.createLaser(game._players[0]);
+    game.createLaser(game.getOwnPlayer());
 
 }.bind(this));
 
@@ -109,7 +109,7 @@ document.getElementById('phase').addEventListener('input', function(e) {
 document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
     game.getOwnPlayer().set_degree(e.target.value);
-      game.createLaser(game._players[0]);
+      game.createLaser(game.getOwnPlayer());
 
 });
 
