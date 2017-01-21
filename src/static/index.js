@@ -1,18 +1,10 @@
 
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    addSliderInput();
     //drawSinus();
     drawPreview();
     drawGameSinus();
 });
-
-const addSliderInput = () => {
-    document.getElementById("slider").addEventListener("change", function(e) {
-        let val = e.target.value;
-        document.getElementById("slider-value").value = val;
-    });
-};
 
 const drawSinus = () => {
     var c = document.getElementById("preview");
@@ -58,7 +50,7 @@ const drawPreview = ()=> {
 }
 
 const drawGameSinus = ()=> {
-   
+
 
 
 playerTWO();
