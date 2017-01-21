@@ -68,8 +68,21 @@ const drawPreview = ()=> {
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 
-for(var player of lib.players) {
-    game.addPlayer(player.name);
+function loadPlayers(){
+    for(var player of lib.players) {
+        game.addPlayer(player.name);
+    }
+}
+
+if(lib.players.length == 0) {
+    lib.ajax("GET", "/players/"+lib.gameId, function(data) {
+        let players = JSON.parse(data);
+        lib.players = players;
+        loadPlayers();
+    });
+}
+else {
+    loadPlayers();
 }
 
 game._obstacles.push(new Asteroid(42, new Vector(350,350)));
