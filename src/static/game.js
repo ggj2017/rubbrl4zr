@@ -6,6 +6,7 @@ class Game {
         _game._canvas = canvas;
         _game._ctx = canvas.getContext("2d");
         _game._players = [];
+        _game._obstacles = [];
         canvas.id = "game";
         _game._canvasPreview = canvasPreview;
         _game._previewLaser = this.createPreviewLaser(canvasPreview);
@@ -38,6 +39,12 @@ class Game {
         for(var player of _game._players) {
             _game._ctx .save();
             player.render(_game._ctx);
+            _game._ctx.restore();
+        }
+
+        for(var obstacle of _game._obstacles) {
+            _game._ctx .save();
+            obstacle.render(_game._ctx);
             _game._ctx.restore();
         }
 
@@ -115,7 +122,9 @@ class Game {
         let xAxis = 0;
         let yAxis = height/2;
         this.previewContext = canvas.getContext("2d");
-        return new SinusLaser({canvas,height,width,xAxis,yAxis, amplitude, color: '#00FF00', degree: 0});
+        var sn = new SinusLaser({canvas,height,width,xAxis,yAxis, amplitude, color: '#00FF00', degree: 0});
+        console.log(sn);
+        return sn;
     }
 
 
