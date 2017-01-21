@@ -57,6 +57,7 @@ var game = new Game(document.getElementById("game"), document.getElementById('pr
 game.addPlayer(Player1);
 game.addPlayer(Player2);
 game.run();
+lib.loopMusic("/static/snd/music01.mp3");
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
     let laser = game.createPreviewLaser(null, e.target.value);
