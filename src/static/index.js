@@ -118,7 +118,7 @@ window.lib = (new function(){
         var params = lib.getParams();
         lib.loadContent(params["p"] || "welcome");
     };
-}
+});
 
 
 
