@@ -1,19 +1,24 @@
+"use strict";
+
 class Renderable {
     constructor(imgPath, pos, degree){
-        var self = this;
-        self._pos = pos;
-        self._degree = degree;
-        self._loaded = false;
-        self._img = new Image();
-        self._img.onload = function() {
-            self._loaded = true;
+        this._pos = pos;
+        this._degree = degree;
+        this._loaded = false;
+        this._img = new Image();
+        this._img.onload = () => {
+            this._loaded = true;
         }
-        self._img.src = imgPath;
+        this._img.src = imgPath;
     }
 
     render(ctx) {
         if(!this._loaded) return;
         // console.log("rendering", this._img, this._pos)
-        ctx.drawImage(this._img, this._pos.x, this._pos.y);
+        ctx.save();
+        ctx.translate(this._pos.x + this._img.width / 2, this._pos.y + this._img.height / 2);
+        ctx.rotate(this._degree * Math.PI / 180);
+        ctx.drawImage(this._img, -this._img.width / 2, -this._img.height / 2);
+        ctx.restore();
     }
 }
