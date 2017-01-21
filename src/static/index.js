@@ -58,12 +58,24 @@ const drawPreview = ()=> {
 }
 
 const drawGameSinus = ()=> {
+   
+
+
+playerTWO();
+}
+
+
+const playerTWO = () => {
     let height = 600;
     let width = 900;
-    let xAxis = width/2;
-    let yAxis = Math.floor(width/4);
+    let xAxis = 0;
+    let yAxis = height/2;
+    let degree = 315;
     let canvas = document.getElementById("game");
-    let preview = new GameSinus({canvas,height,width,xAxis,yAxis});
+    let preview = new GameSinus({canvas,height,width,xAxis,yAxis,degree});
+
+
+
 }
 
 document.onmousemove = function (evt){
