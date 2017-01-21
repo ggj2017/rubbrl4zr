@@ -10,6 +10,13 @@ class Player {
         this.laser = laser;
     }
 
+    get_degree() {
+        return this.renderable._degree;
+    }
+
+    set_degree(degree) {
+        this.renderable._degree = degree;
+    }
 
     render(ctx) {
         this.renderable.render(ctx);
