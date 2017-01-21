@@ -100,4 +100,6 @@ document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
     game._players[0].renderable._degree = e.target.value;
 });
+
+console.log("PID", lib.playerId);
 </script>
