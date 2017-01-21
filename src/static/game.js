@@ -23,9 +23,9 @@ class Game {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         for(var player of _game._players) {
-            //_game._ctx .save();
+            _game._ctx .save();
             player.render(this._ctx);
-            //_game._ctx.restore();
+            _game._ctx.restore();
         }
     }
 
