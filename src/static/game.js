@@ -183,6 +183,7 @@ class Game {
         this.previewContext = canvas.getContext("2d");
         return new SinusLaser(
             {
+                game: this,
                 canvas,
                 height,
                 width,
@@ -242,6 +243,7 @@ class Game {
 
 
         const laser = new SinusLaser({
+            game: _game,
             height: _game._canvas.height,
             width: _game._canvas.width ,
             xAxis:player.renderable._pos.x + x,
