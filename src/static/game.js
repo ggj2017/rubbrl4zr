@@ -179,6 +179,10 @@ class Game {
         _game._players.push(player);
 
     }
+
+    getOwnPlayer() {
+        return this.get_player(lib.playerId);
+    }
 }
 
 class Vector {
