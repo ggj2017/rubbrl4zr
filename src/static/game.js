@@ -10,10 +10,21 @@ class Game {
 
         //_game._ctx .save();
 
-        document.getElementById("rdy-btn").onclick = function(){
-            console.log("beep!");
-            var beep = new Audio("snd/beep01.mp3");
+        let rdyBtn = document.getElementById("rdy-btn");
+        rdyBtn.onclick = function () {
+            var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
+            var r = new XMLHttpRequest();
+            r.open("GET", "toggle_ready", true);
+            r.onreadystatechange = function () {
+                let img = 'img/ready-btn.png'
+                if (r.responseText === "true") {
+                   rdyBtn.style['opacity'] = 0.5;
+                } else  {
+                   rdyBtn.style['opacity'] = 1;
+                }
+            }
+            r.send();
         }
     }
 
@@ -23,9 +34,9 @@ class Game {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         for(var player of _game._players) {
-            //_game._ctx .save();
+            _game._ctx .save();
             player.render(this._ctx);
-            //_game._ctx.restore();
+            _game._ctx.restore();
         }
     }
 

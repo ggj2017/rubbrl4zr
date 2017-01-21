@@ -118,30 +118,24 @@ window.lib = (new function(){
         var params = lib.getParams();
         lib.loadContent(params["p"] || "welcome");
     };
-});
+}
 
-// document.addEventListener("DOMContentLoaded", function(event) {
-//     //drawSinus();
-//     drawPreview();
-//     //drawGameSinus();
-// });
-//
-//
-// const drawPreview = ()=> {
-//     let height = 200;
-//     let width = 400;
-//     let xAxis = 0;
-//     let yAxis = Math.floor(width/4);
-//     let canvas = document.getElementById("preview");
-//     let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
-// }
-//
-// let Player1 = new Player(42, "Carsten", new Renderable("img/ship-red.png", new Vector(0,0),45),"#FF0000");
-// let Player2 = new Player(43, "Ötchen", new Renderable("img/ship-blue.png", new Vector(700,0),135),"#00FF00");
-//
-// var game = new Game(document.getElementById("game"), []);
-// game.addPlayer(Player1);
-// game.addPlayer(Player2);
-//
-// game.run();
-// game.loopMusic("snd/music01.mp3");
+
+
+const drawPreview = ()=> {
+    let height = 200;
+    let width = 400;
+    let xAxis = 0;
+    let yAxis = Math.floor(width/4);
+    let canvas = document.getElementById("preview");
+    let preview = new PreviewSinus({canvas,height,width,xAxis,yAxis});
+
+
+}
+
+let Player1 = new Player(42, "Carsten", new Renderable("/static/img/ship-red.png", new Vector(0,0),45),"#FF0000");
+let Player2 = new Player(43, "Ötchen", new Renderable("/static/img/ship-blue.png", new Vector(700,0),135),"#00FF00");
+
+var game = new Game(document.getElementById("game"), []);
+game.addPlayer(Player1);
+game.addPlayer(Player2);
