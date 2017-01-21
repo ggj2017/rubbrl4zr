@@ -34,6 +34,7 @@
 			window.setInterval(build_player_list, 1000);
 		}
 		</script>
+		<script type="application/javascript" src="/static/cursor.js"></script>
 	</head>
 	<body>
 		<li>Dein Name: <input id="player_name" type="text" placeholder="Spieler {{ player_id }}"/></li>
@@ -41,5 +42,6 @@
 		</ul>
 		Andere Spieler können über diesen Link beitreten:
 		<a href="/join/{{ game_id }}">{{ server_url }}join/{{ game_id }}</a>
+		<div id="cursor"/>
 	</body>
 </html>

@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
     //drawSinus();
     drawPreview();
-    drawGameSinus();
+    //drawGameSinus();
 });
 
 const drawSinus = () => {
@@ -49,29 +49,23 @@ const drawPreview = ()=> {
 
 }
 
-const drawGameSinus = ()=> {
 
 
 
-playerTWO();
+
+document.onmousemove = function (evt){
+    var cursor = document.getElementById('cursor');
+    cursor.style.left = evt.clientX+"px";
+    cursor.style.top = evt.clientY+"px";
 }
 
 
-const playerTWO = () => {
-    let height = 600;
-    let width = 900;
-    let xAxis = 0;
-    let yAxis = height/2;
-    let degree = 315;
-    let canvas = document.getElementById("game");
-    let preview = new GameSinus({canvas,height,width,xAxis,yAxis,degree});
-
-
-
-}
+let Player1 = new Player(42, "Carsten", new Renderable("img/ship-red.png", new Vector(0,0),45),"#FF0000");
+let Player2 = new Player(43, "Ötchen", new Renderable("img/ship-blue.png", new Vector(700,0),135),"#00FF00");
 
 var game = new Game(document.getElementById("game"), []);
-game.addPlayer(new Player(42, "Carsten", new Renderable("img/ship-blue.png", new Vector(100,100))))
-game.addPlayer(new Player(43, "Jan Niklas", new Renderable("img/ship-red.png", new Vector(400,500))))
+game.addPlayer(Player1);
+game.addPlayer(Player2);
+
 game.run();
 // game.loopMusic("snd/music01.mp3");

@@ -16,25 +16,28 @@ class GameSinus extends Renderable {
      */
     render (context) {
 
+        const {color = '#00f'} = this.props;
 
-        const {width,height} = this.props;
         this.context = context;
 
+        console.log(context);
+
         // Set styles for animated graphics
-        context.strokeStyle = '#00f';
-        context.fillStyle = '#fff';
+        this.context.strokeStyle = color;
+        this.context.fillStyle = '#fff';
         context.lineWidth = 2;
         context.lineJoin = 'round';
 
 
-        context.save();
+        this.context.save();
 
         // Draw the sine curve at time draw.t, as well as the circle.
-        context.beginPath();
+        this.context.beginPath();
 
         this.drawSine();
 
-        context.stroke();
+        this.context.stroke();
+        //this.context.restore();
 
     }
 
@@ -45,7 +48,7 @@ class GameSinus extends Renderable {
      * The sine curve is drawn in 10px segments starting at the origin.
      */
     drawSine () {
-        const {yAxis,xAxis,width,height,degree} = this.props;
+        const {yAxis,xAxis,width,height,degree,color} = this.props;
 
 
 
@@ -54,7 +57,7 @@ class GameSinus extends Renderable {
         this.context.translate(width/2,height/2);
         this.context.rotate(degree*Math.PI/180);
         this.context.translate(-width/2,-height/2);
-        let unit = 60;
+        let unit = 20;
         // Set the initial x and y, starting at 0,0 and translating to the origin on
         // the canvas.
         var x = 0;
@@ -73,11 +76,12 @@ class GameSinus extends Renderable {
         y = Math.sin(x);
         this.lines.push({x:direction*this.status + xAxis,y:unit*y+yAxis});
 
+        this.context.strokeStyle = color;
         for(let line of this.lines) {
             this.context.lineTo(line.x, line.y);
         }
-        this.context.stroke();
-        this.context.restore();
+
+
     }
 
 

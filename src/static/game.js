@@ -25,7 +25,7 @@ class Game {
         for(var player of _game._players) {
             _game._ctx .save();
             player.render(this._ctx);
-            this._ctx.restore();
+            //this._ctx.restore();
         }
     }
 
@@ -60,14 +60,19 @@ class Game {
     // ----------------------------------------------------
 
     addPlayer(player) {
+        const laser = new GameSinus({
+            heigt: _game._canvas.height,
+            width: _game._canvas.width ,
+            xAxis:player.renderable._pos.x,
+            yAxis:player.renderable._pos.y,
+            degree: player.renderable._degree,
+            color: player.color
+        });
+        player.shoot(laser);
+        console.log(laser);
+        console.log(player);
         _game._players.push(player);
 
-        let xAxis = 0;
-       // let yAxis = _game._canvas.height/2;
-        let yAxis = 0;
-        let degree = 45;
-        let laser = new GameSinus({xAxis,yAxis,degree});
-        player.shoot(laser);
     }
 
     // ----------------------------------------------------
@@ -105,9 +110,10 @@ class Vector {
 }
 
 class Renderable {
-    constructor(imgPath, pos){
+    constructor(imgPath, pos, degree){
         var self = this;
         self._pos = pos;
+        self._degree = degree;
         self._loaded = false;
         self._img = new Image();
         self._img.onload = function() {
@@ -124,10 +130,11 @@ class Renderable {
 }
 
 class Player {
-    constructor(id, name, renderable) {
+    constructor(id, name, renderable,color) {
         this.id = id;
         this.name = name;
         this.renderable = renderable;
+        this.color = color;
     }
 
     shoot(laser) {
@@ -137,7 +144,7 @@ class Player {
 
     render(ctx) {
         this.renderable.render(ctx);
-        ctx.restore();
+        //ctx.restore();
         if(this.laser) {
             this.laser.render(ctx);
         }
