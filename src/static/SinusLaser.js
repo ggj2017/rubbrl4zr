@@ -44,7 +44,7 @@ class SinusLaser extends Renderable {
 
     addLines() {
 
-        const {collisionCallback, game, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
+        const {collisionCallback, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
 
         let rad = degree * Math.PI /180;
         let x = 0;
