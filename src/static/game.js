@@ -60,6 +60,8 @@ class Game {
         r.send(JSON.stringify({
             "angle": player.get_degree(),
             "dead": player.dead,
+            "frequency": player.frequency,
+            "amplitude": player.amplitude,
         }));
     }
 
@@ -265,7 +267,10 @@ class Game {
                     if (r.readyState != 4 || r.status != 200) return;
                     let response = JSON.parse(r.response);
                     for (let player of response["players"]) {
-                        _game.get_player(player.id).set_degree(player.angle);
+                        let p = _game.get_player(player.id);
+                        p.set_degree(player.angle);
+                        p.frequency = player.frequency;
+                        p.amplitude = player.amplitude;
                     }
 
                     _game.startSimulation();
