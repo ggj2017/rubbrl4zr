@@ -24,13 +24,17 @@ class Game {
         canvas.onclick = (e) => {
             e.preventDefault();
 
-            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+            this.addAsteroidToGame({
+                player: this.getOwnPlayer(),
+                pos: {
+                    x: e.clientX - _game._canvas.offsetLeft,
+                    y: e.clientY - _game._canvas.offsetTop
+                },
+                callback: (type) => {
+                    console.log('failed');
+                }
+            });
 
-            this._obstacles.push(
-                new Asteroid(42,
-                    new Vector(e.clientX - canvas.offsetLeft,
-                        e.clientY - canvas.offsetTop),
-                    this.getOwnPlayer().id));
         };
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
@@ -47,6 +51,29 @@ class Game {
         };
 
         _game.poll();
+    }
+
+    addAsteroidToGame({player, callback, pos}) {
+
+        let id = null;
+
+        for(let obstac of this._obstacles) {
+
+            if(obstac.collision.contains(pos.x,pos.y)) {
+                console.log("damn");
+                callback('fail');
+                return;
+            }
+        }
+
+        if(player) {
+            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+            id = this.getOwnPlayer().id;
+        }
+
+        this._obstacles.push(
+            new Asteroid(42,
+                new Vector(pos.x, pos.y), id));
     }
 
     sendStateToServer() {
