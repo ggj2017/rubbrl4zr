@@ -31,9 +31,11 @@ class SinusLaser extends Renderable {
             frequency  = 30
         } = this.props;
 
+
+
         let rad = degree * Math.PI /180;
         let x = this.status;
-        let y = Math.sin(x / frequency) * amplitude;
+        let y = Math.sin(x / ( 80 / frequency)   ) * amplitude;
 
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
         y = Math.sin(rad) * x + Math.cos(rad) * y;
