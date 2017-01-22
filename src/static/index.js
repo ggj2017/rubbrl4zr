@@ -76,6 +76,10 @@ window.lib = (new function(){
     };
 
     this.loopMusic = function(filePath) {
+        if(_music){
+            _music.pause();
+            _music.currentTime = 0;
+        }
         _music = new Audio(filePath);
         _music.addEventListener('ended', function() {
             this.currentTime = 0;
@@ -83,6 +87,11 @@ window.lib = (new function(){
         }, false);
 
         _music.play();
+    };
+
+    this.loopMusicIfNotAlreadyPlaying = function(filePath) {
+        if(_music) return;
+        lib.loopMusic(filePath);
     };
 
     this.stopMusic = function() {
@@ -111,14 +120,19 @@ window.lib = (new function(){
         lib.ajax("GET", "/static/content/"+uri+".fragment.html", function(data){
             var wrapper = document.querySelector(".wrapper");
             var children = wrapper.children;
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                child.className += " remove";
+            if(children.length > 0) {
+                lib.playSound("/static/snd/up.mp3");
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    child.className += " remove";
+                }
             }
             history.pushState(null, "", "/"+encodeURIComponent(uri)+suffix);
             window.setTimeout(function(){
                 wrapper.innerHTML = data;
-
+                window.setTimeout(function() {
+                    lib.playSound("/static/snd/down.mp3");
+                }, 500);
                 var scripts = wrapper.getElementsByTagName("script");
 
                 var i = 0;
