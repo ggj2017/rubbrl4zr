@@ -83,12 +83,12 @@ game.run();
 lib.loopMusic("/static/snd/music01.mp3");
 
 let amp = 30;
-let fre = 30;
+let fre = 25;
 
 document.getElementById('frequency').addEventListener('input', function(e) {
     document.getElementById('current-frequency').innerHTML = e.target.value;
 
-    this.fre = 80/parseInt(e.target.value);
+    this.fre = parseInt(e.target.value);
     let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
     game.getOwnPlayer().frequency = this.fre;

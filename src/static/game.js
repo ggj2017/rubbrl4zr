@@ -24,13 +24,17 @@ class Game {
         canvas.onclick = (e) => {
             e.preventDefault();
 
-            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+            this.addAsteroidToGame({
+                player: this.getOwnPlayer(),
+                pos: {
+                    x: e.clientX - _game._canvas.offsetLeft,
+                    y: e.clientY - _game._canvas.offsetTop
+                },
+                callback: (type) => {
+                    console.log('failed');
+                }
+            });
 
-            this._obstacles.push(
-                new Asteroid(42,
-                    new Vector(e.clientX - canvas.offsetLeft,
-                        e.clientY - canvas.offsetTop),
-                    this.getOwnPlayer().id));
         };
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
@@ -49,6 +53,35 @@ class Game {
         _game.poll();
     }
 
+    addAsteroidToGame({player, callback, pos}) {
+
+        let id = null;
+
+        for(let obstac of this._obstacles) {
+
+            if (obstac.collision.contains(pos)) {
+                console.log("damn");
+                callback('fail');
+                return;
+            }
+        }
+
+        if(player) {
+            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+            id = this.getOwnPlayer().id;
+        }
+
+        let asteroid = new Asteroid(42,
+            new Vector(pos.x, pos.y), id);
+
+        this._obstacles.push(asteroid);
+
+        if(player) {
+            this.getOwnPlayer().asteroid[0] = asteroid.collision.x;
+            this.getOwnPlayer().asteroid[1] = asteroid.collision.y;
+        }
+    }
+
     sendStateToServer() {
         let r = new XMLHttpRequest();
         r.open("POST", "set_state", true);
@@ -60,6 +93,9 @@ class Game {
         r.send(JSON.stringify({
             "angle": player.get_degree(),
             "dead": player.dead,
+            "frequency": player.frequency,
+            "amplitude": player.amplitude,
+            "asteroid": player.asteroid,
         }));
     }
 
@@ -266,7 +302,10 @@ class Game {
                     if (r.readyState != 4 || r.status != 200) return;
                     let response = JSON.parse(r.response);
                     for (let player of response["players"]) {
-                        _game.get_player(player.id).set_degree(player.angle);
+                        let p = _game.get_player(player.id);
+                        p.set_degree(player.angle);
+                        p.frequency = player.frequency;
+                        p.amplitude = player.amplitude;
                     }
 
                     _game.startSimulation();
