@@ -70,6 +70,16 @@ class Player {
         ctx.fillStyle = "white";
         ctx.fillText(this.name, pos.x, pos.y);
 
+        if(this.dead) {
+            let nameSize = ctx.measureText(this.name);
+            ctx.beginPath();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.moveTo(pos.x, pos.y - 4);
+            ctx.lineTo(pos.x + nameSize.width, pos.y -4);
+            ctx.stroke();
+        }
+
         //ctx.restore();
         if(this.laser) {
             this.laser.render(ctx);
