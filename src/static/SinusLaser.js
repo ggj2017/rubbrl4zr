@@ -15,7 +15,7 @@ class SinusLaser extends Renderable {
     /// Gibt false zurück, wenn er gelöscht werden möchte
     update() {
         if (this.timeout > 10000) {
-            return;
+            return false;
         }
         this.timeout += 1;
 
