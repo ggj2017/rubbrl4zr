@@ -30,8 +30,8 @@ class Game {
                     x: e.clientX - _game._canvas.offsetLeft,
                     y: e.clientY - _game._canvas.offsetTop
                 },
-                callback: (type) => {
-                    console.log('failed');
+                callback: () => {
+                    lib.playSound('/static/snd/denied.mp3');
                 }
             });
 
@@ -60,8 +60,10 @@ class Game {
         for(let obstac of this._obstacles) {
 
             if (obstac.collision.contains(pos)) {
-                console.log("damn");
-                callback('fail');
+                callback({
+                    type: 'error',
+                    message: 'obstacle on given coordinates',
+                });
                 return;
             }
         }
@@ -115,15 +117,14 @@ class Game {
                 x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
                 y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
 
-                for(let obstac of this._obstacles) {
-                    if(obstac.collision.contains(x+75,y+75/2)) {
-                        existingOstacle = true;
-                        console.log(obstac);
-                    }
-                }
+                this.addAsteroidToGame(
+                    {
+                        pos: {x, y},
+                        callback: () => {
+                            existingOstacle = true;
+                        }
+                    });
             } while (existingOstacle);
-
-            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
         }
     }
 
