@@ -225,6 +225,13 @@ input[type='text'],
     border: none;
     font-family: 'forcedsquare';
     font-size: 16px;
+
+    -webkit-touch-callout: text; /* iOS Safari */
+      -webkit-user-select: text; /* Safari*/
+       -khtml-user-select: text; /* Konqueror */
+         -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* Internet Explorer/Edge */
+              user-select: text;
 }
 
 a{

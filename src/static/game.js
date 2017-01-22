@@ -274,12 +274,12 @@ class Game {
                 break;
             case 2:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-blue.png", new Vector(800 - 50,0),90),
+                    new Renderable("/static/img/ship-blue.png", new Vector(800 -50 ,600 -70),180),
                     "#0066FF");
                 break;
             case 3:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-green.png", new Vector(800 -50 ,600 -70),180),
+                    new Renderable("/static/img/ship-green.png", new Vector(800 - 50,0),90),
                     "#00FF00");
                 break;
             case 4:
