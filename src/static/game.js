@@ -53,12 +53,15 @@ class Game {
 
     createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
 
+        Math.seedrandom(lib.gameId);
+
 
         for(let i = 0; i < count; i++) {
 
             let existingOstacle;
             let x;
             let y;
+
             do {
                 existingOstacle = false;
 
@@ -76,6 +79,7 @@ class Game {
             this._obstacles.push(new Asteroid(42, new Vector(x,y)));
         }
     }
+
 
     animateToggleButton() {
         let currentOpacity = parseFloat(this.rdyBtn.style.opacity);
