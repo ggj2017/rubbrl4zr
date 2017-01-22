@@ -21,6 +21,18 @@ class Game {
             _game.makeExplosion(pos);
         });
 
+        canvas.onclick = (e) => {
+            e.preventDefault();
+
+            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+
+            this._obstacles.push(
+                new Asteroid(42,
+                    new Vector(e.clientX - canvas.offsetLeft,
+                        e.clientY - canvas.offsetTop),
+                    this.getOwnPlayer().id));
+        };
+
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
         this.rdyBtn = document.getElementById("rdy-btn");

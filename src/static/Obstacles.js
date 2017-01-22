@@ -13,7 +13,7 @@ class Obstacle {
 class Asteroid extends Obstacle {
     constructor(id, pos, playerId) {
         var path;
-        playerId = playerId || 0;
+
         switch(playerId) {
             case 1:
                 path = "/static/img/asteroid-red.png";
@@ -31,6 +31,9 @@ class Asteroid extends Obstacle {
                 path = "/static/img/asteroid01.png";
         }
         super(id, new Renderable(path, pos, 0));
+
+        this.playerId = playerId || 0;
+
         this.collision = new Circle(pos.x, pos.y, 75/2);
         this._rotationSpeed = Math.random()-0.5;
     }
