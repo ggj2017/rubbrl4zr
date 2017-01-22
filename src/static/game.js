@@ -201,6 +201,24 @@ class Game {
     }
 
     poll() {
+        let players_alive = 0;
+        let winning_player = null;
+        for (let player of this._players) {
+            if (!player.dead) {
+                players_alive += 1;
+                winning_player = player;
+            }
+        }
+        if (!this._simulating && this._players.length > 1 && players_alive <= 1) {
+            let msg = "GAME OVER\n";
+            if (winning_player) {
+                msg += winning_player.name + " hat gewonnen!";
+            } else {
+                msg += "Unendschieden.";
+            }
+            alert(msg);
+            return;
+        }
         let r = new XMLHttpRequest();
         r.open("GET", "get_ready_states", true);
         r.onreadystatechange = () => {
