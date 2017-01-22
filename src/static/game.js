@@ -48,6 +48,7 @@ class Game {
         }
 
         _game.poll();
+        _game.startSimulation();
     }
 
     animateToggleButton() {
@@ -288,7 +289,7 @@ class Game {
 
     createLaser(player, fre = 30 , amp = 30) {
 
-        let rad = (player.renderable._degree + player.renderable._init_degree)*Math.PI / 180;
+        let rad = ( player.renderable._degree + player.renderable._init_degree - 90 )*Math.PI / 180;
         let x =0;
         let y = 64
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
@@ -302,7 +303,7 @@ class Game {
             game: _game,
             height: _game._canvas.height,
             width: _game._canvas.width ,
-            xAxis:player.renderable._pos.x + x + 32/2,
+            xAxis:player.renderable._pos.x + x ,
             yAxis:player.renderable._pos.y + y,
 
             amplitude: amp,
