@@ -17,6 +17,13 @@
     </div>
 
     <div style="position: absolute; bottom: 0; left:0; right:0; padding: 0.5em 1em;">
+        <div id="startbtnAlone" style="display: none;">
+            <h5 class="inverse">Please wait for other players...</h5>
+            As soon as another player has joined the game, you will be able to
+            start the match.
+            <br/>
+            <br/>
+        </div>
         <div id="startbtn" style="display: none">
             <h5 class="inverse">Please start the game as soon as all players have joined.</h5>
             <a id="startbtn-btn" class="menubutton">Start Game</a>
@@ -39,6 +46,7 @@
         var allSlotsOccupied = document.getElementById("allSlotsOccupied");
         var joinbox = document.getElementById("joinbox");
         var startbtn = document.getElementById("startbtn");
+        var startbtnOnePlayer = document.getElementById("startbtnOnePlayer");
         var notJoined = document.getElementById("notJoined");
         var playerNameInput = document.getElementById("playerNameInput");
         var startBtnBtn = document.getElementById("startbtn-btn");
@@ -48,18 +56,17 @@
 
         startBtnBtn.onclick = startGame;
 
-        if(lib.playerId == 1) {
-            startbtn.style.display = "block";
-        }
-        else {
+        if(lib.playerId != 1) {
             startbtn.style.display = "none";
 
-            console.log(lib.playerId);
             if(lib.playerId == 0) {
                 startbtn.style.display = "none";
                 notJoined.style.display = "block";
                 playerNameInput.style.display = "none";
             }
+        }
+        else {
+            startbtnAlone.style.display = "block";
         }
 
         function startGame() {
@@ -79,6 +86,11 @@
                 if(response["gameIsStarted"]) {
                     lib.loadContent('game');
                     return;
+                }
+
+                if(lib.playerId == 1 && lib.players.length > 1) {
+                    startbtnAlone.style.display = "none";
+                    startbtn.style.display = "block";
                 }
 
 				player_list = document.getElementById("player_list");
