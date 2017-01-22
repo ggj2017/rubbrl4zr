@@ -9,6 +9,8 @@ class Player {
         this.centerY = renderable._center.y;
         this.collision = new Circle(this.centerX, this.centerY, this.radius);
         this.dead = false;
+        this.frequency = 30;
+        this.amplitude = 30;
     }
 
     shoot(laser) {
@@ -104,7 +106,7 @@ class Player {
 
     die() {
         // An unserer Position eine Explosion hinzufügen:
-        _game.makeExplosion(new Vector(this.centerX - 96, this.centerY - 64));
+        _game.makeExplosion(new Vector(this.centerX, this.centerY));
         this.dead = true;
         if (this == _game.getOwnPlayer()) { // Wenn wir selber gestorben sind ...
             _game.sendStateToServer(); // ... dies dem Server mitteilen.

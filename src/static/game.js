@@ -21,6 +21,18 @@ class Game {
             _game.makeExplosion(pos);
         });
 
+        canvas.onclick = (e) => {
+            e.preventDefault();
+
+            this._obstacles = this._obstacles.filter((o) => o.playerId != _game.getOwnPlayer().id);
+
+            this._obstacles.push(
+                new Asteroid(42,
+                    new Vector(e.clientX - canvas.offsetLeft,
+                        e.clientY - canvas.offsetTop),
+                    this.getOwnPlayer().id));
+        };
+
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
         this.rdyBtn = document.getElementById("rdy-btn");
@@ -201,6 +213,24 @@ class Game {
     }
 
     poll() {
+        let players_alive = 0;
+        let winning_player = null;
+        for (let player of this._players) {
+            if (!player.dead) {
+                players_alive += 1;
+                winning_player = player;
+            }
+        }
+        if (!this._simulating && this._players.length > 1 && players_alive <= 1) {
+            let msg = "GAME OVER\n";
+            if (winning_player) {
+                msg += winning_player.name + " hat gewonnen!";
+            } else {
+                msg += "Unendschieden.";
+            }
+            alert(msg);
+            return;
+        }
         let r = new XMLHttpRequest();
         r.open("GET", "get_ready_states", true);
         r.onreadystatechange = () => {
@@ -339,7 +369,7 @@ class Game {
         _game._obstacles.pop();
     }
 
-    createLaser(player, fre = 30 , amp = 30) {
+    createLaser(player) {
 
         let rad = ( player.renderable._degree + player.renderable._init_degree - 90 )*Math.PI / 180;
         let x =0;
@@ -348,9 +378,6 @@ class Game {
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
 
-
-
-
         const laser = new SinusLaser({
             game: _game,
             height: _game._canvas.height,
@@ -358,8 +385,8 @@ class Game {
             xAxis: player.renderable._center.x + x,
             yAxis: player.renderable._center.y + y,
 
-            amplitude: amp,
-            frequency: fre,
+            amplitude: player.amplitude,
+            frequency: player.frequency,
             degree: player.renderable._degree + player.renderable._init_degree,
             color: player.color,
             collisionCallback: this.onObstacleCollision,
