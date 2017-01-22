@@ -12,6 +12,9 @@ class Player {
     }
 
     shoot(laser) {
+        if (this.dead) {
+            return;
+        }
         this.laser = laser;
     }
 
