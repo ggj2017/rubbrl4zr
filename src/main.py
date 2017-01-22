@@ -78,9 +78,12 @@ def players(game_id):
     for player in game.players:
         players_json.append({
             'id': player.id,
-            'name': player.name,
+            'name': player.name
         })
-    return json.dumps(players_json)
+    return json.dumps({
+        "players" : players_json,
+        "gameIsStarted": game.is_started
+    })
 
 @app.route("/set_player_name/<game_id>/<int:player_id>", methods=['POST'])
 def set_player_name(game_id, player_id):
@@ -92,6 +95,15 @@ def set_player_name(game_id, player_id):
             player.name = data['name']
             return "OK"
     return "player not found"
+
+@app.route("/game/<game_id>/<int:player_id>/start/", methods=['POST'])
+def start_game(game_id, player_id):
+    if player_id != 1:
+        return "{\"status\" : \"unauthorized\"}"
+    game = get_game(game_id)
+    if game is not None:
+        game.is_started = True
+    return "{\"status\" : \"ok\"}"
 
 @app.route("/game/<game_id>/<int:player_id>/")
 def game(game_id, player_id):

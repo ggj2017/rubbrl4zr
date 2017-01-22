@@ -18,12 +18,15 @@ class Game {
             var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
                                 evt.clientY - canvas.offsetTop - 64);
             _game.makeExplosion(pos);
-        }
+        };
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
+
+        this.createStartingObstacles({count: 5});
+
         this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
@@ -45,6 +48,32 @@ class Game {
             "angle": player.get_degree(),
             "dead": player.dead,
         }));
+    }
+
+    createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
+
+
+        for(let i = 0; i < count; i++) {
+
+            let existingOstacle;
+            let x;
+            let y;
+            do {
+                existingOstacle = false;
+
+                x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
+                y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
+
+                for(let obstac of this._obstacles) {
+                    if(obstac.collision.contains(x+75,y+75/2)) {
+                        existingOstacle = true;
+                        console.log(obstac);
+                    }
+                }
+            } while (existingOstacle);
+
+            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
+        }
     }
 
     animateToggleButton() {
@@ -296,6 +325,7 @@ class Game {
                 throw "invalid player ID "+playerId + "(must be in [1..4])";
         }
         _game._players.push(player);
+        _game._obstacles.pop();
     }
 
     createLaser(player, fre = 30 , amp = 30) {
