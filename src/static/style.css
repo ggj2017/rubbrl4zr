@@ -59,7 +59,7 @@ div {
 }
 
 @keyframes slideCanvas {
-    100% { right: 10px; }
+    100% { right: 36px; }
 }
 
 button::-moz-focus-inner {
@@ -227,6 +227,12 @@ h6.inverseRed {
                 0 0 10px #ff0000;
 }
 
+#buttons {
+    width: 32px;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
 .centered {
     text-align: center;
 }
@@ -290,8 +296,8 @@ a{
     display: block;
     overflow: hidden;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 36px;
+    top: 36px;
     background-color: rgba(0,0,0,0.6);
 
     animation: slideCanvas 0.5s forwards;
