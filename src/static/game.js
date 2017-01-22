@@ -381,26 +381,27 @@ class Game {
 
     addPlayer(playerName) {
         let playerId = _game._players.length+1;
+        let gap = 60;
         var player;
         switch(playerId) {
             case 1:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-red.png", new Vector(30, 30), 0),
+                    new Renderable("/static/img/ship-red.png", new Vector(gap, gap), 0),
                     "#FF0000");
                 break;
             case 2:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-blue.png", new Vector(800 - 30 ,600 - 30),180),
+                    new Renderable("/static/img/ship-blue.png", new Vector(800 - gap ,600 - gap),180),
                     "#0066FF");
                 break;
             case 3:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-green.png", new Vector(800 - 30, 30), 90),
+                    new Renderable("/static/img/ship-green.png", new Vector(800 - gap , gap  ), 90),
                     "#00FF00");
                 break;
             case 4:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-yellow.png", new Vector(30, 600 - 30),270),
+                    new Renderable("/static/img/ship-yellow.png", new Vector(gap, 600 - gap  ),270),
                     "#FFFF00");
                 break;
             default:
