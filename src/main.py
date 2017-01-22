@@ -78,9 +78,12 @@ def players(game_id):
     for player in game.players:
         players_json.append({
             'id': player.id,
-            'name': player.name,
+            'name': player.name
         })
-    return json.dumps(players_json)
+    return json.dumps({
+        "players" : players_json,
+        "gameIsStarted": game.is_started
+    })
 
 @app.route("/set_player_name/<game_id>/<int:player_id>", methods=['POST'])
 def set_player_name(game_id, player_id):
@@ -92,6 +95,15 @@ def set_player_name(game_id, player_id):
             player.name = data['name']
             return "OK"
     return "player not found"
+
+@app.route("/game/<game_id>/<int:player_id>/start/", methods=['POST'])
+def start_game(game_id, player_id):
+    if player_id != 1:
+        return "{\"status\" : \"unauthorized\"}"
+    game = get_game(game_id)
+    if game is not None:
+        game.is_started = True
+    return "{\"status\" : \"ok\"}"
 
 @app.route("/game/<game_id>/<int:player_id>/")
 def game(game_id, player_id):
@@ -108,7 +120,11 @@ def toggle_ready(game_id, player_id):
     '''Gibt zurück, ob der Spieler nun ready ist'''
     game = get_game(game_id)
     player = game.get_player(player_id)
-    player.set_ready(not player.get_ready())
+
+    # Wenn alle Spieler ready sind, kann man sich nicht wieder auf not ready schalten!
+    if not all([x.get_ready() for x in game.players]):
+        player.set_ready(not player.get_ready())
+
     return "true" if player.get_ready() else "false"
 
 @app.route("/game/<game_id>/<int:player_id>/get_ready_states")
@@ -127,10 +143,12 @@ def get_state(game_id, player_id):
     for player in game.players:
         json_players.append(player.get_dict())
 
-    game.get_player(player_id).in_sync = True # Wir schicken ihm geraden State, also ist er synchron
+    game.get_player(player_id).in_sync = True # Wir schicken ihm gerade State, also ist er synchron
+
+    print("Spieler synchronisiert: ", end="")
+    print([x.in_sync for x in game.players])
 
     # Sind alle spieler synchron? Dann neue Runde anfangen.
-    print([x.in_sync for x in game.players])
     if all([x.in_sync for x in game.players]):
         for player in game.players:
             player.set_ready(False)
@@ -147,7 +165,9 @@ def set_state(game_id, player_id):
     data = json.loads(request.data.decode('utf-8'))
     player.angle = data['angle']
     player.dead = data['dead']
+    print("Spieler tot: ", end="")
+    print([x.dead for x in game.players])
     return "OK"
 
 if __name__ == "__main__":
-    app.run(threaded=True)
+    app.run(threaded=False)
