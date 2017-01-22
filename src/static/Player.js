@@ -15,8 +15,7 @@ class Player {
     }
 
     set_degree(degree) {
-        this.renderable._degree = degree;
-        console.log(this.renderable._degree );
+        this.renderable._degree = parseInt(degree);
     }
 
     _getNamePos(){
