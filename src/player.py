@@ -8,6 +8,7 @@ class Player:
 		self.dead = False
 		self.frequency = None
 		self.amplitude = None
+		self.asteroid = []
 
 	def get_ready(self):
 		if self.dead:
@@ -26,4 +27,5 @@ class Player:
 			"angle" : self.angle,
 			"frequency" : self.frequency,
 			"amplitude" : self.amplitude,
+			"asteroid": self.asteroid,
 		}

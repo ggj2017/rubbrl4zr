@@ -169,8 +169,10 @@ def set_state(game_id, player_id):
     player.dead = data['dead']
     player.frequency = data['frequency']
     player.amplitude = data['amplitude']
+    player.asteroid = data['asteroid']
     print("Spieler tot: ", end="")
     print([x.dead for x in game.players])
+    print("Asteroid von Spieler {} = {}".format(player.id, player.asteroid))
     return "OK"
 
 if __name__ == "__main__":

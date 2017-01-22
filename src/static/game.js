@@ -313,6 +313,14 @@ class Game {
                         p.set_degree(player.angle);
                         p.frequency = player.frequency;
                         p.amplitude = player.amplitude;
+
+                        if (player.asteroid.length > 0) {
+                            this._obstacles = this._obstacles.filter((o) => o.playerId != p.id);
+                            let asteroid = new Asteroid(
+                                42, new Vector(player.asteroid[0], player.asteroid[1]), p.id
+                            );
+                            this._obstacles.push(asteroid);
+                        }
                     }
 
                     _game.startSimulation();
