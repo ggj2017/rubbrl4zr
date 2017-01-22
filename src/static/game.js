@@ -9,6 +9,7 @@ class Game {
         this._obstacles = [];
         this._explosions = [];
         this._removeExplosions = []; // the indices of explosions that are done
+        this._simulating = false;
         canvas.id = "game";
         this._canvasPreview = canvasPreview;
         this._previewLaser = this.createPreviewLaser(canvasPreview);
@@ -130,8 +131,23 @@ class Game {
         //this.previewContext.restore();
     }
 
+    startSimulation() {
+        this._simulating = true;
+    }
+
+    stopSimulation() {
+        this._simulating = false;
+    }
+
     update() {
-        // not yet needed
+        if (!this._simulating) {
+            return;
+        }
+
+        let toDelete = [];
+        for (let player of this._players) {
+            player.update();
+        }
     }
 
     poll() {
@@ -167,7 +183,7 @@ class Game {
                         _game.get_player(player.id).set_degree(player.angle);
                     }
 
-                    // TODO: Hier Simulation der Schüsse starten!
+                    startSimulation();
 
                     // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
                     this.setReadyButtonToggled(false);
@@ -271,8 +287,8 @@ class Game {
     createLaser(player, fre = 30 , amp = 30) {
 
         let rad = (player.renderable._degree + player.renderable._init_degree)*Math.PI / 180;
-        let x =64;
-        let y = 0
+        let x =0;
+        let y = 64
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
@@ -284,8 +300,9 @@ class Game {
             game: _game,
             height: _game._canvas.height,
             width: _game._canvas.width ,
-            xAxis:player.renderable._pos.x + x,
+            xAxis:player.renderable._pos.x + x + 32/2,
             yAxis:player.renderable._pos.y + y,
+
             amplitude: amp,
             frequency: fre,
             degree: player.renderable._degree + player.renderable._init_degree,

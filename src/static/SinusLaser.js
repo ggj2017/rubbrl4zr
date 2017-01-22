@@ -7,16 +7,65 @@ class SinusLaser extends Renderable {
         this.counter = 0;
         this.lines = [];
         this.reflec = 0;
-
-        this.addLines();
+        this.status = 1;
     }
 
-    /**
-     * Draw animation function.
-     *
-     * This function draws one frame of the animation, waits 20ms, and then calls
-     * itself again.
-     */
+    /// Gibt false zurück, wenn er gelöscht werden möchte
+    update() {
+        const {collisionCallback, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
+
+        let rad = degree * Math.PI /180;
+        let x = 0;
+        let y = 1;
+
+        x = this.status;
+        y = Math.sin(x/frequency) *amplitude;
+        let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
+        y = Math.sin(rad) * x + Math.cos(rad) * y;
+        x = tempX;
+
+        x = x +  xAxis;
+        y = y + yAxis;
+
+        if(_game) {
+            for (let obstac of _game._obstacles) {
+                if (obstac.collision && obstac.collision.contains({x, y})) {
+                    this.collidedObstacle = obstac;
+                    return false;
+                }
+            }
+        }
+
+
+        if(this.reflec < 10) {
+
+            if(this.edgeWidthReached(x))
+            {
+                this.props.xAxis = x;
+                this.props.yAxis = y;
+                this.props.degree = 180 - degree;
+
+                this.reflec++;
+
+                return true;
+            }
+            if(this.edgeHeightReached(y)){
+                this.props.xAxis = x;
+                this.props.yAxis = y;
+                this.props.degree = 360 - degree;
+
+                this.reflec++;
+
+                return true;
+            }
+        }
+
+        this.lines.push({x: x  , y:  y });
+
+        this.status += 1;
+        return true;
+    }
+
     render (context) {
 
         const {collisionCallback, color = '#00f', lineWidth = 2} = this.props;

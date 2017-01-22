@@ -15,8 +15,7 @@ class Player {
     }
 
     set_degree(degree) {
-        this.renderable._degree = degree;
-        console.log(this.renderable._degree );
+        this.renderable._degree = parseInt(degree);
     }
 
     _getNamePos(){
@@ -43,6 +42,12 @@ class Player {
             pos.y = this.renderable._pos.y;
         }
         return pos;
+    }
+
+    update() {
+        if (!this.laser.update()) {
+            this.laser = null;
+        }
     }
 
     render(ctx) {
