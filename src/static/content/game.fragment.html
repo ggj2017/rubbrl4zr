@@ -73,8 +73,8 @@ function loadPlayers(){
 
 if(lib.players.length == 0) {
     lib.ajax("GET", "/players/"+lib.gameId, function(data) {
-        let players = JSON.parse(data);
-        lib.players = players;
+        let result = JSON.parse(data);
+        lib.players = result["players"];
         loadPlayers();
     });
 }
