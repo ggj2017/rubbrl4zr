@@ -158,9 +158,7 @@ window.lib = (new function(){
         });
     };
 
-    this.showIngameMessage = function(headline, message, positive) {
-        positive = positive || true;
-
+    this.showIngameMessage = function(headline, message, negative) {
         var modalOverlay = document.getElementById("modalOverlay");
         var modalMessage = document.getElementById("modalMessage");
         var modalMessageHeadline = document.getElementById("modalMessageHeadline");
@@ -168,7 +166,7 @@ window.lib = (new function(){
 
         modalMessageHeadline.textContent = headline;
         modalMessageContent.textContent = message;
-        modalMessageHeadline.className = positive ? "inverse" : "inverseRed";
+        modalMessageHeadline.className = negative ? "inverseRed" : "inverse";
         modalOverlay.style.display = "block";
     };
 

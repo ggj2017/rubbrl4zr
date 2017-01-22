@@ -48,12 +48,19 @@ class SinusLaser extends Renderable {
             for (let obstac of _game._obstacles) {
                 if (obstac.collision && obstac.collision.contains({x, y})) {
                     this.collidedObstacle = obstac;
+                    _game.makeExplosion(new Vector(x, y));
                     return false;
                 }
             }
             for (let player of _game._players) {
                 if (player.contains({x, y})) {
                     player.die();
+                    if(player.id == lib.playerId) {
+                        console.log("KILL", lib.playerId, player.id)
+                        lib.showIngameMessage("You died!",
+                            this.props.player.name+" has killed you.", true);
+                    }
+                    return false; // terminate l4zr
                 }
             }
         }
