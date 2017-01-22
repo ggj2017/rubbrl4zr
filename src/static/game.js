@@ -291,7 +291,8 @@ class Game {
                 frequency,
                 amplitude,
                 color: '#00FF00',
-                degree: 0
+                degree: 0,
+                maxReflections: 0
             });
     }
 
