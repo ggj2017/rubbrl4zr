@@ -127,6 +127,7 @@ class Game {
         this.previewContext.lineWidth = 5;
         //this.previewContext.save();
 
+        this._previewLaser.update();
         this._previewLaser.render(this.previewContext);
         //this.previewContext.restore();
     }
