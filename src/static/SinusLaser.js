@@ -13,7 +13,17 @@ class SinusLaser extends Renderable {
 
     /// Gibt false zurück, wenn er gelöscht werden möchte
     update() {
-        const {collisionCallback, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
+        const {
+            maxReflections = 9,
+            collisionCallback,
+            width,
+            degree,
+            xAxis,
+            yAxis,
+            height,
+            amplitude = 30,
+            frequency  = 30
+        } = this.props;
 
         let rad = degree * Math.PI /180;
         let x = this.status;
@@ -41,7 +51,7 @@ class SinusLaser extends Renderable {
         }
 
 
-        if(this.reflec < 10) {
+        if(this.reflec < maxReflections+1) {
 
             if (this.edgeWidthReached(x)) {
                 if (!this.insideObject) {
