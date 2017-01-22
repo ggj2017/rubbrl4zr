@@ -59,6 +59,8 @@ def get_game_info(game_id):
 
 @app.route("/join/<game_id>/")
 def join(game_id):
+    if "Slackbot-LinkExpanding" in request.headers.get('User-Agent'):
+        return "Slack bot detected"
     game = get_game(game_id)
     if len(game.players) >= 4:
         player_id = 0
