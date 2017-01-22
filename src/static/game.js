@@ -71,9 +71,14 @@ class Game {
             id = this.getOwnPlayer().id;
         }
 
-        this._obstacles.push(
-            new Asteroid(42,
-                new Vector(pos.x, pos.y), id));
+        let asteroid = new Asteroid(42,
+            new Vector(pos.x, pos.y), id);
+
+        this._obstacles.push(asteroid);
+
+        if(player) {
+            this.getOwnPlayer().asteroid = asteroid;
+        }
     }
 
     sendStateToServer() {
@@ -89,6 +94,7 @@ class Game {
             "dead": player.dead,
             "frequency": player.frequency,
             "amplitude": player.amplitude,
+            "asteroid": player.asteroid,
         }));
     }
 

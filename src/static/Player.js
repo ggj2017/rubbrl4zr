@@ -11,6 +11,7 @@ class Player {
         this.dead = false;
         this.frequency = 30;
         this.amplitude = 30;
+        this.asteroid = null;
     }
 
     shoot(laser) {
