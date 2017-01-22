@@ -44,7 +44,7 @@ class SinusLaser extends Renderable {
         x = x + xAxis;
         y = y + yAxis;
 
-        if(_game) {
+        if (_game && maxReflections > 0) {
             for (let obstac of _game._obstacles) {
                 if (obstac.collision && obstac.collision.contains({x, y})) {
                     this.collidedObstacle = obstac;

@@ -42,6 +42,8 @@ class Game {
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
 
+
+
         this.createStartingObstacles({count: 5});
 
         this.rdyBtn.onclick = () => {
@@ -60,10 +62,12 @@ class Game {
         for(let obstac of this._obstacles) {
 
             if (obstac.playerId != lib.playerId && obstac.collision.contains(pos)) {
-                callback({
-                    type: 'error',
-                    message: 'obstacle on given coordinates',
-                });
+                if (callback) {
+                    callback({
+                        type: 'error',
+                        message: 'obstacle on given coordinates',
+                    });
+                }
                 return;
             }
 
@@ -108,6 +112,28 @@ class Game {
     }
 
     createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
+
+
+        this.addAsteroidToGame(
+            {
+                pos: { x: this._canvas.width / 2, y: offsetY/2}
+            });
+
+        this.addAsteroidToGame(
+            {
+                pos: { x: this._canvas.width / 2, y: this._canvas.height - offsetY/2}
+            });
+
+        this.addAsteroidToGame(
+            {
+                pos: { x: this._canvas.width - offsetX/2 , y: this._canvas.height / 2 }
+            });
+
+        this.addAsteroidToGame(
+            {
+                pos: { x: offsetX / 2, y: this._canvas.height / 2}
+            });
+
 
         Math.seedrandom(lib.gameId);
 
@@ -313,6 +339,14 @@ class Game {
                         p.set_degree(player.angle);
                         p.frequency = player.frequency;
                         p.amplitude = player.amplitude;
+
+                        if (player.asteroid.length > 0) {
+                            this._obstacles = this._obstacles.filter((o) => o.playerId != p.id);
+                            let asteroid = new Asteroid(
+                                42, new Vector(player.asteroid[0], player.asteroid[1]), p.id
+                            );
+                            this._obstacles.push(asteroid);
+                        }
                     }
 
                     _game.startSimulation();
