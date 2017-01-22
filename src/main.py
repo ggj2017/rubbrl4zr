@@ -60,8 +60,11 @@ def get_game_info(game_id):
 @app.route("/join/<game_id>/")
 def join(game_id):
     game = get_game(game_id)
-    player_id = len(game.players) + 1
-    game.players.append(Player(player_id))
+    if len(game.players) >= 4:
+        player_id = 0
+    else:
+        player_id = len(game.players) + 1
+        game.players.append(Player(player_id))
     return redirect(url_for('lobby', game_id=game_id, player_id=player_id))
 
 @app.route('/lobby/<game_id>/<int:player_id>/')
