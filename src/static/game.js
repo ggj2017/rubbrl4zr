@@ -30,8 +30,8 @@ class Game {
                     x: e.clientX - _game._canvas.offsetLeft,
                     y: e.clientY - _game._canvas.offsetTop
                 },
-                callback: (type) => {
-                    console.log('failed');
+                callback: () => {
+                    lib.playSound('/static/snd/denied.mp3');
                 }
             });
 
@@ -60,6 +60,10 @@ class Game {
         for(let obstac of this._obstacles) {
 
             if (obstac.playerId != this.getOwnPlayer().id && obstac.collision.contains(pos)) {
+                callback({
+                    type: 'error',
+                    message: 'obstacle on given coordinates',
+                });
                 return;
             }
 
@@ -119,15 +123,14 @@ class Game {
                 x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
                 y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
 
-                for(let obstac of this._obstacles) {
-                    if(obstac.collision.contains(x+75,y+75/2)) {
-                        existingOstacle = true;
-                        console.log(obstac);
-                    }
-                }
+                this.addAsteroidToGame(
+                    {
+                        pos: {x, y},
+                        callback: () => {
+                            existingOstacle = true;
+                        }
+                    });
             } while (existingOstacle);
-
-            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
         }
     }
 
@@ -262,13 +265,14 @@ class Game {
             }
         }
         if (!this._simulating && this._players.length > 1 && players_alive <= 1) {
-            let msg = "GAME OVER\n";
+            var msg;
             if (winning_player) {
-                msg += winning_player.name + " hat gewonnen!";
+                msg = winning_player.id == lib.playerId ? "You won!"
+                        : winning_player.name + " won!";
             } else {
-                msg += "Unendschieden.";
+                msg = "Draw!";
             }
-            alert(msg);
+            lib.showIngameMessage("Game Over", msg);
             return;
         }
         let r = new XMLHttpRequest();

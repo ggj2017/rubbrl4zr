@@ -158,23 +158,37 @@ window.lib = (new function(){
         });
     };
 
+    this.showIngameMessage = function(headline, message, positive) {
+        positive = positive || true;
+
+        var modalOverlay = document.getElementById("modalOverlay");
+        var modalMessage = document.getElementById("modalMessage");
+        var modalMessageHeadline = document.getElementById("modalMessageHeadline");
+        var modalMessageContent = document.getElementById("modalMessageContent");
+
+        modalMessageHeadline.textContent = headline;
+        modalMessageContent.textContent = message;
+        modalMessageHeadline.className = positive ? "inverse" : "inverseRed";
+        modalOverlay.style.display = "block";
+    };
+
     this.getParams = function() {
         return window.location.pathname.split('/');
-    }
+    };
 
     this.getPlayerInfo = function(playerId) {
         lib.ajax("GET", "/player/"+lib.gameId+"/"+lib.playerId+"/",
             function(data) {
                 lib.playerName = JSON.parse(data)["name"];
         });
-    }
+    };
 
     this.getGameInfo = function(gameId) {
         lib.ajax("GET", "/game_info/"+lib.gameId+"/",
             function(data) {
                 lib.joinLink = JSON.parse(data)["joinLink"];
         });
-    }
+    };
 
     var _showTypewriterText = function(visible, invisible, interval){
         var message = invisible.textContent;
