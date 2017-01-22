@@ -45,6 +45,12 @@ class Player {
         return pos;
     }
 
+    update() {
+        if (!this.laser.update()) {
+            this.laser = null;
+        }
+    }
+
     render(ctx) {
         this.renderable.render(ctx);
 
