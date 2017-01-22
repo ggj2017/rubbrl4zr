@@ -9,10 +9,16 @@ class SinusLaser extends Renderable {
         this.reflec = 0;
         this.status = 1;
         this.insideObject = false;
+        this.timeout = 0;
     }
 
     /// Gibt false zurück, wenn er gelöscht werden möchte
     update() {
+        if (this.timeout > 10000) {
+            return;
+        }
+        this.timeout += 1;
+
         const {
             maxReflections = 9,
             collisionCallback,
