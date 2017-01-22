@@ -2,6 +2,7 @@ class Game:
     def __init__(self, id):
         self.id = id
         self.players = []
+        self.is_started = False
 
     def get_player(self, id):
         for player in self.players:
