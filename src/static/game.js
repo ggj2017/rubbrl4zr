@@ -59,7 +59,7 @@ class Game {
 
         for(let obstac of this._obstacles) {
 
-            if (obstac.playerId != this.getOwnPlayer().id && obstac.collision.contains(pos)) {
+            if (obstac.playerId != lib.playerId && obstac.collision.contains(pos)) {
                 callback({
                     type: 'error',
                     message: 'obstacle on given coordinates',
