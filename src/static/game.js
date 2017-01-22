@@ -16,8 +16,8 @@ class Game {
 
         canvas.addEventListener('contextmenu', function(evt) {
             evt.preventDefault();
-            var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
-                                evt.clientY - canvas.offsetTop - 64);
+            var pos = new Vector(evt.clientX - canvas.offsetLeft,
+                                 evt.clientY - canvas.offsetTop);
             _game.makeExplosion(pos);
         });
 

@@ -1,12 +1,12 @@
 class Player {
-    constructor(id, name, renderable,color) {
+    constructor(id, name, renderable, color) {
         this.id = id;
         this.name = name;
         this.renderable = renderable;
         this.color = color;
         this.radius = 30;
-        this.centerX = renderable._pos.x + this.radius;
-        this.centerY = renderable._pos.y + this.radius;
+        this.centerX = renderable._center.x;
+        this.centerY = renderable._center.y;
         this.collision = new Circle(this.centerX, this.centerY, this.radius);
         this.dead = false;
     }
@@ -34,20 +34,20 @@ class Player {
         let h = this.renderable._img.height;
 
         var pos = new Vector();
-        if(this.renderable._pos.x < cw)
+        if(this.renderable._center.x < cw)
         {
-            pos.x = this.renderable._pos.x + w;
+            pos.x = this.renderable._center.x + w;
         }
         else{
-            pos.x = this.renderable._pos.x - w;
+            pos.x = this.renderable._center.x - w;
         }
 
-        if(this.renderable._pos.y < ch)
+        if(this.renderable._center.y < ch)
         {
-            pos.y = this.renderable._pos.y + h;
+            pos.y = this.renderable._center.y + h;
         }
         else{
-            pos.y = this.renderable._pos.y;
+            pos.y = this.renderable._center.y;
         }
         return pos;
     }
@@ -64,6 +64,18 @@ class Player {
     }
 
     render(ctx) {
+
+        ctx.save();
+        ctx.strokeStyle = "#FF0000 ";
+        ctx.fillStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+
+        ctx.beginPath();
+        ctx.arc(this.centerX, this.centerY , this.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.restore();
+
         if (!this.dead) {
             this.renderable.render(ctx);
         }
