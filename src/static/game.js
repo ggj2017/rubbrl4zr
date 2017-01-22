@@ -25,7 +25,7 @@ class Game {
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
 
-        this.createStartingObstacles({count: 4});
+        this.createStartingObstacles({count: 5});
 
         this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
@@ -65,7 +65,7 @@ class Game {
                 y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
 
                 for(let obstac of this._obstacles) {
-                    if(obstac.collision.contains(x+75/2,y+75/2)) {
+                    if(obstac.collision.contains(x+75,y+75/2)) {
                         existingOstacle = true;
                         console.log(obstac);
                     }
@@ -325,6 +325,7 @@ class Game {
                 throw "invalid player ID "+playerId + "(must be in [1..4])";
         }
         _game._players.push(player);
+        _game._obstacles.pop();
     }
 
     createLaser(player, fre = 30 , amp = 30) {
