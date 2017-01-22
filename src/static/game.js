@@ -340,8 +340,8 @@ class Game {
                         p.frequency = player.frequency;
                         p.amplitude = player.amplitude;
 
+                        this._obstacles = this._obstacles.filter((o) => o.playerId != p.id);
                         if (player.asteroid.length > 0) {
-                            this._obstacles = this._obstacles.filter((o) => o.playerId != p.id);
                             let asteroid = new Asteroid(
                                 42, new Vector(player.asteroid[0], player.asteroid[1]), p.id
                             );
@@ -363,7 +363,7 @@ class Game {
         var now = Date.now();
     	var delta = now - _game._then;
 
-        for (let i = 0; i < 10; ++i) { // Zum Entwickeln etwas beschleunigen
+        for (let i = 0; i < 5; ++i) { // Zum Entwickeln etwas beschleunigen
     	    _game.update(delta / 1000);
         }
     	_game.render();
