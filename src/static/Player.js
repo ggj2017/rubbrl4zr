@@ -104,7 +104,7 @@ class Player {
 
     die() {
         // An unserer Position eine Explosion hinzufügen:
-        _game.makeExplosion(new Vector(this.centerX - 96, this.centerY - 64));
+        _game.makeExplosion(new Vector(this.centerX, this.centerY));
         this.dead = true;
         if (this == _game.getOwnPlayer()) { // Wenn wir selber gestorben sind ...
             _game.sendStateToServer(); // ... dies dem Server mitteilen.
