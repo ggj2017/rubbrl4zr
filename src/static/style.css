@@ -81,7 +81,7 @@ body{
     background-image: url(img/background.jpg);
     background-repeat: repeat;
     /* -- no bg animation for development -- */
-    /*animation: animateStarsBackground 40s linear infinite;*/
+    animation: animateStarsBackground 40s linear infinite;
 }
 
 #modalOverlay {
@@ -276,7 +276,7 @@ a{
     border: 1px solid #009900;
     box-shadow: 0 0 5px #005500;
     background-image: url(img/previewGrid.png);
-    /*animation: animatePreviewBackground 2s linear infinite;*/
+    animation: animatePreviewBackground 2s linear infinite;
     margin-top: -0.5em;
     margin-bottom: 0.5em;
 }
