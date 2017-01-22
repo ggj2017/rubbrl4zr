@@ -222,13 +222,14 @@ class Game {
             }
         }
         if (!this._simulating && this._players.length > 1 && players_alive <= 1) {
-            let msg = "GAME OVER\n";
+            var msg;
             if (winning_player) {
-                msg += winning_player.name + " hat gewonnen!";
+                msg = winning_player.id == lib.playerId ? "You won!"
+                        : winning_player.name + " won!";
             } else {
-                msg += "Unendschieden.";
+                msg = "Draw!";
             }
-            alert(msg);
+            lib.showIngameMessage("Game Over", msg);
             return;
         }
         let r = new XMLHttpRequest();

@@ -84,6 +84,21 @@ body{
     animation: animateStarsBackground 40s linear infinite;
 }
 
+#modalOverlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,100,0.2);
+}
+
+#modalMessage {
+    text-align: center;
+    color: black;
+    text-shadow: 0 0 5px white;
+}
+
 #cursor{
     width: 32px;
     height: 32px;
