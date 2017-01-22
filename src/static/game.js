@@ -369,7 +369,7 @@ class Game {
         _game._obstacles.pop();
     }
 
-    createLaser(player, fre = 30 , amp = 30) {
+    createLaser(player) {
 
         let rad = ( player.renderable._degree + player.renderable._init_degree - 90 )*Math.PI / 180;
         let x =0;
@@ -378,9 +378,6 @@ class Game {
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
 
-
-
-
         const laser = new SinusLaser({
             game: _game,
             height: _game._canvas.height,
@@ -388,8 +385,8 @@ class Game {
             xAxis: player.renderable._center.x + x,
             yAxis: player.renderable._center.y + y,
 
-            amplitude: amp,
-            frequency: fre,
+            amplitude: player.amplitude,
+            frequency: player.frequency,
             degree: player.renderable._degree + player.renderable._init_degree,
             color: player.color,
             collisionCallback: this.onObstacleCollision,

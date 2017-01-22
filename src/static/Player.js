@@ -9,6 +9,8 @@ class Player {
         this.centerY = renderable._center.y;
         this.collision = new Circle(this.centerX, this.centerY, this.radius);
         this.dead = false;
+        this.frequency = 30;
+        this.amplitude = 30;
     }
 
     shoot(laser) {

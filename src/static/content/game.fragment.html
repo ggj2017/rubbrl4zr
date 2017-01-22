@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div style="float: right"><span id="current-frequency">1</span> Hz</div>
+    <div style="float: right"><span id="current-frequency">25</span> Hz</div>
     <label for="frequency">Frequency</label>
     <input id="frequency" type="range" min="1" max="50" step="1" />
 
@@ -88,17 +88,19 @@ let fre = 30;
 document.getElementById('frequency').addEventListener('input', function(e) {
     document.getElementById('current-frequency').innerHTML = e.target.value;
 
-    this.fre = 80 / e.target.value;
+    this.fre = 80/parseInt(e.target.value);
     let laser = game.createPreviewLaser(null, this.fre, this.amp);
     game._previewLaser = laser;
+    game.getOwnPlayer().frequency = this.fre;
 }.bind(this));
 
 document.getElementById('amplitude').addEventListener('input', function(e) {
     document.getElementById('current-amplitude').innerHTML = e.target.value;
 
-   this.amp = e.target.value;
+   this.amp = parseInt(e.target.value)*0.7;
     let laser = game.createPreviewLaser(null, this.fre,this.amp);
     game._previewLaser = laser;
+    game.getOwnPlayer().amplitude = this.amp;
 
 }.bind(this));
 
