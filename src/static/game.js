@@ -77,7 +77,8 @@ class Game {
         this._obstacles.push(asteroid);
 
         if(player) {
-            this.getOwnPlayer().asteroid = asteroid;
+            this.getOwnPlayer().asteroid[0] = asteroid.collision.x;
+            this.getOwnPlayer().asteroid[1] = asteroid.collision.y;
         }
     }
 
