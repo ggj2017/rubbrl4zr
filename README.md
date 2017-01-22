@@ -28,7 +28,7 @@ If you don't already have Python installed, you should get it at
 [python.org](https://www.python.org/) (get version 3.4 or higher).
 Python ships with *pip*, the Python package manager. In order to install
 the Flask framework, open a terminal, type ``pip install flask`` and
-hit enter. After Flask is installed.
+hit enter.
 
 For starting the server, open a terminal and navigate to the ``src`` directory.
 type ``python main.py``. The HTTP server will start listening on port *5000*.
