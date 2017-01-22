@@ -59,10 +59,14 @@ class Game {
 
         for(let obstac of this._obstacles) {
 
-            if (obstac.collision.contains(pos)) {
-                console.log("damn");
-                callback('fail');
+            if (obstac.playerId != this.getOwnPlayer().id && obstac.collision.contains(pos)) {
                 return;
+            }
+
+            for (let player of this._players) {
+                if (player.collision.contains(pos)) {
+                    return;
+                }
             }
         }
 
