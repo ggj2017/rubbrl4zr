@@ -11,8 +11,24 @@ class Obstacle {
 }
 
 class Asteroid extends Obstacle {
-    constructor(id, pos) {
-        super(id, new Renderable("/static/img/asteroid01.png", pos, 0));
+    constructor(id, pos, playerId) {
+        playerId = playerId || 0;
+        switch(playerId) {
+            case 1:
+                super(id, new Renderable("/static/img/asteroid-red.png", pos, 0));
+                break;
+            case 2:
+                super(id, new Renderable("/static/img/asteroid-blue.png", pos, 0));
+                break;
+            case 3:
+                super(id, new Renderable("/static/img/asteroid-green.png", pos, 0));
+                break;
+            case 4:
+                super(id, new Renderable("/static/img/asteroid-yellow.png", pos, 0));
+                break;
+            default:
+                super(id, new Renderable("/static/img/asteroid01.png", pos, 0));
+        }
         this.collision = new Circle(pos.x, pos.y, 75/2);
         this._rotationSpeed = Math.random()-0.5;
     }
