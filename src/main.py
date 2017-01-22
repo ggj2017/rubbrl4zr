@@ -120,8 +120,8 @@ def toggle_ready(game_id, player_id):
     '''Gibt zurück, ob der Spieler nun ready ist'''
     game = get_game(game_id)
     player = game.get_player(player_id)
-    player.ready = not player.ready
-    return "true" if player.ready else "false"
+    player.set_ready(not player.get_ready())
+    return "true" if player.get_ready() else "false"
 
 @app.route("/game/<game_id>/<int:player_id>/get_ready_states")
 def get_ready_states(game_id, player_id):
@@ -129,7 +129,7 @@ def get_ready_states(game_id, player_id):
     game = get_game(game_id)
     player_states = []
     for player in game.players:
-        player_states.append("true" if player.ready else "false")
+        player_states.append("true" if player.get_ready() else "false")
     return json.dumps(player_states)
 
 @app.route("/game/<game_id>/<int:player_id>/get_state")
@@ -145,7 +145,7 @@ def get_state(game_id, player_id):
     print([x.in_sync for x in game.players])
     if all([x.in_sync for x in game.players]):
         for player in game.players:
-            player.ready = False
+            player.set_ready(False)
             player.in_sync = False
 
     return json.dumps({
@@ -158,7 +158,7 @@ def set_state(game_id, player_id):
     player = game.get_player(player_id)
     data = json.loads(request.data.decode('utf-8'))
     player.angle = data['angle']
-    print(data)
+    player.dead = data['dead']
     return "OK"
 
 if __name__ == "__main__":

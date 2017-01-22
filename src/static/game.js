@@ -18,36 +18,62 @@ class Game {
             var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
                                 evt.clientY - canvas.offsetTop - 64);
             _game.makeExplosion(pos);
-        }
+        };
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
+
+        this.createStartingObstacles({count: 5});
+
         this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
-            let r = new XMLHttpRequest();
-            r.open("POST", "set_state", true);
-            r.onreadystatechange = () => {
-                if (r.readyState != 4 || r.status != 200) return;
-                // Jetzt dem Server mitteilen, dass wir Ready sind
-                let r2 = new XMLHttpRequest();
-                r2.open("GET", "toggle_ready", true);
-                r2.onreadystatechange = () => {
-                    if (r2.readyState != 4 || r2.status != 200) return;
-                    let img = 'img/ready-btn.png'
-                    this.setReadyButtonToggled(r2.responseText === "true");
-                }
-                r2.send();
-            };
-            let player = _game.get_player(lib.playerId);
-            r.send(JSON.stringify({
-                "angle": player.get_degree(),
-            }));
-        }
+            this.sendStateToServer();
+        };
 
         _game.poll();
+    }
+
+    sendStateToServer() {
+        let r = new XMLHttpRequest();
+        r.open("POST", "set_state", true);
+        r.onreadystatechange = () => {
+            if (r.readyState != 4 || r.status != 200) return;
+            this.toggleReadyButton();
+        };
+        let player = _game.get_player(lib.playerId);
+        r.send(JSON.stringify({
+            "angle": player.get_degree(),
+            "dead": player.dead,
+        }));
+    }
+
+    createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
+
+
+        for(let i = 0; i < count; i++) {
+
+            let existingOstacle;
+            let x;
+            let y;
+            do {
+                existingOstacle = false;
+
+                x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
+                y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
+
+                for(let obstac of this._obstacles) {
+                    if(obstac.collision.contains(x+75,y+75/2)) {
+                        existingOstacle = true;
+                        console.log(obstac);
+                    }
+                }
+            } while (existingOstacle);
+
+            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
+        }
     }
 
     animateToggleButton() {
@@ -74,14 +100,20 @@ class Game {
         _game._explosions = activeExplosions;
     }
 
-    setReadyButtonToggled(toggled) {
-        let s = this.rdyBtn.style;
-        if (toggled) {
-            this.rdyBtnTargetOpacity = 0.2;
-        } else {
-            this.rdyBtnTargetOpacity = 1;
+    toggleReadyButton() {
+        let r = new XMLHttpRequest();
+        r.open("GET", "toggle_ready", true);
+        r.onreadystatechange = () => {
+            if (r.readyState != 4 || r.status != 200) return;
+            let s = this.rdyBtn.style;
+            if (r.responseText === "true") {
+                this.rdyBtnTargetOpacity = 0.2;
+            } else {
+                this.rdyBtnTargetOpacity = 1;
+            }
+            this.animateToggleButton();
         }
-        this.animateToggleButton();
+        r.send();
     }
 
     makeExplosion(pos){
@@ -195,8 +227,8 @@ class Game {
 
                     _game.startSimulation();
 
-                    // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
-                    this.setReadyButtonToggled(false);
+                    // Eine neue Runde beginnt, den Ready-Button umschalten:
+                    this.toggleReadyButton();
                 };
                 r.send();
             }
@@ -293,6 +325,7 @@ class Game {
                 throw "invalid player ID "+playerId + "(must be in [1..4])";
         }
         _game._players.push(player);
+        _game._obstacles.pop();
     }
 
     createLaser(player, fre = 30 , amp = 30) {

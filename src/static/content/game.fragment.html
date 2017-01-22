@@ -65,8 +65,6 @@ const drawPreview = ()=> {
 
 var game = new Game(document.getElementById("game"), document.getElementById('preview'), []);
 
-game._obstacles.push(new Asteroid(42, new Vector(350,350)));
-
 function loadPlayers(){
     for(var player of lib.players) {
         game.addPlayer(player.name);
@@ -83,8 +81,6 @@ if(lib.players.length == 0) {
 else {
     loadPlayers();
 }
-
-game._obstacles.push(new Asteroid(42, new Vector(350,350)));
 
 game.run();
 lib.loopMusic("/static/snd/music01.mp3");
