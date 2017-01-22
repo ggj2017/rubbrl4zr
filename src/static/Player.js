@@ -44,10 +44,15 @@ class Player {
         return pos;
     }
 
+    /// Gibt false zurück, sobald er fertig mit der Simulation ist
     update() {
-        if (this.laser && !this.laser.update()) {
-            this.laser = null;
+        if (this.laser) {
+            if (!this.laser.update()) {
+                this.laser = null;
+            }
+            return true;
         }
+        return false;
     }
 
     render(ctx) {

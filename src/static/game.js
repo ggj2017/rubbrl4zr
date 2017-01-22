@@ -48,7 +48,6 @@ class Game {
         }
 
         _game.poll();
-        _game.startSimulation();
     }
 
     animateToggleButton() {
@@ -149,8 +148,14 @@ class Game {
         }
 
         let toDelete = [];
+        let canStop = true;
         for (let player of this._players) {
-            player.update();
+            if (player.update()) {
+                canStop = false;
+            }
+        }
+        if (canStop) {
+            this.stopSimulation();
         }
     }
 
