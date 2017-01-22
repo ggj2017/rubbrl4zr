@@ -15,8 +15,8 @@ class Game {
         this._previewLaser = this.createPreviewLaser(canvasPreview);
 
         canvas.onclick = function(evt) {
-            var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
-                                evt.clientY - canvas.offsetTop - 64);
+            var pos = new Vector(evt.clientX - canvas.offsetLeft,
+                                 evt.clientY - canvas.offsetTop);
             _game.makeExplosion(pos);
         };
 
