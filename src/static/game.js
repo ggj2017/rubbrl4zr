@@ -210,7 +210,9 @@ class Game {
         var now = Date.now();
     	var delta = now - _game._then;
 
-    	_game.update(delta / 1000);
+        for (let i = 0; i < 10; ++i) { // Zum Entwickeln etwas beschleunigen
+    	    _game.update(delta / 1000);
+        }
     	_game.render();
     	_game._then = now;
 
