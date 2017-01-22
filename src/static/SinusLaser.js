@@ -8,6 +8,7 @@ class SinusLaser extends Renderable {
         this.lines = [];
         this.reflec = 0;
         this.status = 1;
+        this.insideObject = false;
     }
 
     /// Gibt false zurück, wenn er gelöscht werden möchte
@@ -15,16 +16,14 @@ class SinusLaser extends Renderable {
         const {collisionCallback, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
 
         let rad = degree * Math.PI /180;
-        let x = 0;
-        let y = 1;
+        let x = this.status;
+        let y = Math.sin(x / frequency) * amplitude;
 
-        x = this.status;
-        y = Math.sin(x/frequency) *amplitude;
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
 
-        x = x +  xAxis;
+        x = x + xAxis;
         y = y + yAxis;
 
         if(_game) {
@@ -39,25 +38,35 @@ class SinusLaser extends Renderable {
 
         if(this.reflec < 10) {
 
-            if(this.edgeWidthReached(x))
-            {
-                this.props.xAxis = x;
-                this.props.yAxis = y;
-                this.props.degree = 180 - degree;
+            if (this.edgeWidthReached(x)) {
+                if (!this.insideObject) {
+                    this.props.xAxis = x;
+                    this.props.yAxis = y;
+                    this.props.degree = 180 - degree;
 
-                this.reflec++;
+                    this.reflec++;
+                    this.status = 0;
+                    this.insideObject = true;
 
-                return true;
+                    return true;
+                }
+            } else if (this.edgeHeightReached(y)) {
+                if (!this.insideObject) {
+                    this.props.xAxis = x;
+                    this.props.yAxis = y;
+                    this.props.degree = 360 - degree;
+
+                    this.reflec++;
+                    this.status = 0;
+                    this.insideObject = true;
+
+                    return true;
+                }
+            } else {
+                this.insideObject = false;
             }
-            if(this.edgeHeightReached(y)){
-                this.props.xAxis = x;
-                this.props.yAxis = y;
-                this.props.degree = 360 - degree;
-
-                this.reflec++;
-
-                return true;
-            }
+        } else {
+            return false;
         }
 
         this.lines.push({x: x  , y:  y });
@@ -189,7 +198,7 @@ class SinusLaser extends Renderable {
         let num = 0;
         for(let line of this.lines) {
 
-            if(this.counter >= num && this.counter <= num + laserLength) {
+            if ((this.counter >= num && this.counter <= num + laserLength) || true) {
                 if(this.counter == num) {
                     //context.moveTo( line.x,  line.y);
                      context.moveTo( line.x  , line.y);
