@@ -14,7 +14,7 @@ class Asteroid extends Obstacle {
     constructor(id, pos) {
         super(id, new Renderable("/static/img/asteroid01.png", pos, 0));
         console.log(pos);
-        this.collision = new Circle(pos.x + 75/2, pos.y + 75/2, 75/2);
+        this.collision = new Circle(pos.x, pos.y, 75/2);
     }
 
     render(ctx) {
