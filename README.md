@@ -38,3 +38,9 @@ type ``python main.py``. The HTTP server will start listening on port *5000*.
 In order to play the game, you need a web browser that supports the ECMA 6
 standard for Javascript and the HTML5 canvas element.
 The game is tested with recent versions of Firefox and Chromium.
+
+### Frameworks & Libraries
+
+The following framworks and libraries were used:
+
+[seedrandom.js 2.4.1 (David Bau)](https://github.com/davidbau/seedrandom) - generating seeded random numbers in Javascript
