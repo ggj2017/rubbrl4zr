@@ -14,11 +14,12 @@ class Game {
         this._canvasPreview = canvasPreview;
         this._previewLaser = this.createPreviewLaser(canvasPreview);
 
-        canvas.onclick = function(evt) {
+        canvas.addEventListener('contextmenu', function(evt) {
+            evt.preventDefault();
             var pos = new Vector(evt.clientX - canvas.offsetLeft,
                                  evt.clientY - canvas.offsetTop);
             _game.makeExplosion(pos);
-        };
+        });
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
