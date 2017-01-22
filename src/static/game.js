@@ -165,6 +165,7 @@ class Game {
     }
 
     startSimulation() {
+        lib.playSound("/static/snd/laser.mp3");
         for (let player of this._players) {
             this.createLaser(player);
         }
