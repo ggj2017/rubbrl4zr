@@ -39,16 +39,10 @@ class Player {
             pos.x = this.renderable._center.x + w;
         }
         else{
-            pos.x = this.renderable._center.x - w;
+            pos.x = this.renderable._center.x - 3*w;
         }
 
-        if(this.renderable._center.y < ch)
-        {
-            pos.y = this.renderable._center.y + h;
-        }
-        else{
-            pos.y = this.renderable._center.y;
-        }
+        pos.y = this.renderable._center.y;
         return pos;
     }
 
