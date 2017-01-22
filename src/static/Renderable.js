@@ -25,7 +25,6 @@ class Renderable {
         if(!this._loaded) return;
 
         //this._degree += +1;
-        // console.log("rendering", this._img, this._pos)
         ctx.save();
         ctx.translate(this._center.x,  this._center.y);
         ctx.rotate(( 90 +  this._init_degree + this._degree) % 360 * Math.PI / 180); // 90 damit es mit dem laser übereinstimmt.

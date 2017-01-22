@@ -333,7 +333,7 @@ class Game {
 
         let rad = ( player.renderable._degree + player.renderable._init_degree - 90 )*Math.PI / 180;
         let x =0;
-        let y = 64
+        let y = player.radius + 11;
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
@@ -345,8 +345,8 @@ class Game {
             game: _game,
             height: _game._canvas.height,
             width: _game._canvas.width ,
-            xAxis:player.renderable._pos.x + x ,
-            yAxis:player.renderable._pos.y + y,
+            xAxis: player.renderable._center.x + x,
+            yAxis: player.renderable._center.y + y,
 
             amplitude: amp,
             frequency: fre,
