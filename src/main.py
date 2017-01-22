@@ -170,4 +170,4 @@ def set_state(game_id, player_id):
     return "OK"
 
 if __name__ == "__main__":
-    app.run(threaded=False)
+    app.run(host= '0.0.0.0', threaded=False)

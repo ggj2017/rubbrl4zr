@@ -61,7 +61,6 @@ class Game {
             let existingOstacle;
             let x;
             let y;
-
             do {
                 existingOstacle = false;
 
@@ -80,8 +79,7 @@ class Game {
         }
     }
 
-
-    animateToggleButton() {
+    _animateToggleButton() {
         let currentOpacity = parseFloat(this.rdyBtn.style.opacity);
         let dif = this.rdyBtnTargetOpacity - currentOpacity;
         if (dif > 0) {
@@ -90,7 +88,7 @@ class Game {
             this.rdyBtn.style.opacity = currentOpacity - 0.05;
         }
         if (Math.abs(dif) > 0.1) {
-            setTimeout(() => { this.animateToggleButton(); }, 40);
+            setTimeout(() => { this._animateToggleButton(); }, 40);
         }
     }
 
@@ -111,14 +109,19 @@ class Game {
         r.onreadystatechange = () => {
             if (r.readyState != 4 || r.status != 200) return;
             let s = this.rdyBtn.style;
-            if (r.responseText === "true") {
-                this.rdyBtnTargetOpacity = 0.2;
-            } else {
-                this.rdyBtnTargetOpacity = 1;
-            }
-            this.animateToggleButton();
+            this.rdyBtnIsReady = (r.responseText === "true");
+            this.animateReadyButton();
         }
         r.send();
+    }
+
+    animateReadyButton() {
+        if (this.rdyBtnIsReady) {
+            this.rdyBtnTargetOpacity = 0.2;
+        } else {
+            this.rdyBtnTargetOpacity = 1;
+        }
+        this._animateToggleButton();
     }
 
     makeExplosion(pos){
@@ -207,13 +210,18 @@ class Game {
             let i = 0;
             let cnt_ready = 0;
             for (let player_ready of response) {
-                if (player_ready === "true") {
+                let ready = (player_ready === "true");
+                if (ready) {
                     lamps[i].classList.add('on');
                     ++cnt_ready;
                 } else {
                     lamps[i].classList.remove('on');
                 }
                 ++i;
+                if (i == lib.playerId) {
+                    this.rdyBtnIsReady = ready;
+                    this.animateReadyButton();
+                }
             }
             let number_of_players = i; // FIXME: Über lib stattedessen
             for (; i < lamps.length; ++i) {
@@ -231,9 +239,6 @@ class Game {
                     }
 
                     _game.startSimulation();
-
-                    // Eine neue Runde beginnt, den Ready-Button umschalten:
-                    this.toggleReadyButton();
                 };
                 r.send();
             }
@@ -309,22 +314,22 @@ class Game {
         switch(playerId) {
             case 1:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-red.png", new Vector(20 ,0 ),0),
+                    new Renderable("/static/img/ship-red.png", new Vector(30, 30), 0),
                     "#FF0000");
                 break;
             case 2:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-blue.png", new Vector(800 -50 ,600 -70),180),
+                    new Renderable("/static/img/ship-blue.png", new Vector(800 - 30 ,600 - 30),180),
                     "#0066FF");
                 break;
             case 3:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-green.png", new Vector(800 - 50,0),90),
+                    new Renderable("/static/img/ship-green.png", new Vector(800 - 30, 30), 90),
                     "#00FF00");
                 break;
             case 4:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-yellow.png", new Vector(20 ,600 -70),270),
+                    new Renderable("/static/img/ship-yellow.png", new Vector(30, 600 - 30),270),
                     "#FFFF00");
                 break;
             default:
@@ -338,7 +343,7 @@ class Game {
 
         let rad = ( player.renderable._degree + player.renderable._init_degree - 90 )*Math.PI / 180;
         let x =0;
-        let y = 64
+        let y = player.radius + 11;
         let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
         y = Math.sin(rad) * x + Math.cos(rad) * y;
         x = tempX;
@@ -350,8 +355,8 @@ class Game {
             game: _game,
             height: _game._canvas.height,
             width: _game._canvas.width ,
-            xAxis:player.renderable._pos.x + x ,
-            yAxis:player.renderable._pos.y + y,
+            xAxis: player.renderable._center.x + x,
+            yAxis: player.renderable._center.y + y,
 
             amplitude: amp,
             frequency: fre,

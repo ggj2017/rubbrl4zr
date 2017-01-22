@@ -4,7 +4,7 @@ class Player {
         this.name = name;
         this.renderable = renderable;
         this.color = color;
-        this.radius = 30;
+        this.radius = 19;
         this.centerX = renderable._center.x;
         this.centerY = renderable._center.y;
         this.collision = new Circle(this.centerX, this.centerY, this.radius);
@@ -65,16 +65,16 @@ class Player {
 
     render(ctx) {
 
-        ctx.save();
-        ctx.strokeStyle = "#FF0000 ";
-        ctx.fillStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.lineJoin = 'round';
+        // ctx.save();
+        // ctx.strokeStyle = "#FF0000 ";
+        // ctx.fillStyle = '#fff';
+        // ctx.lineWidth = 2;
+        // ctx.lineJoin = 'round';
 
-        ctx.beginPath();
-        ctx.arc(this.centerX, this.centerY , this.radius, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.restore();
+        // ctx.beginPath();
+        // ctx.arc(this.centerX, this.centerY , this.radius, 0, 2 * Math.PI);
+        // ctx.stroke();
+        // ctx.restore();
 
         if (!this.dead) {
             this.renderable.render(ctx);

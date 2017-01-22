@@ -13,12 +13,12 @@ class Obstacle {
 class Asteroid extends Obstacle {
     constructor(id, pos) {
         super(id, new Renderable("/static/img/asteroid01.png", pos, 0));
-        console.log(pos);
-        this.collision = new Circle(pos.x + 75/2, pos.y + 75/2, 75/2);
+        this.collision = new Circle(pos.x, pos.y, 75/2);
+        this._rotationSpeed = Math.random()-0.5;
     }
 
     render(ctx) {
-        this.renderable._degree += 0.3;
+        this.renderable._degree += this._rotationSpeed;
         this.renderable.render(ctx);
     }
 }
