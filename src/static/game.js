@@ -30,8 +30,8 @@ class Game {
                     x: e.clientX - _game._canvas.offsetLeft,
                     y: e.clientY - _game._canvas.offsetTop
                 },
-                callback: (type) => {
-                    console.log('failed');
+                callback: () => {
+                    lib.playSound('/static/snd/denied.mp3');
                 }
             });
 
@@ -59,10 +59,18 @@ class Game {
 
         for(let obstac of this._obstacles) {
 
-            if (obstac.collision.contains(pos)) {
-                console.log("damn");
-                callback('fail');
+            if (obstac.playerId != lib.playerId && obstac.collision.contains(pos)) {
+                callback({
+                    type: 'error',
+                    message: 'obstacle on given coordinates',
+                });
                 return;
+            }
+
+            for (let player of this._players) {
+                if (player.collision.contains(pos)) {
+                    return;
+                }
             }
         }
 
@@ -115,15 +123,14 @@ class Game {
                 x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
                 y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
 
-                for(let obstac of this._obstacles) {
-                    if(obstac.collision.contains(x+75,y+75/2)) {
-                        existingOstacle = true;
-                        console.log(obstac);
-                    }
-                }
+                this.addAsteroidToGame(
+                    {
+                        pos: {x, y},
+                        callback: () => {
+                            existingOstacle = true;
+                        }
+                    });
             } while (existingOstacle);
-
-            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
         }
     }
 
@@ -380,26 +387,27 @@ class Game {
 
     addPlayer(playerName) {
         let playerId = _game._players.length+1;
+        let gap = 60;
         var player;
         switch(playerId) {
             case 1:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-red.png", new Vector(30, 30), 0),
+                    new Renderable("/static/img/ship-red.png", new Vector(gap, gap), 0),
                     "#FF0000");
                 break;
             case 2:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-blue.png", new Vector(800 - 30 ,600 - 30),180),
+                    new Renderable("/static/img/ship-blue.png", new Vector(800 - gap ,600 - gap),180),
                     "#0066FF");
                 break;
             case 3:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-green.png", new Vector(800 - 30, 30), 90),
+                    new Renderable("/static/img/ship-green.png", new Vector(800 - gap , gap  ), 90),
                     "#00FF00");
                 break;
             case 4:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-yellow.png", new Vector(30, 600 - 30),270),
+                    new Renderable("/static/img/ship-yellow.png", new Vector(gap, 600 - gap  ),270),
                     "#FFFF00");
                 break;
             default:
