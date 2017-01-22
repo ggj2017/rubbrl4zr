@@ -59,7 +59,7 @@ class Game {
 
         for(let obstac of this._obstacles) {
 
-            if(obstac.collision.contains(pos.x,pos.y)) {
+            if (obstac.collision.contains(pos)) {
                 console.log("damn");
                 callback('fail');
                 return;
