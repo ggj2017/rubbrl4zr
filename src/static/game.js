@@ -186,7 +186,7 @@ class Game {
                         _game.get_player(player.id).set_degree(player.angle);
                     }
 
-                    startSimulation();
+                    _game.startSimulation();
 
                     // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
                     this.setReadyButtonToggled(false);
