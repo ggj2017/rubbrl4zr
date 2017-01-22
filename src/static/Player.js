@@ -4,6 +4,11 @@ class Player {
         this.name = name;
         this.renderable = renderable;
         this.color = color;
+        this.radius = 30;
+        this.centerX = renderable._pos.x + this.radius;
+        this.centerY = renderable._pos.y + this.radius;
+        this.collision = new Circle(this.centerX, this.centerY, this.radius);
+        this.dead = false;
     }
 
     shoot(laser) {
@@ -56,7 +61,9 @@ class Player {
     }
 
     render(ctx) {
-        this.renderable.render(ctx);
+        if (!this.dead) {
+            this.renderable.render(ctx);
+        }
 
         let pos = this._getNamePos();
         ctx.font = "16px forcedsquare";
@@ -67,5 +74,18 @@ class Player {
         if(this.laser) {
             this.laser.render(ctx);
         }
+    }
+
+    contains(point) {
+        if (this.dead) {
+            return false;
+        }
+        return this.collision.contains(point);
+    }
+
+    die() {
+        // An unserer Position eine Explosion hinzufügen:
+        _game.makeExplosion(new Vector(this.centerX - 96, this.centerY - 64));
+        this.dead = true;
     }
 }

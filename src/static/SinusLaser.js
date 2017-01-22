@@ -33,6 +33,11 @@ class SinusLaser extends Renderable {
                     return false;
                 }
             }
+            for (let player of _game._players) {
+                if (player.contains({x, y})) {
+                    player.die();
+                }
+            }
         }
 
 
@@ -218,6 +223,4 @@ class SinusLaser extends Renderable {
         this.counter+= laserLength/20 ;
 
     }
-
-
 }
