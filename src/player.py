@@ -13,6 +13,7 @@ class Player:
 		return self._ready
 
 	def set_ready(self, ready):
+		print("Spieler {} ready = {}".format(self.id, ready))
 		self._ready = ready
 
 	def get_dict(self):
