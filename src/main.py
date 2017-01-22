@@ -167,6 +167,8 @@ def set_state(game_id, player_id):
     data = json.loads(request.data.decode('utf-8'))
     player.angle = data['angle']
     player.dead = data['dead']
+    player.frequency = data['frequency']
+    player.amplitude = data['amplitude']
     print("Spieler tot: ", end="")
     print([x.dead for x in game.players])
     return "OK"

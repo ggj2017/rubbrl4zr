@@ -6,6 +6,8 @@ class Player:
 		self.in_sync = False
 		self.angle = 140
 		self.dead = False
+		self.frequency = None
+		self.amplitude = None
 
 	def get_ready(self):
 		if self.dead:
@@ -22,4 +24,6 @@ class Player:
 			"name" : self.name,
 			"ready" : self.get_ready(),
 			"angle" : self.angle,
+			"frequency" : self.frequency,
+			"amplitude" : self.amplitude,
 		}
