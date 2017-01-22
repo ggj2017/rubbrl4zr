@@ -436,6 +436,7 @@ class Game {
 
         const laser = new SinusLaser({
             game: _game,
+            player: player,
             height: _game._canvas.height,
             width: _game._canvas.width ,
             xAxis: player.renderable._center.x + x,
