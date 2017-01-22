@@ -45,7 +45,7 @@ class Player {
     }
 
     update() {
-        if (!this.laser.update()) {
+        if (this.laser && !this.laser.update()) {
             this.laser = null;
         }
     }

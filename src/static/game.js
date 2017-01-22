@@ -132,6 +132,9 @@ class Game {
     }
 
     startSimulation() {
+        for (let player of this._players) {
+            this.createLaser(player);
+        }
         this._simulating = true;
     }
 
@@ -280,7 +283,6 @@ class Game {
             default:
                 throw "invalid player ID "+playerId + "(must be in [1..4])";
         }
-        this.createLaser(player);
         _game._players.push(player);
     }
 
