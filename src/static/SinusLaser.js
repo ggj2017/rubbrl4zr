@@ -105,68 +105,6 @@ class SinusLaser extends Renderable {
         this.drawSine(context);
     }
 
-    addLines() {
-
-        const {collisionCallback, width,degree,xAxis,yAxis,height, amplitude = 30, frequency  = 30} = this.props;
-
-        let rad = degree * Math.PI /180;
-        let x = 0;
-        let y = 1;
-
-        for(let status = 1; status < width + height ; status++) {
-
-            x = status ;
-            y = Math.sin(x/frequency) *amplitude;
-            let tempX = (Math.cos(rad) * x) + (-Math.sin(rad) * y);
-            y = Math.sin(rad) * x + Math.cos(rad) * y;
-            x = tempX;
-
-            x = x +  xAxis;
-            y = y + yAxis;
-
-            if(_game) {
-                for (let obstac of _game._obstacles) {
-                    if (obstac.collision && obstac.collision.contains({x, y})) {
-                        this.collidedObstacle = obstac;
-                        return;
-                    }
-                }
-            }
-
-
-            if(this.reflec < 10) {
-
-                if(this.edgeWidthReached(x))
-                {
-                    this.props.xAxis = x;
-                    this.props.yAxis = y;
-                    this.props.degree = 180 - degree;
-
-                    this.reflec++;
-
-
-                    this.addLines();
-
-                    return;
-                }
-                if(this.edgeHeightReached(y)){
-                    this.props.xAxis = x;
-                    this.props.yAxis = y;
-                    this.props.degree = 360 - degree;
-
-                    this.reflec++;
-
-
-                    this.addLines();
-
-                    return;
-                }
-            }
-
-            this.lines.push({x: x  , y:  y });
-        }
-    }
-
     edgeWidthReached(x) {
         const {width} = this.props;
 
