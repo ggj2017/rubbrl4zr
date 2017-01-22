@@ -17,10 +17,6 @@
     <label for="amplitude">Amplitude</label>
     <input id="amplitude" type="range" min="0" max="100" step="5" />
 
-    <div style="float: right"><span id="current-phase">50</span> %</div>
-    <label for="phase">Phase</label>
-    <input id="phase" type="range" min="0" max="100" step="5" />
-
     <div style="float: right"><span id="current-rotation">45</span> °</div>
     <label for="rotation">Rotation</label>
     <input id="rotation" type="range" min="-30" max="120" value="45"/>
@@ -104,10 +100,6 @@ document.getElementById('amplitude').addEventListener('input', function(e) {
     game._previewLaser = laser;
 
 }.bind(this));
-
-document.getElementById('phase').addEventListener('input', function(e) {
-    document.getElementById('current-phase').innerHTML = e.target.value;
-});
 
 document.getElementById('rotation').addEventListener('input', function (e) {
     document.getElementById('current-rotation').innerHTML = e.target.value;
