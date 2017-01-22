@@ -18,12 +18,15 @@ class Game {
             var pos = new Vector(evt.clientX - canvas.offsetLeft - 64,
                                 evt.clientY - canvas.offsetTop - 64);
             _game.makeExplosion(pos);
-        }
+        };
 
         lib.setInterval(this._garbageCollectExplosions, 5000);
 
         this.rdyBtn = document.getElementById("rdy-btn");
         this.rdyBtn.style.opacity = 1;
+
+        this.createStartingObstacles({count: 4});
+
         this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
@@ -48,6 +51,32 @@ class Game {
         }
 
         _game.poll();
+    }
+
+    createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
+
+
+        for(let i = 0; i < count; i++) {
+
+            let existingOstacle;
+            let x;
+            let y;
+            do {
+                existingOstacle = false;
+
+                x = Math.floor((Math.random() * (this._canvas.width - offsetX - offsetX + 1)) + offsetX);
+                y = Math.floor((Math.random() * (this._canvas.height - offsetY - offsetY + 1)) + offsetY);
+
+                for(let obstac of this._obstacles) {
+                    if(obstac.collision.contains(x+75/2,y+75/2)) {
+                        existingOstacle = true;
+                        console.log(obstac);
+                    }
+                }
+            } while (existingOstacle);
+
+            this._obstacles.push(new Asteroid(42, new Vector(x,y)));
+        }
     }
 
     animateToggleButton() {
