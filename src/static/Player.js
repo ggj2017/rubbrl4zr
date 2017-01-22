@@ -100,5 +100,8 @@ class Player {
         // An unserer Position eine Explosion hinzufügen:
         _game.makeExplosion(new Vector(this.centerX - 96, this.centerY - 64));
         this.dead = true;
+        if (this == _game.getOwnPlayer()) { // Wenn wir selber gestorben sind ...
+            _game.sendStateToServer(); // ... dies dem Server mitteilen.
+        }
     }
 }

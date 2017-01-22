@@ -30,27 +30,24 @@ class Game {
         this.rdyBtn.onclick = () => {
             var beep = new Audio("/static/snd/beep01.mp3");
             beep.play();
-            let r = new XMLHttpRequest();
-            r.open("POST", "set_state", true);
-            r.onreadystatechange = () => {
-                if (r.readyState != 4 || r.status != 200) return;
-                // Jetzt dem Server mitteilen, dass wir Ready sind
-                let r2 = new XMLHttpRequest();
-                r2.open("GET", "toggle_ready", true);
-                r2.onreadystatechange = () => {
-                    if (r2.readyState != 4 || r2.status != 200) return;
-                    let img = 'img/ready-btn.png'
-                    this.setReadyButtonToggled(r2.responseText === "true");
-                }
-                r2.send();
-            };
-            let player = _game.get_player(lib.playerId);
-            r.send(JSON.stringify({
-                "angle": player.get_degree(),
-            }));
-        }
+            this.sendStateToServer();
+        };
 
         _game.poll();
+    }
+
+    sendStateToServer() {
+        let r = new XMLHttpRequest();
+        r.open("POST", "set_state", true);
+        r.onreadystatechange = () => {
+            if (r.readyState != 4 || r.status != 200) return;
+            this.toggleReadyButton();
+        };
+        let player = _game.get_player(lib.playerId);
+        r.send(JSON.stringify({
+            "angle": player.get_degree(),
+            "dead": player.dead,
+        }));
     }
 
     createStartingObstacles({count = 4, offsetX = 100, offsetY = 100}) {
@@ -103,14 +100,20 @@ class Game {
         _game._explosions = activeExplosions;
     }
 
-    setReadyButtonToggled(toggled) {
-        let s = this.rdyBtn.style;
-        if (toggled) {
-            this.rdyBtnTargetOpacity = 0.2;
-        } else {
-            this.rdyBtnTargetOpacity = 1;
+    toggleReadyButton() {
+        let r = new XMLHttpRequest();
+        r.open("GET", "toggle_ready", true);
+        r.onreadystatechange = () => {
+            if (r.readyState != 4 || r.status != 200) return;
+            let s = this.rdyBtn.style;
+            if (r.responseText === "true") {
+                this.rdyBtnTargetOpacity = 0.2;
+            } else {
+                this.rdyBtnTargetOpacity = 1;
+            }
+            this.animateToggleButton();
         }
-        this.animateToggleButton();
+        r.send();
     }
 
     makeExplosion(pos){
@@ -224,8 +227,8 @@ class Game {
 
                     _game.startSimulation();
 
-                    // Eine neue Runde beginnt, der Ready-Button sollte wieder deaktiviert werden:
-                    this.setReadyButtonToggled(false);
+                    // Eine neue Runde beginnt, den Ready-Button umschalten:
+                    this.toggleReadyButton();
                 };
                 r.send();
             }
@@ -239,7 +242,9 @@ class Game {
         var now = Date.now();
     	var delta = now - _game._then;
 
-    	_game.update(delta / 1000);
+        for (let i = 0; i < 10; ++i) { // Zum Entwickeln etwas beschleunigen
+    	    _game.update(delta / 1000);
+        }
     	_game.render();
     	_game._then = now;
 
@@ -303,12 +308,12 @@ class Game {
                 break;
             case 2:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-blue.png", new Vector(800 - 50,0),90),
+                    new Renderable("/static/img/ship-blue.png", new Vector(800 -50 ,600 -70),180),
                     "#0066FF");
                 break;
             case 3:
                 player = new Player(playerId, playerName,
-                    new Renderable("/static/img/ship-green.png", new Vector(800 -50 ,600 -70),180),
+                    new Renderable("/static/img/ship-green.png", new Vector(800 - 50,0),90),
                     "#00FF00");
                 break;
             case 4:

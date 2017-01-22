@@ -1,26 +1,62 @@
 <div class="menupanel">
     <h1 class="centered">rubbrl4zr</h1>
 
-    Your Name: <input id="player_name" type="text"/>
-    <br/>
+    <span id="playerNameInput">
+        Your Name: <input id="player_name" type="text"/>
+        <br/>
+    </span>
 
     <h5 class="inverse">Players online:</h5>
     <ul id="player_list">
     </ul>
 
-    <div style="position: absolute; bottom: 0; left:0; right:0;">
-        <a class="menubutton" onclick="lib.loadContent('game');">Start Game</a>
-        <h5 class="centered inverse">Other players can join the game by using this link:</h5>
-        <div class="sunkenBox">
-            <a id="joinLink" target="_blank"></a>
+    <div id="notJoined" style="display: none">
+        <h5 class="centered inverseRed">All game slots are occupied.</h5>
+        Unfortunately, you can't join the game. The maximum number
+        of players has been reached.
+    </div>
+
+    <div style="position: absolute; bottom: 0; left:0; right:0; padding: 0.5em 1em;">
+        <div id="startbtn" style="display: none">
+            <h5 class="inverse">Please start the game as soon as all players have joined.</h5>
+            <a class="menubutton" onclick="lib.loadContent('game');">Start Game</a>
+        </div>
+        <div id="joinbox" style="display: none">
+            <h5 class="centered inverse">Other players can join the game by using this link:</h5>
+            <div class="sunkenBox">
+                <a id="joinLink" target="_blank"></a>
+            </div>
+        </div>
+        <div id="allSlotsOccupied" style="display: none">
+            <h5 class="centered inverse">All game slots are occupied.</h5>
+            The maximum number of players is reached. Please wait for the
+            first player to start the match.
         </div>
     </div>
     <script type="application/javascript">
         var link = document.getElementById("joinLink");
         var input = document.getElementById("player_name");
+        var allSlotsOccupied = document.getElementById("allSlotsOccupied");
+        var joinbox = document.getElementById("joinbox");
+        var startbtn = document.getElementById("startbtn");
+        var notJoined = document.getElementById("notJoined");
+        var playerNameInput = document.getElementById("playerNameInput");
         link.href = lib.joinLink;
         link.innerHTML = lib.joinLink;
         input.value = lib.playerName;
+        if(lib.playerId == 1) {
+            startbtn.style.display = "block";
+        }
+        else {
+            startbtn.style.display = "none";
+
+            console.log(lib.playerId);
+            if(lib.playerId == 0) {
+                startbtn.style.display = "none";
+                notJoined.style.display = "block";
+                playerNameInput.style.display = "none";
+            }
+        }
 
 		function build_player_list() {
             lib.ajax("GET", "/players/"+lib.gameId, function(data) {
@@ -30,6 +66,14 @@
 				while (player_list.firstChild) {
 					player_list.removeChild(player_list.firstChild);
 				}
+                if(lib.players.length >= 4) {
+                    allSlotsOccupied.style.display = "block";
+                    joinbox.style.display = "none";
+                }
+                else {
+                    allSlotsOccupied.style.display = "none";
+                    if(lib.playerId > 0) joinbox.style.display = "block";
+                }
 				for (player of players) {
 					li = document.createElement("li");
 					li.innerHTML = player.name;

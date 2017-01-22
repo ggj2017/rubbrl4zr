@@ -200,6 +200,18 @@ h1.inverse, h2.inverse, h3.inverse, h4.inverse, h5.inverse, h6.inverse {
                 0 0 10px #00ff00;
 }
 
+h1.inverseRed,
+h2.inverseRed,
+h3.inverseRed,
+h4.inverseRed,
+h5.inverseRed,
+h6.inverseRed {
+    color: black;
+    text-shadow: 0 0 2px white,
+                0 0 5px #883300,
+                0 0 10px #ff0000;
+}
+
 .centered {
     text-align: center;
 }
@@ -212,7 +224,6 @@ h1.inverse, h2.inverse, h3.inverse, h4.inverse, h5.inverse, h6.inverse {
     text-shadow: 0 0 1px #338800,
                 0 0 2px #00ff00;
 }
-
 input[type='text'],
 .sunkenBox {
     border-radius: 0.1em;
@@ -225,6 +236,13 @@ input[type='text'],
     border: none;
     font-family: 'forcedsquare';
     font-size: 16px;
+
+    -webkit-touch-callout: text; /* iOS Safari */
+      -webkit-user-select: text; /* Safari*/
+       -khtml-user-select: text; /* Konqueror */
+         -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* Internet Explorer/Edge */
+              user-select: text;
 }
 
 a{
