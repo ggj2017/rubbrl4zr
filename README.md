@@ -6,6 +6,8 @@ A Global Game Jam 2017 game.
 
 The superior scientists from the MFT-705 galaxy have invented a new type of laser beams: Rubber lasers, which don't emit the light linearly, but in sine waves.Although this kind of technology was originally developed for civil use, an intergalactic military organization adopted it for their warfare due to the devastating power of rubber lasers.However, the unpredictable nature of this technology requires hard trainings for starship crews in order to be ready for combat.
 
+(Youtube Video: [https://youtu.be/30fSsyqXZ-E](https://youtu.be/30fSsyqXZ-E))
+
 ### Installation guide
 
 #### Starting a server
